@@ -16,24 +16,16 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-primary/20 bg-lifitseg-dark/95 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="relative flex h-[56px] w-[56px] items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+          <Link href="/" className="group flex items-center">
+            <div className="relative flex items-center transition-transform group-hover:scale-105">
               <Image
                 src="/logo.png"
                 alt={siteConfig.nome}
-                width={56}
+                width={180}
                 height={56}
-                className="h-full w-full object-contain"
+                className="h-14 w-auto object-contain"
                 priority
               />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl leading-none font-black tracking-tight text-lifitseg-offwhite">
-                {siteConfig.nome.toUpperCase()}
-              </span>
-              <span className="mt-1 text-[10px] leading-tight font-semibold tracking-widest text-primary uppercase">
-                {siteConfig.tagline}
-              </span>
             </div>
           </Link>
 

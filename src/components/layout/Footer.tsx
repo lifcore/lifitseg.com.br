@@ -11,19 +11,16 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-4">
           <div className="space-y-4 md:col-span-1">
-            <div className="flex items-center gap-3">
-              <div className="relative flex h-[62px] w-[62px] items-center justify-center overflow-hidden">
+            <div className="flex items-center">
+              <div className="relative flex items-center">
                 <Image
                   src="/logo.png"
                   alt={siteConfig.nome}
-                  width={62}
+                  width={200}
                   height={62}
-                  className="h-[62px] w-[62px] object-contain"
+                  className="h-[62px] w-auto object-contain"
                 />
               </div>
-              <span className="text-lg font-black tracking-wider text-lifitseg-offwhite">
-                {siteConfig.nome.toUpperCase()}
-              </span>
             </div>
             <p className="leading-relaxed text-lifitseg-offwhite/60">
               Consultoria e Arquitetura de Riscos Corporativos. Transição da corretagem tradicional
