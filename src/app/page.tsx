@@ -1,22 +1,35 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { LeadModal } from '@/components/forms/LeadModal'
 
 // ==========================================
 // MOCK DATA & CONSTANTS
 // ==========================================
 const OPERATORS = [
-  'Bradesco Saúde',
-  'SulAmérica',
-  'Amil',
-  'Porto Seguro',
-  'Omint',
-  'Care Plus',
-  'Unimed',
-  'Tokio Marine',
-  'Liberty Seguros',
-  'Mapfre',
+  { name: 'Bradesco Saúde', file: 'bradesco' },
+  { name: 'SulAmérica', file: 'sulamerica' },
+  { name: 'Amil', file: 'amil' },
+  { name: 'Porto Seguro', file: 'porto' },
+  { name: 'Omint', file: 'omint' },
+  { name: 'Care Plus', file: 'careplus' },
+  { name: 'Unimed', file: 'unimed' },
+  { name: 'Tokio Marine', file: 'tokio' },
+  { name: 'Liberty Seguros', file: 'liberty' },
+  { name: 'Mapfre', file: 'mapfre' },
+  { name: 'Sobam', file: 'sobam' },
+  { name: 'Hapvida', file: 'hapvida' },
+  { name: 'Allianz', file: 'allianz' },
+  { name: 'HDI Seguros', file: 'hdi' },
+  { name: 'Yelum', file: 'yelum' },
+  { name: 'Suhai', file: 'suhai' },
+  { name: 'Alice', file: 'alice' },
+  { name: 'Sami', file: 'sami' },
+  { name: 'New Leader Saúde', file: 'new_leader_saude' },
+  { name: 'Plena Saúde', file: 'plena_saude' },
+  { name: 'Única Saúde', file: 'unica_saude' },
+  { name: 'Zurich', file: 'zurich' },
 ]
 
 const DIFFERENTIALS = [
@@ -229,7 +242,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAIXA DE OPERADORAS — off-white */}
+      {/* FAIXA DE OPERADORAS — off-white com logos e nomes */}
       <section className="bg-lifitseg-offwhite py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="mb-8 text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase">
@@ -239,9 +252,20 @@ export default function HomePage() {
             {OPERATORS.map((op, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-bold tracking-tight text-lifitseg-dark/70 shadow-sm transition-colors hover:border-primary/40 hover:text-lifitseg-dark"
+                className="flex flex-col items-center justify-center rounded-2xl border border-black/10 bg-white px-5 py-4 text-center shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
               >
-                {op}
+                <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
+                  <Image
+                    src={`/seguradoras/${op.file}.png`}
+                    alt={op.name}
+                    width={96}
+                    height={40}
+                    className="max-h-10 w-auto object-contain"
+                  />
+                </div>
+                <span className="text-xs font-bold tracking-tight text-lifitseg-dark/80">
+                  {op.name}
+                </span>
               </div>
             ))}
           </div>
