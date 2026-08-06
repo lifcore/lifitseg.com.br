@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOC 002 — Structure & UX | Ação Transportes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1C1C1C;
+            --secondary: #C9A227;
+            --bg-light: #F8F9FA;
+            --text: #333333;
+            --border: #E0E0E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background-color: #FFF; line-height: 1.6; padding: 40px 20px; }
+        .doc-container { max-width: 900px; margin: 0 auto; background: #FFF; border: 1px solid var(--border); padding: 50px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        
+        .header-doc { border-bottom: 3px solid var(--secondary); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .header-doc h1 { font-family: 'Poppins', sans-serif; color: var(--primary); font-size: 1.8rem; line-height: 1.2; }
+        .header-doc .badge { background: var(--primary); color: var(--secondary); padding: 6px 12px; font-weight: 600; font-size: 0.85rem; border-radius: 4px; }
+
+        h2 { font-family: 'Poppins', sans-serif; color: var(--primary); font-size: 1.3rem; margin: 30px 0 15px 0; border-left: 4px solid var(--secondary); padding-left: 12px; }
+        h3 { font-family: 'Poppins', sans-serif; color: var(--primary); font-size: 1.05rem; margin: 20px 0 10px 0; }
+        
+        p, li { font-size: 0.95rem; color: #444; margin-bottom: 10px; }
+        ul { margin-left: 20px; margin-bottom: 15px; }
+
+        .note-box { background-color: var(--bg-light); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 20px; margin: 25px 0; border-radius: 4px; }
+        .note-box h4 { font-family: 'Poppins', sans-serif; color: var(--primary); margin-bottom: 8px; }
+
+        .sitemap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .sitemap-card { background: var(--bg-light); border: 1px solid var(--border); padding: 15px; border-radius: 6px; }
+        .sitemap-card strong { color: var(--primary); display: block; font-family: 'Poppins', sans-serif; margin-bottom: 5px; }
+
+        blockquote { background: #FFF9E6; border-left: 3px solid var(--secondary); padding: 10px 15px; font-style: italic; margin: 10px 0; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 0.85rem; color: #777; }
+    </style>
+</head>
+<body>
+
+<div class="doc-container">
+    <div class="header-doc">
+        <div>
+            <h1>DOC 002 — WEBSITE STRUCTURE & USER EXPERIENCE</h1>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Ação Transportes | Projeto de Presença Digital Corporativa</p>
+        </div>
+        <div class="badge">Versão 1.0</div>
+    </div>
+
+    <h2>1. Objetivo do Documento</h2>
+    <p>O site deverá proporcionar uma navegação intuitiva, elegante e objetiva, conduzindo o visitante desde a apresentação da autoridade da empresa até a solicitação direta de orçamento comercial.</p>
+    <p>Toda a estrutura deverá transmitir confiança, organização e senioridade corporativa, reforçando a trajetória de <strong>mais de 30 anos</strong> da Ação Transportes. A experiência do usuário (UX) deve ser simples, ultra-rápida e totalmente otimizada para dispositivos móveis e desktop.</p>
+
+    <h2>2. Arquitetura do Site (Sitemap Simplificado)</h2>
+    <div class="sitemap-grid">
+        <div class="sitemap-card">
+            <strong>1. Home</strong>
+            <p>Apresentação de impacto, autoridade, resumo de serviços e canal direto de conversão.</p>
+        </div>
+        <div class="sitemap-card">
+            <strong>2. A Empresa</strong>
+            <p>História de +30 anos, missão, visão, valores e compromisso operacional.</p>
+        </div>
+        <div class="sitemap-card">
+            <strong>3. Soluções / Serviços</strong>
+            <p>Carga Seca, Refrigerada, Congelada, Produtos Perigosos e Operações Dedicadas.</p>
+        </div>
+        <div class="sitemap-card">
+            <strong>4. Frota</strong>
+            <p>Capacidade operacional (Leves, VUC, Toco, Truck, Carretas) e frota homologada.</p>
+        </div>
+        <div class="sitemap-card">
+            <strong>5. Segmentos Atendidos</strong>
+            <p>Páginas dedicadas (Químico, Alimentício, Autopeças, Indústria, etc.) para SEO B2B.</p>
+        </div>
+        <div class="sitemap-card">
+            <strong>6. Orçamento & Contato</strong>
+            <p>Formulário de cotação completo, dados de contato, localização e WhatsApp.</p>
+        </div>
+    </div>
+
+    <h2>3. Detalhamento das Páginas</h2>
+
+    <h3>HOME PAGE</h3>
+    <ul>
+        <li><strong>Hero Banner:</strong> Imagem de alta resolução de operação logística real + Tríade de autoridade (30+ Anos | Cobertura Nacional | Frota Própria & Homologada).</li>
+        <li><strong>Headline Principal:</strong> <blockquote>"Sua operação logística merece um parceiro em quem você possa confiar."</blockquote></li>
+        <li><strong>Subheadline:</strong> <blockquote>"Há mais de 30 anos oferecendo soluções logísticas para empresas que valorizam segurança, agilidade e compromisso."</blockquote></li>
+        <li><strong>CTAs (Botões):</strong> [Solicitar Orçamento] e [Falar no WhatsApp].</li>
+        <li><strong>Quem Somos (Resumo):</strong> Apresentação institucional focada em transparência e soluções B2B.</li>
+        <li><strong>Grid de Serviços:</strong> Cards minimalistas (Carga Seca, Refrigerada, Congelada, Químicos, Dedicados).</li>
+        <li><strong>Segmentos Atendidos:</strong> Carrossel/Grid de indústrias atendidas ligando para as páginas dedicadas.</li>
+        <li><strong>Faixa de Validação / Clientes:</strong> Exibição de logos corporativos autorizados.</li>
+    </ul>
+
+    <h3>EMPRESA</h3>
+    <p>Conteúdo focado em governança, governabilidade e pilares operacionais (Missão, Visão, Valores, Práticas de Segurança e Sustentabilidade).</p>
+
+    <h3>FROTA & CAPACIDADE OPERACIONAL</h3>
+    <p>Apresentação técnica dos veículos (VUC, 3/4, Toco, Truck, Carretas Baú, Sider e Refrigerados), destacando a manutenção preventiva, gerenciamento de risco (GR) e suporte de parceiros homologados.</p>
+
+    <h3>ORÇAMENTO & COTAÇÃO RÁPIDA</h3>
+    <p>Formulário inteligente estruturado para o departamento comercial receber informações prontas:</p>
+    <ul>
+        <li>Razão Social / Empresa & Nome do Responsável</li>
+        <li>E-mail e WhatsApp Corporativo</li>
+        <li>Cidade de Origem x Cidade de Destino</li>
+        <li>Tipo de Carga (Seca, Refrigerada, Química/Perigosa, etc.)</li>
+        <li>Peso Estimado (KG/Toneladas) e Volume</li>
+    </ul>
+
+    <div class="note-box">
+        <h4>Parecer Técnico do Assessor: Estratégia de SEO B2B</h4>
+        <p>A criação da seção dedicada de <strong>Segmentos Atendidos</strong> (com subpáginas direcionadas para o setor Químico, Alimentício, Autopeças e Indústria) é decisiva para o posicionamento orgânico no Google. Isso atrai gestores de <i>Supply Chain</i> e compradores que buscam exatamente por soluções especializadas, passando máxima autoridade operacional.</p>
+    </div>
+
+    <footer>
+        <p>Ação Transportes | CNPJ: 00.628.191/0001-30 | Documento Técnico Interno</p>
+    </footer>
+</div>
+
+</body>
+</html>
