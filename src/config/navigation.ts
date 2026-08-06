@@ -14,7 +14,7 @@ export const NAV_HOME: ItemNavegacao[] = [
   { label: 'Contato', href: '/#contato' },
 ]
 
-/** Submenu "Soluções" ajustado ao conteúdo real das páginas */
+/** Submenu "Soluções" — nomenclatura oficial definitiva */
 export const NAV_SOLUCOES: ItemNavegacao[] = [
   {
     label: 'Benefícios Corporativos',
@@ -22,18 +22,19 @@ export const NAV_SOLUCOES: ItemNavegacao[] = [
     descricao: 'Planos de Saúde e Odontológicos PME/Corp.',
   },
   {
-    label: 'Seguros Corporativos e Pessoais',
-    href: '/seguros-corporativos-pessoais',
-    descricao: 'Proteção para pessoas, patrimônios e empresas.',
+    label: 'Seguros Corporativos',
+    href: '/seguros-corporativos',
+    descricao: 'Portfólio consultivo para diferentes segmentos empresariais.',
   },
   {
-    label: 'Centro de Conhecimento',
-    href: '/centro-de-conhecimento',
-    descricao: 'Artigos, análises regulatórias e guias práticos.',
+    label: 'Seguros Pessoais',
+    href: '/seguros-pessoais',
+    descricao: 'Proteção para você, sua família e seu patrimônio.',
   },
 ]
 
 /** Itens institucionais */
 export const NAV_INSTITUCIONAL: ItemNavegacao[] = [
-  { label: 'Sobre a LifitSeg', href: '/sobre' },
+  { label: 'Sobre a LifitSeg', href: '/sobre-e-conhecimento#sobre' },
+  { label: 'Centro de Conhecimento', href: '/sobre-e-conhecimento#conhecimento' },
 ]
