@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 :root {
+  /* Paleta institucional LifitSeg */
+  --color-lifitseg-dark: #05191b;   /* verde escuro — fundo de marca */
+  --color-lifitseg-dark-deep: #030f10; /* verde mais escuro ainda — camada de fundo profunda */
+  --color-lifitseg-surface: #0e2426;  /* superfície de card, um tom mais claro que o fundo */
+  --color-lifitseg-primary: #e0a63d; /* âmbar/dourado — destaque, CTAs */
+  --color-lifitseg-offwhite: #f7f4ef; /* off-white — texto sobre fundo escuro */
+
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -8,6 +15,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Disponibiliza a paleta como utilitários Tailwind:
+     bg-primary, text-primary, bg-lifitseg-dark, text-lifitseg-offwhite, etc. */
+  --color-primary: var(--color-lifitseg-primary);
+  --color-lifitseg-dark: var(--color-lifitseg-dark);
+  --color-lifitseg-dark-deep: var(--color-lifitseg-dark-deep);
+  --color-lifitseg-surface: var(--color-lifitseg-surface);
+  --color-lifitseg-primary: var(--color-lifitseg-primary);
+  --color-lifitseg-offwhite: var(--color-lifitseg-offwhite);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -22,5 +39,27 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Tipografia base — hierarquia consistente entre todas as páginas */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+h3 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+p {
+  line-height: 1.6;
 }

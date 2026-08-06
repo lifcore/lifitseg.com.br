@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { LeadModal } from '@/components/forms/LeadModal';
 import { 
   ShieldCheck, 
@@ -171,7 +171,7 @@ export default function SobreCentroConhecimentoPage() {
                   <strong className="text-[#05191b]">Propósito:</strong> Descomplicar a gestão de riscos e benefícios, garantindo estabilidade financeira para empresas e máxima segurança para os colaboradores.
                 </p>
                 <p>
-                  <strong className="text-[#05191b]">Forma de atuação:</strong> Trabalhamos lado a lado com os gestores, utilizando tecnologia proprietária (LifCore) e inteligência analítica para tomada de decisões seguras.
+                  <strong className="text-[#05191b]">Forma de atuação:</strong> Trabalhamos lado a lado com os gestores, utilizando tecnologia proprietária e inteligência analítica para tomada de decisões seguras.
                 </p>
                 <p>
                   <strong className="text-[#05191b]">Filosofia consultiva:</strong> Não vendemos produtos de prateleira; encaixamos exatamente a solução necessária para a realidade exata da organização.
@@ -346,7 +346,7 @@ export default function SobreCentroConhecimentoPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Informações e Mapa (Coluna Esquerda) */}
+            {/* Informações e Localização (Coluna Esquerda) */}
             <div className="lg:col-span-5 space-y-8">
               <div className="bg-[#F7F4EF] p-8 rounded-3xl border border-[#05191b]/10 space-y-6">
                 <h3 className="text-xl font-bold text-[#05191b] mb-4">Informações de Atendimento</h3>
@@ -356,8 +356,8 @@ export default function SobreCentroConhecimentoPage() {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-[#05191b]/50 font-bold uppercase">Telefone</div>
-                    <div className="text-sm font-bold text-[#05191b]">+55 (11) 99999-9999</div>
+                    <div className="text-xs text-[#05191b]/50 font-bold uppercase">WhatsApp / Telefone</div>
+                    <div className="text-sm font-bold text-[#05191b]">+55 (11) 94054-3808</div>
                   </div>
                 </div>
 
@@ -367,7 +367,7 @@ export default function SobreCentroConhecimentoPage() {
                   </div>
                   <div>
                     <div className="text-xs text-[#05191b]/50 font-bold uppercase">E-mail</div>
-                    <div className="text-sm font-bold text-[#05191b]">contato@lifitseg.com.br</div>
+                    <div className="text-sm font-bold text-[#05191b]">atendimento@lifitseg.com.br</div>
                   </div>
                 </div>
 
@@ -377,7 +377,7 @@ export default function SobreCentroConhecimentoPage() {
                   </div>
                   <div>
                     <div className="text-xs text-[#05191b]/50 font-bold uppercase">Endereço</div>
-                    <div className="text-sm font-bold text-[#05191b]">Av. Paulista, 1000 - Conj. 101<br />São Paulo - SP</div>
+                    <div className="text-sm font-bold text-[#05191b]">Jundiaí - SP</div>
                   </div>
                 </div>
 
@@ -401,7 +401,7 @@ export default function SobreCentroConhecimentoPage() {
                 />
                 <div className="absolute inset-0 bg-[#05191b]/20 flex items-center justify-center">
                   <span className="bg-[#05191b] text-[#E0A63D] px-4 py-2 rounded-xl text-xs font-bold shadow-lg border border-[#E0A63D]/30">
-                    Ver no Google Maps
+                    Jundiaí - SP
                   </span>
                 </div>
               </div>
@@ -439,7 +439,7 @@ export default function SobreCentroConhecimentoPage() {
                     <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-[#E0A63D]">Telefone / WhatsApp</label>
                     <input 
                       type="text" 
-                      placeholder="(11) 99999-9999" 
+                      placeholder="(11) 94054-3808" 
                       required 
                       className="w-full bg-[#0b3337] border border-[#E0A63D]/30 rounded-xl px-4 py-3.5 text-sm text-[#F7F4EF] focus:outline-none focus:border-[#E0A63D]"
                     />
@@ -549,44 +549,6 @@ export default function SobreCentroConhecimentoPage() {
           </div>
         </div>
       </section>
-
-      {/* RODAPÉ INSTITUCIONAL */}
-      <footer className="bg-[#031012] text-[#F7F4EF]/60 py-16 border-t border-[#E0A63D]/20 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          <div className="space-y-4">
-            <div className="text-lg font-black text-[#F7F4EF] tracking-wider">LIFITSEG</div>
-            <p className="leading-relaxed text-[#F7F4EF]/50">
-              Consultoria estruturada em benefícios corporativos e seguros com foco em governança, dados e relacionamento de longo prazo.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-[#E0A63D] font-bold uppercase tracking-wider mb-4 text-[11px]">Navegação</h4>
-            <ul className="space-y-2.5">
-              <li><Link href="/sobre" className="hover:text-[#E0A63D] transition-colors">Sobre a LifitSeg</Link></li>
-              <li><Link href="/centro-de-conhecimento" className="hover:text-[#E0A63D] transition-colors">Centro de Conhecimento</Link></li>
-              <li><Link href="/trabalhe-conosco" className="hover:text-[#E0A63D] transition-colors">Trabalhe Conosco</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-[#E0A63D] font-bold uppercase tracking-wider mb-4 text-[11px]">Legal & Governança</h4>
-            <ul className="space-y-2.5">
-              <li><Link href="/politica-de-privacidade" className="hover:text-[#E0A63D] transition-colors">Política de Privacidade</Link></li>
-              <li><Link href="/lgpd" className="hover:text-[#E0A63D] transition-colors">LGPD</Link></li>
-              <li><Link href="/termos-de-uso" className="hover:text-[#E0A63D] transition-colors">Termos de Uso</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-[#E0A63D] font-bold uppercase tracking-wider mb-4 text-[11px]">Registro & CNPJ</h4>
-            <div className="space-y-2 text-[#F7F4EF]/50">
-              <p>CNPJ: 00.000.000/0001-00</p>
-              <p>Registro SUSEP: 000000000</p>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-[#F7F4EF]/10 text-center text-[#F7F4EF]/40">
-          © {new Date().getFullYear()} LifitSeg. Todos os direitos reservados.
-        </div>
-      </footer>
 
       <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} origem="sobre-e-centro-de-conhecimento" />
     </>
