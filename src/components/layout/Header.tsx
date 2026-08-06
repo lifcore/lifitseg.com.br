@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 import { LeadModal } from '@/components/forms/LeadModal'
@@ -16,8 +17,15 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/40 bg-gradient-to-tr from-lifitseg-dark via-lifitseg-surface to-primary text-xl font-bold text-lifitseg-offwhite shadow-lg transition-transform group-hover:scale-105">
-              L
+            <div className="relative flex h-[56px] w-[56px] items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt={siteConfig.nome}
+                width={56}
+                height={56}
+                className="h-full w-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-xl leading-none font-black tracking-tight text-lifitseg-offwhite">

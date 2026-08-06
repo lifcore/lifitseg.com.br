@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 
@@ -11,8 +12,14 @@ export function Footer() {
         <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-4">
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-lifitseg-dark">
-                L
+              <div className="relative flex h-[62px] w-[62px] items-center justify-center overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt={siteConfig.nome}
+                  width={62}
+                  height={62}
+                  className="h-[62px] w-[62px] object-contain"
+                />
               </div>
               <span className="text-lg font-black tracking-wider text-lifitseg-offwhite">
                 {siteConfig.nome.toUpperCase()}
