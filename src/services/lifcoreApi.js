@@ -3,23 +3,8 @@
 import { LifCoreConfig } from '../config/lifcore.config.js'
 
 /**
- * @typedef {Object} LifCoreLeadPayload
- * @property {string} origem - Página ou canal de origem (ex: 'home-hero', 'beneficios-pme')
- * @property {string} workspace - Workspace de destino no CRM ('lifitseg-comercial')
- * @property {string} produto - Produto de interesse ('Saúde Empresarial', 'Auto & Frota', etc.)
- * @property {string} empresa - Nome da empresa contratante
- * @property {string} nome - Nome do contato responsável
- * @property {string} telefone - Telefone / WhatsApp com DDD
- * @property {string} email - E-mail corporativo
- * @property {string} cidade - Cidade / UF
- * @property {number} [numeroColaboradores] - Quantidade de vidas/colaboradores (opcional)
- * @property {string} [observacoes] - Notas ou dores descritas pelo lead
- * @property {Object} [utm] - Parâmetros de rastreamento de campanhas
- */
-
-/**
- * Simula a resposta da API em ambiente de desenvolvimento — não depende
- * do backend real do LifCore existir ainda.
+ * Simula a resposta da API em ambiente de desenvolvimento — não
+ * depende do backend real existir.
  */
 const mockAdapter = async (endpoint, data) => {
   return new Promise((resolve, reject) => {
@@ -30,27 +15,14 @@ const mockAdapter = async (endpoint, data) => {
       } else {
         resolve({
           success: true,
-          message: 'Lead capturado com sucesso (Mock)',
-          // bug corrigido: 36 é number, não tem .substring — precisa
-          // encadear .toString(36) primeiro, depois .substring()
-          leadId: 'lead_mock_' + Math.random().toString(36).substring(2, 9),
+          message: 'Capturado com sucesso (Mock)',
+          leadId: 'mock_' + Math.random().toString(36).substring(2, 9),
         })
       }
     }, 1000)
   })
 }
 
-/**
- * Envia dados reais para o ecossistema LifCore.
- *
- * IMPORTANTE (registrado, não escondido): este endpoint ainda não
- * existe no LifCore hoje — o LifCore não tem servidor de API próprio,
- * é um app que fala direto com o Supabase. Antes de sair do modo Mock,
- * alguém precisa publicar uma Supabase Edge Function (mesmo padrão já
- * usado pela `especialista-ia`) que receba este payload e crie o
- * registro real em `clientes_prospects`. Sem isso, `useMock: false`
- * vai falhar com erro de rede, não com erro de validação.
- */
 const realAdapter = async (endpoint, data) => {
   const url = `${LifCoreConfig.baseUrl}${endpoint}`
 
@@ -71,26 +43,57 @@ const realAdapter = async (endpoint, data) => {
   return await response.json()
 }
 
-/**
- * Serviço central de comunicação com o ecossistema LifCore.
- */
-export const lifcoreApi = {
-  async submitLead(payload) {
-    const endpoint = '/api/leads'
+/** Chama uma Supabase Edge Function pelo nome (ex: 'receber-lead-site'). */
+async function postToFunction(functionName, payload) {
+  const endpoint = `/${functionName}`
+  try {
+    if (LifCoreConfig.useMock) {
+      return await mockAdapter(endpoint, payload)
+    }
+    return await realAdapter(endpoint, payload)
+  } catch (error) {
+    console.error('[LifCore API Error]:', error)
+    throw error
+  }
+}
 
-    // Validação estrutural mínima
+export const lifcoreApi = {
+  /**
+   * Usado pelo LeadModal (via useLifCoreLead). Bate na function
+   * `receber-lead-site`, já publicada e testada no Supabase — cria
+   * cliente/prospect + contato primário de verdade.
+   */
+  async submitLead(payload) {
     if (!payload.nome || !payload.email || !payload.telefone) {
       throw new Error('Campos obrigatórios ausentes: Nome, E-mail e Telefone são fundamentais.')
     }
+    return postToFunction('receber-lead-site', payload)
+  },
 
-    try {
-      if (LifCoreConfig.useMock) {
-        return await mockAdapter(endpoint, payload)
-      }
-      return await realAdapter(endpoint, payload)
-    } catch (error) {
-      console.error('[LifCore API Error]:', error)
-      throw error
+  /**
+   * Usado pelo ContatoForm (WEB-005, "Fale com a LifitSeg").
+   * ⚠️ AINDA NÃO EXISTE a function `receber-fale-conosco` no
+   * Supabase — vai retornar 404 até alguém criá-la (mesmo padrão de
+   * segurança/estrutura de `receber-lead-site`, adaptado pros campos
+   * do ContatoForm: assunto, mensagem, sem numeroColaboradores).
+   */
+  async submitContato(payload) {
+    if (!payload.nome || !payload.email) {
+      throw new Error('Campos obrigatórios ausentes: Nome e E-mail são fundamentais.')
     }
+    return postToFunction('receber-fale-conosco', payload)
+  },
+
+  /**
+   * Usado pelo TrabalheConoscoCTA (WEB-005).
+   * ⚠️ AINDA NÃO EXISTE a function `receber-trabalhe-conosco` no
+   * Supabase — vai retornar 404 até ser criada. Destino: tabela
+   * `candidatos_recrutamento` (ver observação sobre People Center).
+   */
+  async submitCandidatura(payload) {
+    if (!payload.nome || !payload.email) {
+      throw new Error('Campos obrigatórios ausentes: Nome e E-mail são fundamentais.')
+    }
+    return postToFunction('receber-trabalhe-conosco', payload)
   },
 }
