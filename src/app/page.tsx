@@ -15,6 +15,7 @@ const OPERATORS = [
   { name: 'Omint', file: 'omint' },
   { name: 'Care Plus', file: 'careplus' },
   { name: 'Unimed', file: 'unimed' },
+  { name: 'Seguros Unimed', file: 'seguros_unimed' },
   { name: 'Tokio Marine', file: 'tokio' },
   { name: 'Liberty Seguros', file: 'liberty' },
   { name: 'Mapfre', file: 'mapfre' },
@@ -26,9 +27,9 @@ const OPERATORS = [
   { name: 'Suhai', file: 'suhai' },
   { name: 'Alice', file: 'alice' },
   { name: 'Sami', file: 'sami' },
-  { name: 'New Leader Saúde', file: 'new_leader_saude' },
-  { name: 'Plena Saúde', file: 'plena_saude' },
-  { name: 'Única Saúde', file: 'unica_saude' },
+  { name: 'New Leader Saúde', file: 'new' },
+  { name: 'Plena Saúde', file: 'plena' },
+  { name: 'Única Saúde', file: 'unica' },
   { name: 'Zurich', file: 'zurich' },
 ]
 
