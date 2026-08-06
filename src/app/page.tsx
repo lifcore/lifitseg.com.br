@@ -568,7 +568,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* INSIGHTS — off-white */}
+      {/* INSIGHTS — off-white (Com cliques funcionais abrindo o modal com o tema) */}
       <section id="insights" className="bg-lifitseg-offwhite py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 flex flex-col justify-between md:flex-row md:items-end">
@@ -590,14 +590,15 @@ export default function HomePage() {
             {INSIGHTS.map((post, idx) => (
               <article
                 key={idx}
-                className="flex flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition-all hover:shadow-md"
+                onClick={() => abrirModal(post.title)}
+                className="group flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
               >
                 <div>
                   <div className="h-40 w-full overflow-hidden">
                     <img
                       src={post.image}
                       alt={post.title}
-                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -605,7 +606,7 @@ export default function HomePage() {
                       <span className="font-semibold text-primary">{post.category}</span>
                       <span>{post.readTime}</span>
                     </div>
-                    <h3 className="mb-3 cursor-pointer text-lg font-bold text-lifitseg-dark transition-colors hover:text-primary">
+                    <h3 className="mb-3 text-lg font-bold text-lifitseg-dark transition-colors group-hover:text-primary">
                       {post.title}
                     </h3>
                     <p className="mb-6 text-xs leading-relaxed text-lifitseg-dark/60">
@@ -615,8 +616,8 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center justify-between border-t border-black/10 px-6 pb-6 pt-4 text-xs text-lifitseg-dark/50">
                   <span>{post.date}</span>
-                  <span className="cursor-pointer font-medium text-primary hover:underline">
-                    Ler artigo →
+                  <span className="font-medium text-primary group-hover:underline">
+                    Falar sobre o tema →
                   </span>
                 </div>
               </article>
