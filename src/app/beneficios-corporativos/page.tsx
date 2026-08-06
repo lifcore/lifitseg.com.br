@@ -398,6 +398,14 @@ export default function SolucoesBeneficiosPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         origem="beneficios-corporativos"
+        produtos={[
+          'Plano de Saúde Empresarial',
+          'Seguro Saúde',
+          'Seguro Odontológico',
+          'Seguro de Vida em Grupo',
+          'Gestão de Sinistralidade',
+          'Programas de Bem-Estar',
+        ]}
       />
     </>
   );

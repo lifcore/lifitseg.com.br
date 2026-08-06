@@ -376,6 +376,14 @@ export default function SegurosCorporativosPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         origem="seguros-corporativos"
+        produtos={[
+          'Transporte & Logística',
+          'Patrimônio Empresarial',
+          'Responsabilidade Civil',
+          'Garantias Financeiras',
+          'Riscos Corporativos',
+          'Gestão de Frotas',
+        ]}
       />
     </>
   )

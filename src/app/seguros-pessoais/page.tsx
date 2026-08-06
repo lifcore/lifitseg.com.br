@@ -358,6 +358,14 @@ export default function SegurosPessoaisPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         origem="seguros-pessoais"
+        mostrarDadosEmpresa={false}
+        produtos={[
+          'Seguro Auto',
+          'Seguro Residencial',
+          'Seguro de Vida',
+          'Seguro Viagem',
+          'Equipamentos e Tecnologia',
+        ]}
       />
     </>
   )

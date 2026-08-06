@@ -8,9 +8,14 @@ type LeadModalProps = {
   onClose: () => void
   defaultProduto?: string
   origem?: string
+  /** Lista de produtos exibida no seletor "Interesse Principal". Cada página passa a sua — se omitido, cai no fallback genérico abaixo (usado hoje pela Home/Header). */
+  produtos?: string[]
+  /** Controla os campos "Nome da Empresa" e "Nº de Colaboradores/Vidas" — fazem sentido para páginas B2B (Benefícios, Seguros Corporativos), não para Seguros Pessoais. Default: true, para não quebrar páginas que ainda não passam essa prop. */
+  mostrarDadosEmpresa?: boolean
 }
 
-const PRODUTOS = [
+/** Fallback genérico — usado só quando a página não informa sua própria lista de produtos. */
+const PRODUTOS_FALLBACK = [
   'Plano de Saúde Empresarial',
   'Seguro de Vida em Grupo',
   'Riscos Patrimoniais & Empresariais',
@@ -35,8 +40,15 @@ const ESTADO_INICIAL = (produto: string, origem: string) => ({
  * contrato de dados e pelos mesmos 4 estados (IDLE/SENDING/SUCCESS/ERROR),
  * não importa de qual página do site ele venha.
  */
-export function LeadModal({ isOpen, onClose, defaultProduto, origem = 'site' }: LeadModalProps) {
-  const produtoInicial = defaultProduto ?? PRODUTOS[0]
+export function LeadModal({
+  isOpen,
+  onClose,
+  defaultProduto,
+  origem = 'site',
+  produtos = PRODUTOS_FALLBACK,
+  mostrarDadosEmpresa = true,
+}: LeadModalProps) {
+  const produtoInicial = defaultProduto ?? produtos[0]
   const { status, errorMessage, submit, reset } = useLifCoreLead()
   const [form, setForm] = useState(ESTADO_INICIAL(produtoInicial, origem))
 
@@ -105,7 +117,7 @@ export function LeadModal({ isOpen, onClose, defaultProduto, origem = 'site' }: 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                    E-mail Corporativo *
+                    {mostrarDadosEmpresa ? 'E-mail Corporativo *' : 'E-mail *'}
                   </label>
                   <input
                     type="email"
@@ -133,34 +145,36 @@ export function LeadModal({ isOpen, onClose, defaultProduto, origem = 'site' }: 
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                    Nome da Empresa
-                  </label>
-                  <input
-                    type="text"
-                    name="empresa"
-                    value={form.empresa}
-                    onChange={handleChange}
-                    placeholder="Sua Empresa S/A"
-                    className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                  />
+              {mostrarDadosEmpresa && (
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                      Nome da Empresa
+                    </label>
+                    <input
+                      type="text"
+                      name="empresa"
+                      value={form.empresa}
+                      onChange={handleChange}
+                      placeholder="Sua Empresa S/A"
+                      className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                      Nº de Colaboradores / Vidas
+                    </label>
+                    <input
+                      type="text"
+                      name="numeroColaboradores"
+                      value={form.numeroColaboradores ?? ''}
+                      onChange={handleChange}
+                      placeholder="Ex: 15, 50, 200+"
+                      className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                    Nº de Colaboradores / Vidas
-                  </label>
-                  <input
-                    type="text"
-                    name="numeroColaboradores"
-                    value={form.numeroColaboradores ?? ''}
-                    onChange={handleChange}
-                    placeholder="Ex: 15, 50, 200+"
-                    className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                  />
-                </div>
-              </div>
+              )}
 
               <div>
                 <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
@@ -172,7 +186,7 @@ export function LeadModal({ isOpen, onClose, defaultProduto, origem = 'site' }: 
                   onChange={handleChange}
                   className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
                 >
-                  {PRODUTOS.map((p) => (
+                  {produtos.map((p) => (
                     <option key={p} value={p}>
                       {p}
                     </option>
