@@ -45,5 +45,5 @@ export const NAV_SOLUCOES: ItemNavegacao[] = [
 /** Itens institucionais (Sobre, Centro de Conhecimento) */
 export const NAV_INSTITUCIONAL: ItemNavegacao[] = [
   { label: 'Sobre a LifitSeg', href: '/sobre' },
-  { label: 'Centro de Conhecimento', href: '/centro-conhecimento' },
+  { label: 'Centro de Conhecimento', href: '/centro-de-conhecimento' },
 ]
