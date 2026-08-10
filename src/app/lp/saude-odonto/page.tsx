@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, HeartPulse, Users, Stethoscope, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, HeartPulse, Users, Stethoscope, ArrowRight, CheckCircle2, TrendingDown, CalendarClock, MessageCircleWarning, UserX } from 'lucide-react';
 import { captureAndPersistUtms } from '@/utils/tracking';
 import { LeadModal } from '@/components/forms/LeadModal'; // Reutilização obrigatória — named export, caminho real do componente
 
@@ -37,9 +37,6 @@ export default function LandingPageSaudeOdonto() {
           <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-lifitseg-dark">
             <span className="text-primary">Lifit</span>Seg
           </Link>
-          <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-dark/60 bg-black/5 px-3 py-1.5 rounded-full">
-            Canal Consultivo Dedicado
-          </div>
         </div>
       </header>
 
@@ -48,20 +45,20 @@ export default function LandingPageSaudeOdonto() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wide">
-              <ShieldCheck className="w-4 h-4" /> Saúde Corporativa & Individual
+              <TrendingDown className="w-4 h-4" /> Revisão sem compromisso
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-lifitseg-dark leading-[1.1]">
-              Seu plano de saúde precisa fazer sentido para quem utiliza e para quem administra.
+              Pagando cada vez mais caro e recebendo cada vez menos suporte do seu plano de saúde?
             </h1>
             <p className="text-lg text-lifitseg-dark/70 leading-relaxed max-w-2xl">
-              Entendemos o cenário, analisamos as necessidades e apresentamos alternativas estruturadas de acordo com o perfil de cada cliente ou operação corporativa.
+              Reajuste alto, demora pra marcar consulta ou exame, e ninguém do outro lado da linha pra resolver de verdade. Analisamos seu plano atual e mostramos, sem custo, se existe uma alternativa que resolve isso.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 onClick={() => handleOpenModal('Plano de Saúde Empresarial')}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-lifitseg-dark text-white font-semibold shadow-lg hover:bg-lifitseg-dark/90 transition-all cursor-pointer group"
               >
-                Solicitar Análise Consultiva
+                Quero Revisar Meu Plano
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -79,28 +76,31 @@ export default function LandingPageSaudeOdonto() {
         </div>
       </section>
 
-      {/* PARA QUEM É */}
+      {/* DORES REAIS */}
       <section className="py-16 bg-white border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">Para quem desenhamos nossas soluções</h2>
-            <p className="text-lifitseg-dark/60 mt-2">Abordagem flexível para apoiar gestores de RH ou proteger o núcleo familiar.</p>
+            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">Reconhece algum destes problemas?</h2>
+            <p className="text-lifitseg-dark/60 mt-2">São os motivos mais comuns pelos quais famílias e empresas nos procuram.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'Empresas & PME', desc: 'Estruturação e revisão de benefícios corporativos competitivos.' },
-              { title: 'Gestores de RH', desc: 'Apoio estratégico na gestão de sinistralidade e retenção.' },
-              { title: 'Famílias', desc: 'Proteção individual robusta e alinhada ao orçamento familiar.' },
-              { title: 'Profissionais', desc: 'Planos coletivos por adesão e alternativas customizadas.' },
-            ].map((item, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#F4F6F4] border border-black/5 space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
-                  {idx + 1}
+              { icon: TrendingDown, title: 'Reajustes Altos', desc: 'O valor sobe todo ano e ninguém explica exatamente por quê — nem se dá pra pagar menos em outro lugar.' },
+              { icon: CalendarClock, title: 'Demora no Atendimento', desc: 'Marcar consulta ou exame virou uma via-crúcis, e o problema de saúde não espera.' },
+              { icon: MessageCircleWarning, title: 'Falta de Informação', desc: 'Perguntas simples sobre cobertura e carência sem resposta clara de ninguém.' },
+              { icon: UserX, title: 'Sem Suporte de Verdade', desc: 'Corretor que só aparece na hora da venda e some quando você precisa de ajuda de verdade.' },
+            ].map((item, idx) => {
+              const Icon = item.icon
+              return (
+                <div key={idx} className="p-6 rounded-2xl bg-[#F4F6F4] border border-black/5 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-lg">{item.title}</h3>
+                  <p className="text-sm text-lifitseg-dark/70 leading-relaxed">{item.desc}</p>
                 </div>
-                <h3 className="font-bold text-lg">{item.title}</h3>
-                <p className="text-sm text-lifitseg-dark/70 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -109,9 +109,9 @@ export default function LandingPageSaudeOdonto() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight">Uma consultoria que vai além da simples cotação</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Como resolvemos cada um desses problemas</h2>
             <p className="text-lifitseg-dark/70 leading-relaxed">
-              Não acreditamos em catálogos engessados ou venda empurrada. Nosso papel é auditar o cenário atual, mapear carências, negociar com operadoras qualificadas e desenhar a melhor proporção entre custo e qualidade assistencial.
+              Não acreditamos em catálogos engessados ou venda empurrada. Auditamos o plano atual, mapeamos onde o reajuste e a rede estão pesando no seu bolso, e negociamos com operadoras qualificadas uma alternativa real — com alguém que continua respondendo depois que você contrata.
             </p>
             <ul className="space-y-3">
               {['Análise técnica de rede credenciada', 'Estudo de coparticipação inteligente', 'Suporte contínuo na gestão de vidas'].map((el, i) => (

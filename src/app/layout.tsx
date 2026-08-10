@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { FloatingActionButtons } from '@/components/layout/FloatingActionButtons'
 import { siteConfig } from '@/config/site'
 import './globals.css'
 
@@ -42,18 +39,19 @@ export const metadata: Metadata = {
   },
 }
 
+// CORREÇÃO (Header duplicado nas Landing Pages): Header/Footer/
+// FloatingActionButtons saíram do layout raiz e foram pro layout do
+// grupo (site) — assim só as páginas institucionais herdam, e /lp/*
+// fica livre pra ter (ou não) sua própria topbar mínima, sem duplicar
+// nada. Layout raiz só cuida do que é global de verdade (html, fontes,
+// metadata) — nunca de UI específica de um conjunto de páginas.
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <FloatingActionButtons />
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   )
 }
