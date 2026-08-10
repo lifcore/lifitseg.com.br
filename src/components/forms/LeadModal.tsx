@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useLifCoreLead } from '@/hooks/useLifCoreLead'
+import { getStoredUtms } from '@/utils/tracking'
 
 type LeadModalProps = {
   isOpen: boolean
@@ -95,7 +96,15 @@ export function LeadModal({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    await submit(form)
+    // UTM Transversal — resgata o que foi capturado na entrada da
+    // sessão (qualquer página), mesmo que o usuário tenha navegado
+    // várias páginas antes de chegar neste formulário. Vem null se a
+    // sessão não teve UTM nenhuma — nunca inventado aqui.
+    //
+    // `receber-lead-site` espera um único campo `utm` (objeto) — por
+    // isso agrupa aqui, não espalha os campos soltos no payload.
+    const utms = getStoredUtms()
+    await submit({ ...form, utm: utms })
   }
 
   const conteudo = (
