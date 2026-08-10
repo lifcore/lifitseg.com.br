@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLifCoreLead } from '@/hooks/useLifCoreLead'
 
 type LeadModalProps = {
@@ -10,7 +11,12 @@ type LeadModalProps = {
   origem?: string
   /** Lista de produtos exibida no seletor "Interesse Principal". Cada página passa a sua — se omitido, cai no fallback genérico abaixo (usado hoje pela Home/Header). */
   produtos?: string[]
-  /** Controla os campos "Nome da Empresa" e "Nº de Colaboradores/Vidas" — fazem sentido para páginas B2B (Benefícios, Seguros Corporativos), não para Seguros Pessoais. Default: true, para não quebrar páginas que ainda não passam essa prop. */
+  /**
+   * @deprecated O campo que essa prop controlava ("Nº de Colaboradores/Vidas")
+   * foi removido do formulário — não fazia sentido fora de plano
+   * coletivo de Saúde/Odonto. Prop mantida só pra não quebrar build
+   * de páginas que ainda não foram revisadas; não tem mais efeito.
+   */
   mostrarDadosEmpresa?: boolean
 }
 
@@ -27,7 +33,7 @@ const ESTADO_INICIAL = (produto: string, origem: string) => ({
   email: '',
   telefone: '',
   empresa: '',
-  cidade: '',
+  documento: '', // CPF ou CNPJ — opcional, sem distinção de formato forçada aqui
   numeroColaboradores: undefined as number | undefined,
   produto,
   origem,
@@ -35,10 +41,26 @@ const ESTADO_INICIAL = (produto: string, origem: string) => ({
 
 /**
  * Modal de captura de lead — reutilizável em qualquer página do site
- * (Home, Benefícios Corporativos, etc.). Usa o hook oficial
+ * (Home, Header, Benefícios Corporativos, etc.). Usa o hook oficial
  * `useLifCoreLead` (WEB-001), então todo lead passa pelo mesmo
  * contrato de dados e pelos mesmos 4 estados (IDLE/SENDING/SUCCESS/ERROR),
  * não importa de qual página do site ele venha.
+ *
+ * CORREÇÃO (ajuste "Fale com Consultor" travado): renderiza via
+ * Portal direto no <body>. Antes, quando chamado de dentro do
+ * <Header>, o `backdrop-blur` do header criava um novo container de
+ * posicionamento — qualquer `position: fixed` dentro dele passava a
+ * ser relativo ao header (80px de altura), não à tela inteira. Por
+ * isso o modal aparecia cortado e impossível de usar. Portal resolve
+ * isso na raiz, pra qualquer página que chamar o modal no futuro,
+ * não só o Header.
+ *
+ * SIMPLIFICAÇÃO (campos do formulário): removido "Nº de
+ * Colaboradores/Vidas" — é conceito específico de plano coletivo de
+ * Saúde/Odonto, não fazia sentido aparecer pra "Gestão de Frotas &
+ * Automóvel" nem pra nenhum outro produto. E-mail deixou de exigir
+ * "corporativo" — nem todo lead tem e-mail de empresa. Campo de
+ * CPF/CNPJ adicionado como opcional.
  */
 export function LeadModal({
   isOpen,
@@ -46,13 +68,19 @@ export function LeadModal({
   defaultProduto,
   origem = 'site',
   produtos = PRODUTOS_FALLBACK,
-  mostrarDadosEmpresa = true,
 }: LeadModalProps) {
   const produtoInicial = defaultProduto ?? produtos[0]
   const { status, errorMessage, submit, reset } = useLifCoreLead()
   const [form, setForm] = useState(ESTADO_INICIAL(produtoInicial, origem))
+  const [montado, setMontado] = useState(false)
 
-  if (!isOpen) return null
+  // Portal só pode apontar pro document.body depois que o componente
+  // montou no cliente — no SSR do Next.js, `document` não existe.
+  useEffect(() => {
+    setMontado(true)
+  }, [])
+
+  if (!isOpen || !montado) return null
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target
@@ -70,7 +98,7 @@ export function LeadModal({
     await submit(form)
   }
 
-  return (
+  const conteudo = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-lifitseg-dark-deep/80 p-4 backdrop-blur-sm">
       <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-lifitseg-dark p-6 shadow-2xl sm:p-8">
         <button
@@ -117,7 +145,7 @@ export function LeadModal({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                    {mostrarDadosEmpresa ? 'E-mail Corporativo *' : 'E-mail *'}
+                    E-mail *
                   </label>
                   <input
                     type="email"
@@ -125,7 +153,7 @@ export function LeadModal({
                     required
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="carlos@empresa.com.br"
+                    placeholder="carlos@email.com.br"
                     className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
                   />
                 </div>
@@ -145,36 +173,48 @@ export function LeadModal({
                 </div>
               </div>
 
-              {mostrarDadosEmpresa && (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                      Nome da Empresa
-                    </label>
-                    <input
-                      type="text"
-                      name="empresa"
-                      value={form.empresa}
-                      onChange={handleChange}
-                      placeholder="Sua Empresa S/A"
-                      className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                      Nº de Colaboradores / Vidas
-                    </label>
-                    <input
-                      type="text"
-                      name="numeroColaboradores"
-                      value={form.numeroColaboradores ?? ''}
-                      onChange={handleChange}
-                      placeholder="Ex: 15, 50, 200+"
-                      className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                    />
-                  </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                    Nome da Empresa
+                  </label>
+                  <input
+                    type="text"
+                    name="empresa"
+                    value={form.empresa}
+                    onChange={handleChange}
+                    placeholder="Sua Empresa S/A (se aplicável)"
+                    className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                  />
                 </div>
-              )}
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                    CPF ou CNPJ (opcional)
+                  </label>
+                  <input
+                    type="text"
+                    name="documento"
+                    value={form.documento}
+                    onChange={handleChange}
+                    placeholder="000.000.000-00"
+                    className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                  Número de Colaboradores (opcional)
+                </label>
+                <input
+                  type="number"
+                  name="numeroColaboradores"
+                  value={form.numeroColaboradores ?? ''}
+                  onChange={handleChange}
+                  placeholder="Ex: 15"
+                  className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                />
+              </div>
 
               <div>
                 <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
@@ -211,4 +251,6 @@ export function LeadModal({
       </div>
     </div>
   )
+
+  return createPortal(conteudo, document.body)
 }
