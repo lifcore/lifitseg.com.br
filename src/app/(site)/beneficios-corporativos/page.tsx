@@ -110,7 +110,7 @@ export default function SolucoesBeneficiosPage() {
       {/* 1. HERO */}
       <section className="relative bg-[#00393f] overflow-hidden border-b border-[#e2a535]/20">
         <div className="grid grid-cols-1 lg:grid-cols-12 max-w-[100vw]">
-          <div className="lg:col-span-5 px-6 lg:px-16 py-20 lg:py-32 flex flex-col justify-center z-10 relative">
+          <div className="lg:col-span-6 px-6 lg:px-16 py-20 lg:py-32 flex flex-col justify-center z-10 relative">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#094448] text-[#e2a535] text-[10px] font-bold uppercase tracking-widest mb-6 w-max border border-[#e2a535]/30 shadow-sm">
               Benefícios Corporativos
             </span>
@@ -136,7 +136,7 @@ export default function SolucoesBeneficiosPage() {
             </div>
           </div>
           
-          <div className="lg:col-span-7 relative h-[400px] lg:h-auto">
+          <div className="lg:col-span-6 relative h-[400px] lg:h-auto">
             <img 
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600" 
               alt="Reunião de RH e diretoria analisando benefícios" 
@@ -265,22 +265,6 @@ export default function SolucoesBeneficiosPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. OPERADORAS PARCEIRAS */}
-      <section className="py-20 bg-white border-b border-[#00393f]/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-[#00393f]/40 mb-10">
-            Parcerias com as principais operadoras de saúde e seguradoras do mercado
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-10 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 font-black text-2xl text-[#00393f]">
-            <span>Amil</span>
-            <span>Bradesco Saúde</span>
-            <span>SulAmérica</span>
-            <span>Porto Seguro Saúde</span>
-            <span>NotreDame Intermédica</span>
           </div>
         </div>
       </section>

@@ -139,7 +139,7 @@ export default function SegurosCorporativosPage() {
     { label: 'Construção', icon: HardHat },
   ]
 
-  const seguradoras = ['Porto Seguro', 'Allianz', 'SulAmérica', 'Tokyo Marine', 'Sompo']
+
 
   return (
     <>
@@ -321,20 +321,6 @@ export default function SegurosCorporativosPage() {
                 </div>
               )
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. SEGURADORAS PARCEIRAS (Off White) */}
-      <section className="py-20 bg-[#e1e7e1] border-b border-[#00393f]/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-[#00393f]/40 mb-10">
-            Relacionamento com as principais seguradoras do mercado
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-10 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            {seguradoras.map((s) => (
-              <span key={s} className="text-2xl font-black text-[#00393f]">{s}</span>
-            ))}
           </div>
         </div>
       </section>

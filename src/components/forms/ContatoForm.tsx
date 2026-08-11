@@ -28,6 +28,7 @@ export function ContatoForm() {
   const [form, setForm] = useState<ContatoFormData>(INITIAL_STATE)
   const [status, setStatus] = useState<Status>('IDLE')
   const [errorMessage, setErrorMessage] = useState('')
+  const [consentimento, setConsentimento] = useState(false)
 
   const handleChange = (field: keyof ContatoFormData) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,6 +49,7 @@ export function ContatoForm() {
       })
       setStatus('SUCCESS')
       setForm(INITIAL_STATE)
+      setConsentimento(false)
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : 'Ocorreu um erro inesperado.')
       setStatus('ERROR')
@@ -130,13 +132,30 @@ export function ContatoForm() {
         className={`${inputClass} resize-none`}
       />
 
+      <label className="flex items-start gap-3 text-xs text-[#00393f]/70">
+        <input
+          type="checkbox"
+          checked={consentimento}
+          onChange={(e) => setConsentimento(e.target.checked)}
+          required
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#00393f]/20 accent-[#e2a535]"
+        />
+        <span>
+          Li e concordo com a{' '}
+          <a href="/privacidade" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#e2a535] underline">
+            Política de Privacidade
+          </a>{' '}
+          e autorizo o contato da LifitSeg com base nos dados informados.
+        </span>
+      </label>
+
       {status === 'ERROR' && (
         <p className="text-sm font-medium text-red-500">{errorMessage}</p>
       )}
 
       <button
         type="submit"
-        disabled={status === 'SENDING'}
+        disabled={status === 'SENDING' || !consentimento}
         className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#e2a535] hover:bg-[#c9932f] text-[#00393f] font-bold px-8 py-3.5 rounded-xl transition-all shadow-md text-sm disabled:opacity-60"
       >
         {status === 'SENDING' ? 'Enviando...' : 'Enviar mensagem'}

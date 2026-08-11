@@ -13,10 +13,10 @@ type LeadModalProps = {
   /** Lista de produtos exibida no seletor "Interesse Principal". Cada página passa a sua — se omitido, cai no fallback genérico abaixo (usado hoje pela Home/Header). */
   produtos?: string[]
   /**
-   * @deprecated O campo que essa prop controlava ("Nº de Colaboradores/Vidas")
-   * foi removido do formulário — não fazia sentido fora de plano
-   * coletivo de Saúde/Odonto. Prop mantida só pra não quebrar build
-   * de páginas que ainda não foram revisadas; não tem mais efeito.
+   * Controla se o campo "Nome da Empresa" aparece — false pra páginas de
+   * Seguros Pessoais, onde não faz sentido perguntar empresa pra pessoa
+   * física. Default true (mantém o comportamento das páginas que não
+   * passam essa prop).
    */
   mostrarDadosEmpresa?: boolean
 }
@@ -35,7 +35,6 @@ const ESTADO_INICIAL = (produto: string, origem: string) => ({
   telefone: '',
   empresa: '',
   documento: '', // CPF ou CNPJ — opcional, sem distinção de formato forçada aqui
-  numeroColaboradores: undefined as number | undefined,
   produto,
   origem,
 })
@@ -56,12 +55,13 @@ const ESTADO_INICIAL = (produto: string, origem: string) => ({
  * isso na raiz, pra qualquer página que chamar o modal no futuro,
  * não só o Header.
  *
- * SIMPLIFICAÇÃO (campos do formulário): removido "Nº de
- * Colaboradores/Vidas" — é conceito específico de plano coletivo de
- * Saúde/Odonto, não fazia sentido aparecer pra "Gestão de Frotas &
- * Automóvel" nem pra nenhum outro produto. E-mail deixou de exigir
- * "corporativo" — nem todo lead tem e-mail de empresa. Campo de
- * CPF/CNPJ adicionado como opcional.
+ * CORREÇÃO (11/08 — campos do formulário): "Nº de Colaboradores"
+ * removido de fato agora (antes só o comentário dizia que tinha sido
+ * removido, o campo continuava aparecendo em toda página, inclusive
+ * Seguro Auto/Viagem, onde não fazia sentido nenhum). `mostrarDadosEmpresa`
+ * agora tem efeito de verdade — antes era prop morta (`@deprecated`,
+ * sem nenhum código lendo ela), e `seguros-pessoais/page.tsx` já
+ * passava `mostrarDadosEmpresa={false}` esperando que funcionasse.
  */
 export function LeadModal({
   isOpen,
@@ -69,10 +69,12 @@ export function LeadModal({
   defaultProduto,
   origem = 'site',
   produtos = PRODUTOS_FALLBACK,
+  mostrarDadosEmpresa = true,
 }: LeadModalProps) {
   const produtoInicial = defaultProduto ?? produtos[0]
   const { status, errorMessage, submit, reset } = useLifCoreLead()
   const [form, setForm] = useState(ESTADO_INICIAL(produtoInicial, origem))
+  const [consentimento, setConsentimento] = useState(false)
   const [montado, setMontado] = useState(false)
 
   // Portal só pode apontar pro document.body depois que o componente
@@ -92,6 +94,7 @@ export function LeadModal({
     onClose()
     reset()
     setForm(ESTADO_INICIAL(produtoInicial, origem))
+    setConsentimento(false)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -183,19 +186,21 @@ export function LeadModal({
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                    Nome da Empresa
-                  </label>
-                  <input
-                    type="text"
-                    name="empresa"
-                    value={form.empresa}
-                    onChange={handleChange}
-                    placeholder="Sua Empresa S/A (se aplicável)"
-                    className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                  />
-                </div>
+                {mostrarDadosEmpresa && (
+                  <div>
+                    <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
+                      Nome da Empresa
+                    </label>
+                    <input
+                      type="text"
+                      name="empresa"
+                      value={form.empresa}
+                      onChange={handleChange}
+                      placeholder="Sua Empresa S/A (se aplicável)"
+                      className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+                    />
+                  </div>
+                )}
                 <div>
                   <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
                     CPF ou CNPJ (opcional)
@@ -209,20 +214,6 @@ export function LeadModal({
                     className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-lifitseg-offwhite/80">
-                  Número de Colaboradores (opcional)
-                </label>
-                <input
-                  type="number"
-                  name="numeroColaboradores"
-                  value={form.numeroColaboradores ?? ''}
-                  onChange={handleChange}
-                  placeholder="Ex: 15"
-                  className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
-                />
               </div>
 
               <div>
@@ -243,13 +234,30 @@ export function LeadModal({
                 </select>
               </div>
 
+              <label className="flex items-start gap-3 text-xs text-lifitseg-offwhite/70">
+                <input
+                  type="checkbox"
+                  checked={consentimento}
+                  onChange={(e) => setConsentimento(e.target.checked)}
+                  required
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-lifitseg-dark-deep accent-primary"
+                />
+                <span>
+                  Li e concordo com a{' '}
+                  <a href="/privacidade" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline">
+                    Política de Privacidade
+                  </a>{' '}
+                  e autorizo o contato da LifitSeg com base nos dados informados.
+                </span>
+              </label>
+
               {status === 'ERROR' && (
                 <p className="text-sm font-medium text-red-400">{errorMessage}</p>
               )}
 
               <button
                 type="submit"
-                disabled={status === 'SENDING'}
+                disabled={status === 'SENDING' || !consentimento}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 font-bold text-lifitseg-dark shadow-lg transition-opacity hover:opacity-90 disabled:opacity-60"
               >
                 {status === 'SENDING' ? 'Enviando solicitação...' : 'Solicitar Contato do Consultor'}

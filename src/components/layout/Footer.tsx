@@ -80,7 +80,12 @@ export function Footer() {
           <p>
             © {ano} {siteConfig.nomeCompleto}. Todos os direitos reservados.
           </p>
-          <p className="font-mono text-[10px]">CNPJ {siteConfig.juridico.cnpj}</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacidade" className="transition-colors hover:text-primary">
+              Política de Privacidade
+            </Link>
+            <p className="font-mono text-[10px]">CNPJ {siteConfig.juridico.cnpj}</p>
+          </div>
         </div>
       </div>
     </footer>
