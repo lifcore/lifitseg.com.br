@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { captureAndPersistUtms } from '@/utils/tracking';
 import { LeadModal } from '@/components/forms/LeadModal'; // Reutilização obrigatória — named export, caminho real do componente
@@ -37,8 +38,8 @@ export default function LandingPageSaudeOdonto() {
       {/* TOPBAR MÍNIMA DE LP */}
       <header className="border-b border-black/5 bg-white/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-lifitseg-dark">
-            <span className="text-primary">Lifit</span>Seg
+          <Link href="/" className="flex items-center">
+            <Image src="/logo.png" alt="LifitSeg" width={150} height={46} className="h-11 w-auto object-contain" priority />
           </Link>
           <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-dark/60 bg-black/5 px-3 py-1.5 rounded-full">
             Canal Consultivo Dedicado
