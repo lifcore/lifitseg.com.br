@@ -31,12 +31,12 @@ export default function LandingPageVeiculosFrota() {
   return (
     <div className="min-h-screen bg-[#F4F6F4] text-lifitseg-dark font-sans selection:bg-primary/20 antialiased">
       {/* TOPBAR MÍNIMA DE LP */}
-      <header className="border-b border-black/5 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-primary/20 bg-lifitseg-dark/95 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image src="/logo.png" alt="LifitSeg" width={150} height={46} className="h-11 w-auto object-contain" priority />
           </Link>
-          <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-dark/60 bg-black/5 px-3 py-1.5 rounded-full">
+          <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-offwhite/70 bg-white/10 px-3 py-1.5 rounded-full">
             Veículos & Frota • Canal Consultivo
           </div>
         </div>

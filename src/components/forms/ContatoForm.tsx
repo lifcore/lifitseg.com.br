@@ -55,19 +55,19 @@ export function ContatoForm() {
   }
 
   const inputClass =
-    'w-full rounded-xl border border-[#05191b]/15 bg-white px-4 py-3 text-sm text-[#05191b] placeholder:text-[#05191b]/40 focus:outline-none focus:border-[#E0A63D] transition-colors'
+    'w-full rounded-xl border border-[#00393f]/15 bg-white px-4 py-3 text-sm text-[#00393f] placeholder:text-[#00393f]/40 focus:outline-none focus:border-[#e2a535] transition-colors'
 
   if (status === 'SUCCESS') {
     return (
       <div className="space-y-3 py-8 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#E0A63D]/15 text-xl font-bold text-[#E0A63D]">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#e2a535]/15 text-xl font-bold text-[#e2a535]">
           ✓
         </div>
-        <h4 className="text-lg font-bold text-[#05191b]">Mensagem enviada!</h4>
-        <p className="text-sm text-[#05191b]/60">Nossa equipe vai retornar em breve.</p>
+        <h4 className="text-lg font-bold text-[#00393f]">Mensagem enviada!</h4>
+        <p className="text-sm text-[#00393f]/60">Nossa equipe vai retornar em breve.</p>
         <button
           onClick={() => setStatus('IDLE')}
-          className="text-xs font-bold text-[#E0A63D] hover:text-[#0b3337]"
+          className="text-xs font-bold text-[#e2a535] hover:text-[#094448]"
         >
           Enviar outra mensagem
         </button>
@@ -137,7 +137,7 @@ export function ContatoForm() {
       <button
         type="submit"
         disabled={status === 'SENDING'}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#E0A63D] hover:bg-[#c99333] text-[#05191b] font-bold px-8 py-3.5 rounded-xl transition-all shadow-md text-sm disabled:opacity-60"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#e2a535] hover:bg-[#c9932f] text-[#00393f] font-bold px-8 py-3.5 rounded-xl transition-all shadow-md text-sm disabled:opacity-60"
       >
         {status === 'SENDING' ? 'Enviando...' : 'Enviar mensagem'}
         {status !== 'SENDING' && <Send className="w-4 h-4" strokeWidth={1.5} />}

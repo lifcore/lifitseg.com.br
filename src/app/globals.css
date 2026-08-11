@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta institucional LifitSeg */
-  --color-lifitseg-dark: #05191b;   /* verde escuro — fundo de marca */
-  --color-lifitseg-dark-deep: #030f10; /* verde mais escuro ainda — camada de fundo profunda */
-  --color-lifitseg-surface: #0e2426;  /* superfície de card, um tom mais claro que o fundo */
-  --color-lifitseg-primary: #e0a63d; /* âmbar/dourado — destaque, CTAs */
-  --color-lifitseg-offwhite: #f7f4ef; /* off-white — texto sobre fundo escuro */
+  /* Paleta institucional LifitSeg (atualizada 11/08) */
+  --color-lifitseg-dark: #00393f;   /* verde — fundo de marca */
+  --color-lifitseg-dark-deep: #002226; /* verde mais escuro ainda — camada de fundo profunda */
+  --color-lifitseg-surface: #094448;  /* superfície de card, um tom mais claro que o fundo */
+  --color-lifitseg-primary: #e2a535; /* âmbar/dourado — destaque, CTAs */
+  --color-lifitseg-offwhite: #e1e7e1; /* off-white — texto sobre fundo escuro */
 
   --background: #ffffff;
   --foreground: #171717;
