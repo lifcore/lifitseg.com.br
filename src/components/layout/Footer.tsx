@@ -1,39 +1,29 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
+import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 
-export function Footer() {
-  const ano = new Date().getFullYear()
-
+export default function Footer() {
   return (
-    <footer className="border-t border-primary/20 bg-lifitseg-dark-deep py-16 text-xs text-lifitseg-offwhite/70">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-4">
-          <div className="space-y-4 md:col-span-1">
-            <div className="flex items-center">
-              <div className="relative flex items-center">
-                <Image
-                  src="/logo.png"
-                  alt={siteConfig.nome}
-                  width={200}
-                  height={62}
-                  className="h-[62px] w-auto object-contain"
-                />
-              </div>
-            </div>
-            <p className="leading-relaxed text-lifitseg-offwhite/60">
+    <footer className="border-t border-white/10 bg-lifitseg-dark-deep text-lifitseg-offwhite">
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+          <div>
+            <Image src="/logo.png" alt={siteConfig.nome} width={160} height={45} className="mb-4 h-10 w-auto" />
+            <p className="text-sm leading-relaxed text-lifitseg-offwhite/60">
               Consultoria e Arquitetura de Riscos Corporativos. Transição da corretagem tradicional
               para a governança de alta autoridade.
             </p>
           </div>
 
           <div>
-            <p className="mb-4 text-sm font-bold text-lifitseg-offwhite">Soluções Corporativas</p>
+            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
+              Soluções Corporativas
+            </h4>
             <ul className="space-y-2.5">
               {NAV_SOLUCOES.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition-colors hover:text-primary">
+                  <Link href={item.href} className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
                     {item.label}
                   </Link>
                 </li>
@@ -42,22 +32,24 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 text-sm font-bold text-lifitseg-offwhite">Institucional</p>
+            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
+              Institucional
+            </h4>
             <ul className="space-y-2.5">
               {NAV_INSTITUCIONAL.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition-colors hover:text-primary">
+                  <Link href={item.href} className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
                     {item.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/#metodo" className="transition-colors hover:text-primary">
+                <Link href="/#metodo" className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
                   Método de Trabalho
                 </Link>
               </li>
               <li>
-                <Link href="/#strategy" className="transition-colors hover:text-primary">
+                <Link href="/#strategy" className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
                   Strategy Business
                 </Link>
               </li>
@@ -65,26 +57,43 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 text-sm font-bold text-lifitseg-offwhite">Contato &amp; Governança</p>
-            <p className="mb-2">Atendimento Corporativo Nacional</p>
-            <p className="mb-1 font-semibold text-lifitseg-offwhite">{siteConfig.contato.email}</p>
-            <p className="mb-4">WhatsApp: {siteConfig.contato.whatsappExibicao}</p>
-            <p className="mb-4 leading-relaxed">{siteConfig.endereco.completo}</p>
-            <span className="inline-block rounded border border-primary/30 bg-lifitseg-surface px-3 py-1 font-mono text-[10px] text-primary">
-              SUSEP {siteConfig.juridico.registroSusep}
-            </span>
+            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
+              Contato &amp; Governança
+            </h4>
+            <p className="mb-3 text-sm text-lifitseg-offwhite/70">Atendimento Corporativo Nacional</p>
+            <ul className="space-y-2 text-sm text-lifitseg-offwhite/70">
+              <li>
+                <a href={`mailto:${siteConfig.contato.email}`} className="transition-colors hover:text-primary">
+                  {siteConfig.contato.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/${siteConfig.contato.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition-colors hover:text-primary"
+                >
+                  WhatsApp: {siteConfig.contato.whatsappExibicao}
+                </a>
+              </li>
+              <li>{siteConfig.endereco.completo}</li>
+              <li className="pt-1 text-xs text-lifitseg-offwhite/50">
+                SUSEP {siteConfig.juridico.registroSusep}
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-lifitseg-offwhite/50 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-lifitseg-offwhite/50 sm:flex-row">
           <p>
-            © {ano} {siteConfig.nomeCompleto}. Todos os direitos reservados.
+            © {new Date().getFullYear()} {siteConfig.nomeCompleto}. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/privacidade" className="transition-colors hover:text-primary">
               Política de Privacidade
             </Link>
-            <p className="font-mono text-[10px]">CNPJ {siteConfig.juridico.cnpj}</p>
+            <span>CNPJ {siteConfig.juridico.cnpj}</span>
           </div>
         </div>
       </div>

@@ -3,160 +3,154 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
-import { LeadModal } from '@/components/forms/LeadModal'
+import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 
-export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [solucoesAberto, setSolucoesAberto] = useState(false)
-  const [modalAberto, setModalAberto] = useState(false)
+function whatsappLink(mensagem: string) {
+  return `https://wa.me/${siteConfig.contato.whatsapp}?text=${encodeURIComponent(mensagem)}`
+}
+
+export default function Header() {
+  const [solucoesOpen, setSolucoesOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-primary/20 bg-lifitseg-dark/95 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="group flex items-center">
-            <div className="relative flex items-center transition-transform group-hover:scale-105">
-              <Image
-                src="/logo.png"
-                alt={siteConfig.nome}
-                width={180}
-                height={56}
-                className="h-14 w-auto object-contain"
-                priority
-              />
-            </div>
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-lifitseg-dark text-lifitseg-offwhite">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
+          <Image src="/logo.png" alt={siteConfig.nome} width={140} height={40} className="h-9 w-auto" priority />
+        </Link>
+
+        {/* NAVEGAÇÃO PRINCIPAL — DESKTOP */}
+        <nav className="hidden items-center gap-8 md:flex">
+          <Link href="/" className="text-sm font-medium text-lifitseg-offwhite/80 transition-colors hover:text-primary">
+            Home
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-8 text-sm font-medium text-lifitseg-offwhite/80 lg:flex">
-            <Link href="/" className="transition-colors hover:text-primary">
-              Home
-            </Link>
+          <div
+            className="relative"
+            onMouseEnter={() => setSolucoesOpen(true)}
+            onMouseLeave={() => setSolucoesOpen(false)}
+          >
+            <button className="flex items-center gap-1 text-sm font-medium text-lifitseg-offwhite/80 transition-colors hover:text-primary">
+              Soluções
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-            {/* Mega Menu de Soluções */}
-            <div
-              className="relative py-2"
-              onMouseEnter={() => setSolucoesAberto(true)}
-              onMouseLeave={() => setSolucoesAberto(false)}
-            >
-              <button className="flex items-center gap-1.5 transition-colors hover:text-primary focus:outline-none">
-                <span>Soluções</span>
-                <svg
-                  className={`h-4 w-4 transition-transform ${solucoesAberto ? 'rotate-180 text-primary' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {solucoesAberto && (
-                <div className="absolute top-full left-1/2 mt-1 grid w-80 -translate-x-1/2 gap-2 rounded-2xl border border-primary/30 bg-lifitseg-dark p-4 shadow-2xl">
+            {solucoesOpen && (
+              <div className="absolute top-full left-1/2 w-80 -translate-x-1/2 pt-3">
+                <div className="overflow-hidden rounded-2xl border border-black/10 bg-white shadow-xl">
                   {NAV_SOLUCOES.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-xl p-3 transition-colors hover:bg-lifitseg-surface"
+                      className="block border-b border-black/5 px-5 py-4 transition-colors last:border-b-0 hover:bg-lifitseg-offwhite"
                     >
-                      <p className="text-sm font-bold text-lifitseg-offwhite">{item.label}</p>
+                      <p className="text-sm font-bold text-lifitseg-dark">{item.label}</p>
                       {item.descricao && (
-                        <p className="mt-0.5 text-xs text-lifitseg-offwhite/60">{item.descricao}</p>
+                        <p className="mt-0.5 text-xs text-lifitseg-dark/60">{item.descricao}</p>
                       )}
                     </Link>
                   ))}
                 </div>
-              )}
-            </div>
-
-            {NAV_INSTITUCIONAL.map((item) => (
-              <Link key={item.href} href={item.href} className="transition-colors hover:text-primary">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="hidden items-center gap-4 lg:flex">
-            <a
-              href={`https://wa.me/${siteConfig.contato.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-lifitseg-offwhite transition-colors hover:bg-white/5"
-            >
-              WhatsApp
-            </a>
-            <button
-              onClick={() => setModalAberto(true)}
-              className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-lifitseg-dark shadow-md transition-all active:scale-95 hover:opacity-90"
-            >
-              Falar com Consultor
-            </button>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-lg bg-lifitseg-surface p-2 text-lifitseg-offwhite focus:outline-none lg:hidden"
-            aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-          >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown */}
-      {mobileMenuOpen && (
-        <div className="space-y-3 border-b border-primary/20 bg-lifitseg-dark px-4 pt-2 pb-6 lg:hidden">
-          <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium text-lifitseg-offwhite">
-            Home
-          </Link>
-
-          <div className="space-y-2 border-l-2 border-primary/40 py-2 pl-4">
-            <p className="text-xs font-bold text-primary uppercase">Soluções</p>
-            {NAV_SOLUCOES.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-1 text-sm text-lifitseg-offwhite/80"
-              >
-                {item.label}
-              </Link>
-            ))}
+              </div>
+            )}
           </div>
 
           {NAV_INSTITUCIONAL.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-2 font-medium text-lifitseg-offwhite"
+              className="text-sm font-medium text-lifitseg-offwhite/80 transition-colors hover:text-primary"
             >
               {item.label}
             </Link>
           ))}
+        </nav>
 
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false)
-              setModalAberto(true)
-            }}
-            className="mt-2 w-full rounded-xl bg-primary py-3 text-center font-bold text-lifitseg-dark transition-colors hover:opacity-90"
+        {/* AÇÕES — DESKTOP */}
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href={whatsappLink('Olá, gostaria de falar com um especialista da LifitSeg.')}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="WhatsApp"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-lifitseg-offwhite/80 transition-colors hover:border-primary/40 hover:text-primary"
           >
-            Falar com Consultor
-          </button>
+            <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.84 14.1c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.61-.6-2.85-1.23-4.7-4.1-4.84-4.29-.14-.19-1.16-1.54-1.16-2.94s.72-2.09.98-2.37c.25-.28.55-.35.73-.35h.53c.17 0 .4-.06.62.48.24.55.8 1.9.87 2.04.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.14-.29.28-.12.55.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.63-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.16 1.36z" />
+            </svg>
+          </a>
+          <a
+            href={whatsappLink('Olá, gostaria de falar com um especialista da LifitSeg.')}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-lifitseg-dark shadow-md transition-all hover:-translate-y-0.5 hover:opacity-90"
+          >
+            Falar com um Especialista
+          </a>
+        </div>
+
+        {/* BOTÃO HAMBÚRGUER — MOBILE */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={mobileOpen}
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+        >
+          <span className={`block h-0.5 w-6 bg-lifitseg-offwhite transition-transform duration-200 ${mobileOpen ? 'translate-y-2 rotate-45' : ''}`} />
+          <span className={`block h-0.5 w-6 bg-lifitseg-offwhite transition-opacity duration-200 ${mobileOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-0.5 w-6 bg-lifitseg-offwhite transition-transform duration-200 ${mobileOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+        </button>
+      </div>
+
+      {/* MENU MOBILE */}
+      {mobileOpen && (
+        <div className="border-t border-white/10 bg-lifitseg-dark-deep px-4 py-6 md:hidden">
+          <nav className="flex flex-col gap-1">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm font-medium text-lifitseg-offwhite/90">
+              Home
+            </Link>
+
+            <p className="mt-3 mb-1 text-xs font-bold tracking-wider text-primary uppercase">Soluções</p>
+            {NAV_SOLUCOES.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="py-2.5 pl-3 text-sm font-medium text-lifitseg-offwhite/90 border-b border-white/5 last:border-b-0"
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <p className="mt-4 mb-1 text-xs font-bold tracking-wider text-primary uppercase">Institucional</p>
+            {NAV_INSTITUCIONAL.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="py-2.5 pl-3 text-sm font-medium text-lifitseg-offwhite/90 border-b border-white/5 last:border-b-0"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <a
+            href={whatsappLink('Olá, gostaria de falar com um especialista da LifitSeg.')}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMobileOpen(false)}
+            className="mt-6 block rounded-xl bg-primary px-6 py-3.5 text-center text-sm font-semibold text-lifitseg-dark shadow-md"
+          >
+            Falar com um Especialista
+          </a>
         </div>
       )}
-
-      <LeadModal isOpen={modalAberto} onClose={() => setModalAberto(false)} origem="header" />
     </header>
   )
 }

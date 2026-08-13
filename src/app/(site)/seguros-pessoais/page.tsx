@@ -20,7 +20,7 @@ import {
 
 export default function SegurosPessoaisPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   const handleOpenLeadModal = () => setIsModalOpen(true)
 
@@ -116,30 +116,30 @@ export default function SegurosPessoaisPage() {
       <Breadcrumb items={breadcrumbItems} />
 
       {/* 1. HERO (Verde institucional) */}
-      <section className="relative bg-[#00393f] overflow-hidden border-b border-[#e2a535]/20">
+      <section className="relative bg-lifitseg-dark overflow-hidden border-b border-primary/20">
         <div className="grid grid-cols-1 lg:grid-cols-12 max-w-[100vw]">
           <div className="lg:col-span-6 px-6 lg:px-16 py-20 lg:py-32 flex flex-col justify-center z-10 relative">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#094448] text-[#e2a535] text-[10px] font-bold uppercase tracking-widest mb-6 w-max border border-[#e2a535]/30 shadow-sm">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-lifitseg-surface text-primary text-[10px] font-bold uppercase tracking-widest mb-6 w-max border border-primary/30 shadow-sm">
               Seguros Pessoais
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#e1e7e1] mb-8 leading-[1.15]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-lifitseg-offwhite mb-8 leading-[1.15]">
               Proteção para você, sua família e seu patrimônio, com uma consultoria construída sobre confiança e relacionamento.
             </h1>
-            <p className="text-[#e1e7e1]/80 text-base leading-relaxed mb-10 font-light">
+            <p className="text-lifitseg-offwhite/80 text-base leading-relaxed mb-10 font-light">
               Cada momento da vida pede um tipo de cuidado diferente. Estamos aqui para entender o que importa para você e apresentar soluções que façam sentido para a sua realidade.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="#momentos"
-                className="bg-[#e2a535] hover:bg-[#c9932f] text-[#00393f] font-bold px-8 py-3.5 rounded-xl transition-all shadow-xl text-sm text-center transform hover:-translate-y-0.5"
+                className="bg-primary hover:bg-primary/80 text-lifitseg-dark font-bold px-8 py-3.5 rounded-xl transition-all shadow-xl text-sm text-center transform hover:-translate-y-0.5"
               >
                 Conheça nossas soluções
               </a>
               <button
                 onClick={handleOpenLeadModal}
-                className="bg-transparent border border-[#e1e7e1]/20 hover:border-[#e2a535] hover:text-[#e2a535] text-[#e1e7e1] font-bold px-8 py-3.5 rounded-xl transition-all text-sm"
+                className="bg-transparent border border-lifitseg-offwhite/20 hover:border-primary hover:text-primary text-lifitseg-offwhite font-bold px-8 py-3.5 rounded-xl transition-all text-sm"
               >
-                Falar com um Especialista
+                Encontrar a proteção ideal
               </button>
             </div>
           </div>
@@ -150,17 +150,17 @@ export default function SegurosPessoaisPage() {
               alt="Família em ambiente doméstico acolhedor"
               className="absolute inset-0 w-full h-full object-cover lg:rounded-l-[100px]"
             />
-            <div className="absolute inset-0 lg:rounded-l-[100px] bg-gradient-to-r from-[#00393f] via-transparent to-transparent opacity-90 lg:opacity-30"></div>
+            <div className="absolute inset-0 lg:rounded-l-[100px] bg-gradient-to-r from-lifitseg-dark via-transparent to-transparent opacity-90 lg:opacity-30"></div>
           </div>
         </div>
       </section>
 
       {/* 2. MOMENTOS DA VIDA (Off White) */}
-      <section id="momentos" className="py-24 lg:py-32 bg-[#e1e7e1] scroll-mt-10">
+      <section id="momentos" className="py-24 lg:py-32 bg-lifitseg-offwhite scroll-mt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#00393f] mb-4">Momentos que merecem proteção.</h2>
-            <p className="text-[#00393f]/60 text-base leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-black text-lifitseg-dark mb-4">Momentos que merecem proteção.</h2>
+            <p className="text-lifitseg-dark/60 text-base leading-relaxed">
               Cada fase da vida traz necessidades diferentes. Ajudamos você a identificar o que faz sentido em cada momento.
             </p>
           </div>
@@ -171,12 +171,12 @@ export default function SegurosPessoaisPage() {
               return (
                 <div
                   key={m.label}
-                  className="flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-white border border-[#00393f]/10 hover:border-[#e2a535]/50 hover:shadow-lg transition-all"
+                  className="flex flex-col items-center text-center gap-4 p-8 rounded-3xl bg-white border border-lifitseg-dark/10 hover:border-primary/50 hover:shadow-lg transition-all"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-[#00393f]/5 flex items-center justify-center text-[#094448]">
+                  <div className="w-14 h-14 rounded-2xl bg-lifitseg-dark/5 flex items-center justify-center text-lifitseg-surface">
                     <Icon className="w-6 h-6" strokeWidth={1.5} />
                   </div>
-                  <span className="text-sm font-bold text-[#00393f]">{m.label}</span>
+                  <span className="text-sm font-bold text-lifitseg-dark">{m.label}</span>
                 </div>
               )
             })}
@@ -188,7 +188,7 @@ export default function SegurosPessoaisPage() {
       <section id="solucoes" className="py-24 bg-white scroll-mt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#00393f] mb-4">Soluções pensadas para o seu dia a dia.</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-lifitseg-dark mb-4">Soluções pensadas para o seu dia a dia.</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -197,23 +197,23 @@ export default function SegurosPessoaisPage() {
               return (
                 <div
                   key={item.title}
-                  className="bg-[#e1e7e1]/50 rounded-3xl border border-[#00393f]/10 overflow-hidden hover:border-[#e2a535]/50 hover:shadow-xl transition-all duration-300 group flex flex-col"
+                  className="bg-lifitseg-offwhite/50 rounded-3xl border border-lifitseg-dark/10 overflow-hidden hover:border-primary/50 hover:shadow-xl transition-all duration-300 group flex flex-col"
                 >
                   <div className="h-48 overflow-hidden relative">
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#00393f]/80 via-[#00393f]/20 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 w-11 h-11 rounded-xl bg-white flex items-center justify-center text-[#e2a535] shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-lifitseg-dark/80 via-lifitseg-dark/20 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 w-11 h-11 rounded-xl bg-white flex items-center justify-center text-primary shadow-lg">
                       <Icon className="w-5 h-5" strokeWidth={1.5} />
                     </div>
                   </div>
                   <div className="p-8 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-[#00393f] mb-3">{item.title}</h3>
-                    <p className="text-[#00393f]/60 text-sm leading-relaxed mb-5">{item.description}</p>
+                    <h3 className="text-xl font-bold text-lifitseg-dark mb-3">{item.title}</h3>
+                    <p className="text-lifitseg-dark/60 text-sm leading-relaxed mb-5">{item.description}</p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {item.itens.map((s) => (
                         <span
                           key={s}
-                          className="text-[11px] font-medium text-[#00393f]/70 bg-[#00393f]/5 border border-[#00393f]/10 px-3 py-1 rounded-full"
+                          className="text-[11px] font-medium text-lifitseg-dark/70 bg-lifitseg-dark/5 border border-lifitseg-dark/10 px-3 py-1 rounded-full"
                         >
                           {s}
                         </span>
@@ -221,7 +221,7 @@ export default function SegurosPessoaisPage() {
                     </div>
                     <button
                       onClick={handleOpenLeadModal}
-                      className="mt-auto flex items-center gap-2 text-[#e2a535] text-sm font-bold hover:text-[#094448] transition-colors w-max group-hover:translate-x-1 duration-300"
+                      className="mt-auto flex items-center gap-2 text-primary text-sm font-bold hover:text-lifitseg-surface transition-colors w-max group-hover:translate-x-1 duration-300"
                     >
                       Saiba Mais
                       <ArrowRight className="w-4 h-4" />
@@ -232,12 +232,12 @@ export default function SegurosPessoaisPage() {
             })}
 
             {/* Bloco "Outras Soluções" — espaço preparado para expansão */}
-            <div className="bg-[#e1e7e1]/30 rounded-3xl border border-dashed border-[#00393f]/20 flex flex-col items-center justify-center text-center p-10 min-h-[220px]">
-              <div className="w-11 h-11 rounded-xl bg-[#00393f]/5 flex items-center justify-center text-[#094448] mb-4">
+            <div className="bg-lifitseg-offwhite/30 rounded-3xl border border-dashed border-lifitseg-dark/20 flex flex-col items-center justify-center text-center p-10 min-h-[220px]">
+              <div className="w-11 h-11 rounded-xl bg-lifitseg-dark/5 flex items-center justify-center text-lifitseg-surface mb-4">
                 <Sparkles className="w-5 h-5" strokeWidth={1.5} />
               </div>
-              <h3 className="text-lg font-bold text-[#00393f] mb-2">Outras Soluções</h3>
-              <p className="text-[#00393f]/60 text-sm leading-relaxed">
+              <h3 className="text-lg font-bold text-lifitseg-dark mb-2">Outras Soluções</h3>
+              <p className="text-lifitseg-dark/60 text-sm leading-relaxed">
                 Nossa consultoria está preparada para orientar você também em outras modalidades. Fale com um especialista para saber mais.
               </p>
             </div>
@@ -246,25 +246,25 @@ export default function SegurosPessoaisPage() {
       </section>
 
       {/* 4. COMO ATUAMOS (Off White - Timeline) */}
-      <section className="py-24 bg-[#e1e7e1] overflow-hidden">
+      <section className="py-24 bg-lifitseg-offwhite overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl font-black text-[#00393f] mb-4">Como Atuamos</h2>
+            <h2 className="text-3xl font-black text-lifitseg-dark mb-4">Como Atuamos</h2>
           </div>
 
           <div className="relative">
-            <div className="hidden lg:block absolute top-6 left-0 w-full h-[2px] bg-[#e2a535]/30 z-0"></div>
+            <div className="hidden lg:block absolute top-6 left-0 w-full h-[2px] bg-primary/30 z-0"></div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative z-10">
               {timelineSteps.map((step) => {
                 const Icon = step.icon
                 return (
                   <div key={step.title} className="relative">
-                    <div className="w-12 h-12 rounded-full bg-white border-2 border-[#e2a535] flex items-center justify-center mb-6 shadow-md relative z-10">
-                      <Icon className="w-5 h-5 text-[#e2a535]" strokeWidth={1.5} />
+                    <div className="w-12 h-12 rounded-full bg-white border-2 border-primary flex items-center justify-center mb-6 shadow-md relative z-10">
+                      <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-base font-bold text-[#00393f] mb-2">{step.title}</h3>
-                    <p className="text-xs text-[#00393f]/60 leading-relaxed pr-2">{step.desc}</p>
+                    <h3 className="text-base font-bold text-lifitseg-dark mb-2">{step.title}</h3>
+                    <p className="text-xs text-lifitseg-dark/60 leading-relaxed pr-2">{step.desc}</p>
                   </div>
                 )
               })}
@@ -274,30 +274,30 @@ export default function SegurosPessoaisPage() {
       </section>
 
       {/* 6. PERGUNTAS FREQUENTES (Off White) */}
-      <section className="py-24 bg-[#e1e7e1]">
+      <section className="py-24 bg-lifitseg-offwhite">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#00393f] mb-4">Perguntas Frequentes</h2>
-            <p className="text-[#00393f]/60 text-base">As dúvidas mais comuns de quem busca proteção pessoal.</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-lifitseg-dark mb-4">Perguntas Frequentes</h2>
+            <p className="text-lifitseg-dark/60 text-base">As dúvidas mais comuns de quem busca proteção pessoal.</p>
           </div>
 
           <div className="space-y-4">
             {faqs.map((item, idx) => {
               const isOpen = openFaq === idx
               return (
-                <div key={item.q} className="bg-white rounded-2xl border border-[#00393f]/10 overflow-hidden">
+                <div key={item.q} className="bg-white rounded-2xl border border-lifitseg-dark/10 overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
                     className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                   >
-                    <span className="text-sm font-bold text-[#00393f]">{item.q}</span>
+                    <span className="text-sm font-bold text-lifitseg-dark">{item.q}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#e2a535] flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-primary flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {isOpen && (
                     <div className="px-6 pb-5">
-                      <p className="text-sm text-[#00393f]/60 leading-relaxed">{item.a}</p>
+                      <p className="text-sm text-lifitseg-dark/60 leading-relaxed">{item.a}</p>
                     </div>
                   )}
                 </div>
@@ -308,31 +308,31 @@ export default function SegurosPessoaisPage() {
       </section>
 
       {/* 7. CTA (Verde institucional) */}
-      <section className="relative py-28 bg-[#00393f] overflow-hidden border-t border-[#e2a535]/20">
+      <section className="relative py-28 bg-lifitseg-dark overflow-hidden border-t border-primary/20">
         <img
           src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1600"
           alt="Família em momento de tranquilidade"
           className="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#00393f] via-[#00393f]/80 to-transparent opacity-95"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-lifitseg-dark via-lifitseg-dark/80 to-transparent opacity-95"></div>
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-3xl sm:text-4xl font-black text-[#e1e7e1] mb-6 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-black text-lifitseg-offwhite mb-6 tracking-tight">
             Vamos conversar sobre a proteção que faz sentido para você?
           </h2>
-          <p className="text-[#e1e7e1]/70 text-lg mb-10 leading-relaxed font-light">
+          <p className="text-lifitseg-offwhite/70 text-lg mb-10 leading-relaxed font-light">
             Nossa equipe está preparada para entender sua realidade e apresentar as soluções mais adequadas para você e sua família.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={handleOpenLeadModal}
-              className="bg-[#e2a535] hover:bg-[#c9932f] text-[#00393f] font-bold px-10 py-4 rounded-xl transition-all shadow-2xl shadow-[#e2a535]/20 text-base transform hover:-translate-y-0.5"
+              className="bg-primary hover:bg-primary/80 text-lifitseg-dark font-bold px-10 py-4 rounded-xl transition-all shadow-2xl shadow-primary/20 text-base transform hover:-translate-y-0.5"
             >
-              Falar com um Especialista
+              Encontrar a proteção ideal
             </button>
             <button
               onClick={handleOpenLeadModal}
-              className="bg-transparent border border-[#e1e7e1]/20 hover:border-[#e2a535] hover:text-[#e2a535] text-[#e1e7e1] font-bold px-10 py-4 rounded-xl transition-all text-base"
+              className="bg-transparent border border-lifitseg-offwhite/20 hover:border-primary hover:text-primary text-lifitseg-offwhite font-bold px-10 py-4 rounded-xl transition-all text-base"
             >
               Entrar em Contato
             </button>

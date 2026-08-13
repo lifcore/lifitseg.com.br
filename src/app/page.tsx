@@ -33,12 +33,33 @@ const OPERATORS = [
   { name: 'Zurich', file: 'zurich' },
 ]
 
+const AUDIENCES = [
+  {
+    title: 'Pessoa Física',
+    description: 'Proteção para você, sua família, seu patrimônio e seus veículos.',
+  },
+  {
+    title: 'Pequenas e Médias Empresas',
+    description:
+      'Benefícios e seguros alinhados ao momento e à realidade financeira da empresa.',
+  },
+  {
+    title: 'Empresas',
+    description: 'Gestão estruturada de benefícios, seguros e riscos corporativos.',
+  },
+  {
+    title: 'Grandes Empresas',
+    description:
+      'Gestão estratégica de grandes contas, relacionamento, carteira, renovação e oportunidades.',
+  },
+]
+
 const DIFFERENTIALS = [
   {
     number: '01',
     title: 'Consultoria de Alta Autoridade',
     description:
-      'Superamos o modelo tradicional de corretagem reativa. Atuamos como arquitetos de gestão de riscos e benefícios para o seu negócio.',
+      'Superamos o modelo tradicional de corretagem reativa. Somos especialistas que ajudam você a entender, comparar e proteger o que importa para o seu negócio.',
     badge: 'Metodologia BMA',
   },
   {
@@ -72,6 +93,7 @@ const SOLUTIONS = [
     description:
       'Planos de Saúde e Odontológicos PME e Corporativos. Redesenho de apólices, coparticipação inteligente e negociação técnica de reajustes.',
     metrics: 'Até 30% de otimização de custos sem perda de cobertura',
+    cta: 'Avaliar minha carteira',
     featured: true,
   },
   {
@@ -81,6 +103,7 @@ const SOLUTIONS = [
     description:
       'Proteção estratégica para sócios, executivos e colaboradores. Garantia de continuidade do negócio e alinhamento com convenções coletivas.',
     metrics: 'Planos customizados e isenção fiscal',
+    cta: 'Proteger minha equipe executiva',
     featured: false,
   },
   {
@@ -90,6 +113,7 @@ const SOLUTIONS = [
     description:
       'Proteção integral de ativos físicos, responsabilidade civil executiva (D&O), seguros operacionais e garantias contratuais.',
     metrics: 'Análise de exposição tailor-made',
+    cta: 'Avaliar a exposição da minha empresa',
     featured: false,
   },
   {
@@ -99,6 +123,7 @@ const SOLUTIONS = [
     description:
       'Consultoria especializada para frotas leves e pesadas. Telemetria, controle de sinistralidade e apólices otimizadas por perfil.',
     metrics: 'Redução do TCO da frota corporativa',
+    cta: 'Avaliar minha frota',
     featured: false,
   },
 ]
@@ -175,8 +200,8 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-gradient-to-b from-lifitseg-dark via-lifitseg-dark to-lifitseg-dark-deep pt-16 pb-24 text-lifitseg-offwhite lg:pt-24 lg:pb-32">
         <div className="absolute inset-0 opacity-15">
           <img
-            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1800"
-            alt="Ambiente corporativo moderno"
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1800"
+            alt="Consultora conversando com cliente em reunião"
             className="h-full w-full object-cover"
           />
         </div>
@@ -192,13 +217,13 @@ export default function HomePage() {
             </div>
 
             <h1 className="mb-6 text-4xl leading-[1.1] font-black tracking-tight sm:text-5xl lg:text-6xl">
-              A evolução da corretagem para uma consultoria de alta autoridade
+              Benefícios e seguros pensados para o que realmente importa para você e para o seu
+              negócio
             </h1>
 
             <p className="mb-10 text-lg leading-relaxed font-normal text-lifitseg-offwhite/70 sm:text-xl">
-              Transformamos planos de saúde, seguros e benefícios em vantagens competitivas
-              sustentáveis para sua empresa — com governança técnica, inteligência de dados e
-              retenção de talentos.
+              Da escolha da proteção à gestão da sua carteira, a LifitSeg combina conhecimento de
+              mercado, análise e atendimento próximo para ajudar você a tomar decisões melhores.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -206,7 +231,7 @@ export default function HomePage() {
                 onClick={() => abrirModal()}
                 className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-8 py-4 text-base font-semibold text-lifitseg-dark shadow-xl transition-all hover:-translate-y-0.5 hover:opacity-90 active:translate-y-0 sm:w-auto"
               >
-                <span>Solicitar Diagnóstico Gratuito</span>
+                <span>Falar com um Especialista</span>
                 <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -215,7 +240,7 @@ export default function HomePage() {
                 href="#solucoes"
                 className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-8 py-4 text-base font-semibold text-lifitseg-offwhite transition-all hover:border-white/25 hover:bg-white/5 sm:w-auto"
               >
-                Explorar Soluções
+                Conhecer nossas soluções
               </a>
             </div>
 
@@ -239,6 +264,38 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PARA QUEM TRABALHAMOS — branco */}
+      <section id="para-quem" className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="text-3xl font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
+              Soluções para diferentes momentos e necessidades
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {AUDIENCES.map((aud, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl border border-black/10 bg-lifitseg-offwhite p-6 text-center transition-all hover:border-primary/40"
+              >
+                <h3 className="mb-2 text-base font-bold text-lifitseg-dark">{aud.title}</h3>
+                <p className="text-xs leading-relaxed text-lifitseg-dark/60">{aud.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => abrirModal()}
+              className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 text-sm font-semibold text-lifitseg-dark shadow-lg transition-all hover:opacity-90"
+            >
+              Encontrar a solução para o meu perfil
+            </button>
           </div>
         </div>
       </section>
@@ -358,7 +415,7 @@ export default function HomePage() {
 
                 <div>
                   <div className="mb-6 flex items-center gap-2 rounded-xl border border-black/10 bg-lifitseg-offwhite px-4 py-3 text-xs font-semibold text-lifitseg-dark/70">
-                    <span className="text-emerald-600">✓</span>
+                    <span className="text-lifitseg-success">✓</span>
                     <span>{sol.metrics}</span>
                   </div>
 
@@ -367,7 +424,7 @@ export default function HomePage() {
                       onClick={() => abrirModal(sol.title)}
                       className="inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:opacity-80"
                     >
-                      <span>Solicitar Proposta para este produto</span>
+                      <span>{sol.cta}</span>
                       <span>→</span>
                     </button>
                   </div>
@@ -421,14 +478,20 @@ export default function HomePage() {
               <h2 className="mb-6 text-3xl leading-tight font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
                 Strategy Business: Inteligência Técnica no Combate ao Reajuste
               </h2>
+              <p className="mb-4 text-base leading-relaxed text-lifitseg-dark/70">
+                O Strategy Business é a nossa abordagem de gestão estratégica para grandes contas
+                — reunindo carteira, benefícios, seguros, riscos, renovação e relacionamento em um
+                acompanhamento contínuo.
+              </p>
               <p className="mb-6 text-base leading-relaxed text-lifitseg-dark/70">
-                A maioria das empresas aceita passivamente os reajustes anuais das operadoras por
-                falta de dados técnicos para contestação. Nossa abordagem muda as regras do jogo.
+                Um dos resultados mais concretos dessa gestão aparece no combate a reajustes: a
+                maioria das empresas aceita passivamente os aumentos anuais das operadoras por
+                falta de dados técnicos para contestação. Nossa abordagem muda essa lógica.
               </p>
 
               <ul className="mb-8 space-y-4 text-sm text-lifitseg-dark/70">
                 <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
+                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-lifitseg-success/15 text-xs font-bold text-lifitseg-success">
                     ✓
                   </span>
                   <span>
@@ -437,7 +500,7 @@ export default function HomePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
+                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-lifitseg-success/15 text-xs font-bold text-lifitseg-success">
                     ✓
                   </span>
                   <span>
@@ -447,7 +510,7 @@ export default function HomePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
+                  <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-lifitseg-success/15 text-xs font-bold text-lifitseg-success">
                     ✓
                   </span>
                   <span>
@@ -485,10 +548,10 @@ export default function HomePage() {
                 <div>
                   <div className="mb-2 flex justify-between text-xs font-semibold">
                     <span className="text-lifitseg-offwhite/60">Com Gestão LifitSeg Strategy</span>
-                    <span className="font-bold text-emerald-400">8% - 12%</span>
+                    <span className="font-bold text-lifitseg-success">8% - 12%</span>
                   </div>
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-[35%] bg-emerald-500" />
+                    <div className="h-full w-[35%] bg-lifitseg-success" />
                   </div>
                 </div>
               </div>
@@ -515,6 +578,9 @@ export default function HomePage() {
                   Conheça o LifCore: A inteligência por trás do nosso atendimento
                 </h2>
                 <p className="text-sm leading-relaxed text-lifitseg-offwhite/70 sm:text-base">
+                  <strong className="text-lifitseg-offwhite">
+                    Tecnologia para não deixar sua gestão parar.
+                  </strong>{' '}
                   Não somos apenas consultores; desenvolvemos nossa própria plataforma técnica para
                   garantir rastreabilidade total, triagem ágil de chamados e pipeline unificado.
                 </p>
@@ -538,12 +604,12 @@ export default function HomePage() {
               <div className="space-y-4 rounded-2xl border border-white/10 bg-lifitseg-dark-deep p-6 sm:p-8 lg:col-span-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-emerald-500" />
+                    <div className="h-3 w-3 rounded-full bg-lifitseg-success" />
                     <span className="font-mono text-xs font-bold text-lifitseg-offwhite/70">
                       LIFCORE ENGINE v2.4
                     </span>
                   </div>
-                  <span className="rounded bg-emerald-950 px-2 py-0.5 font-mono text-[10px] text-emerald-400">
+                  <span className="rounded bg-lifitseg-success/15 px-2 py-0.5 font-mono text-[10px] text-lifitseg-success">
                     ONLINE
                   </span>
                 </div>
@@ -551,15 +617,15 @@ export default function HomePage() {
                 <div className="space-y-3 font-mono text-xs">
                   <div className="flex justify-between rounded-lg border border-white/10 bg-white/5 p-3 text-lifitseg-offwhite/70">
                     <span>› Lead Routing Status:</span>
-                    <span className="text-emerald-400">AUTOMATED</span>
+                    <span className="text-lifitseg-success">AUTOMATED</span>
                   </div>
                   <div className="flex justify-between rounded-lg border border-white/10 bg-white/5 p-3 text-lifitseg-offwhite/70">
                     <span>› SLA Resposta Média:</span>
                     <span className="text-primary">&lt; 15 min</span>
                   </div>
                   <div className="flex justify-between rounded-lg border border-white/10 bg-white/5 p-3 text-lifitseg-offwhite/70">
-                    <span>› Conexão Backend:</span>
-                    <span className="text-lifitseg-offwhite/50">Supabase Edge Functions</span>
+                    <span>› Rastreabilidade:</span>
+                    <span className="text-lifitseg-offwhite/50">Histórico completo e centralizado</span>
                   </div>
                 </div>
               </div>

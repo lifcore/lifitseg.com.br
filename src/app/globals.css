@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta institucional LifitSeg (atualizada 11/08) */
-  --color-lifitseg-dark: #00393f;   /* verde — fundo de marca */
-  --color-lifitseg-dark-deep: #002226; /* verde mais escuro ainda — camada de fundo profunda */
-  --color-lifitseg-surface: #094448;  /* superfície de card, um tom mais claro que o fundo */
-  --color-lifitseg-primary: #e2a535; /* âmbar/dourado — destaque, CTAs */
-  --color-lifitseg-offwhite: #e1e7e1; /* off-white — texto sobre fundo escuro */
+  /* Paleta institucional LifitSeg — refinamento REV-SITE-001 (§22-26) */
+  --color-lifitseg-dark: #082124;      /* verde petróleo — fundo de marca, Hero, navegação */
+  --color-lifitseg-dark-deep: #041416; /* verde profundo — rodapé, áreas de maior contraste */
+  --color-lifitseg-surface: #102D2F;   /* verde superfície — cards e painéis sobre fundo escuro */
+  --color-lifitseg-primary: #C9A45A;   /* âmbar champagne — CTA, destaque, valor/ação */
+  --color-lifitseg-offwhite: #F7F4EF;  /* off-white — fundo claro principal */
+
+  /* Hierarquia de texto (§25) */
+  --color-lifitseg-text: #293A38;      /* texto principal, em fundo claro */
+  --color-lifitseg-text-soft: #687673; /* texto secundário/legenda */
+  --color-lifitseg-success: #4A9589;   /* verde positivo — resultado, confirmação, checks */
 
   --background: #ffffff;
   --foreground: #171717;
@@ -17,13 +22,17 @@
   --color-foreground: var(--foreground);
 
   /* Disponibiliza a paleta como utilitários Tailwind:
-     bg-primary, text-primary, bg-lifitseg-dark, text-lifitseg-offwhite, etc. */
+     bg-primary, text-primary, bg-lifitseg-dark, text-lifitseg-offwhite,
+     text-lifitseg-text, text-lifitseg-text-soft, text-lifitseg-success etc. */
   --color-primary: var(--color-lifitseg-primary);
   --color-lifitseg-dark: var(--color-lifitseg-dark);
   --color-lifitseg-dark-deep: var(--color-lifitseg-dark-deep);
   --color-lifitseg-surface: var(--color-lifitseg-surface);
   --color-lifitseg-primary: var(--color-lifitseg-primary);
   --color-lifitseg-offwhite: var(--color-lifitseg-offwhite);
+  --color-lifitseg-text: var(--color-lifitseg-text);
+  --color-lifitseg-text-soft: var(--color-lifitseg-text-soft);
+  --color-lifitseg-success: var(--color-lifitseg-success);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
