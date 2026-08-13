@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { siteConfig } from '@/config/site'
 import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-lifitseg-dark-deep text-lifitseg-offwhite">
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">

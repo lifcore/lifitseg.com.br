@@ -10,7 +10,7 @@ function whatsappLink(mensagem: string) {
   return `https://wa.me/${siteConfig.contato.whatsapp}?text=${encodeURIComponent(mensagem)}`
 }
 
-export default function Header() {
+export function Header() {
   const [solucoesOpen, setSolucoesOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
