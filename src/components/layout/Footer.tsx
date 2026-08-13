@@ -9,7 +9,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div>
-            <Image src="/logo.png" alt={siteConfig.nome} width={160} height={45} className="mb-4 h-10 w-auto" />
+            <Image src="/logo.png" alt={siteConfig.nome} width={313} height={88} className="mb-4 h-[88px] w-auto" />
             <p className="text-sm leading-relaxed text-lifitseg-offwhite/60">
               Consultoria e Arquitetura de Riscos Corporativos. Transição da corretagem tradicional
               para a governança de alta autoridade.

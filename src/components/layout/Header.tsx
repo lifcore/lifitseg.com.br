@@ -18,7 +18,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-lifitseg-dark text-lifitseg-offwhite">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
-          <Image src="/logo.png" alt={siteConfig.nome} width={140} height={40} className="h-9 w-auto" priority />
+          <Image src="/logo.png" alt={siteConfig.nome} width={231} height={66} className="h-[66px] w-auto" priority />
         </Link>
 
         {/* NAVEGAÇÃO PRINCIPAL — DESKTOP */}
