@@ -1,18 +1,31 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, Send } from 'lucide-react'
+import { Users, Send, Briefcase, ArrowLeft } from 'lucide-react'
 import { lifcoreApi } from '@/services/lifcoreApi'
 
 type Status = 'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'
+type Etapa = 'escolha' | 'formulario'
+type TipoCandidatura = 'corretor_externo' | 'candidato_interno'
 
 const ESTADO_INICIAL = {
   nome: '',
   email: '',
   telefone: '',
-  areaInteresse: '',
-  curriculoUrl: '',
+  cidadeRegiao: '',
+  experiencia: '',
   mensagem: '',
+  // Corretor Externo / Parceiro
+  tipoAtuacao: '',
+  corretora: '',
+  produtosTrabalhados: '',
+  susepCadastro: '',
+  operadorasRelacionamento: '',
+  // Candidato Interno
+  areaInteresse: '',
+  funcaoPretendida: '',
+  curriculoUrl: '',
+  disponibilidade: '',
 }
 
 export function TrabalheConoscoCTA() {
@@ -23,23 +36,35 @@ export function TrabalheConoscoCTA() {
       <button
         type="button"
         onClick={() => setModalAberto(true)}
-        className="inline-flex items-center gap-2 bg-[#E0A63D] hover:bg-[#c99333] text-[#05191b] font-bold px-8 py-3.5 rounded-xl transition-all text-sm shadow-md"
+        className="inline-flex items-center gap-2 bg-primary hover:opacity-90 text-lifitseg-dark font-bold px-8 py-3.5 rounded-xl transition-all text-sm shadow-md"
       >
         <Users className="w-4 h-4" strokeWidth={1.5} />
-        Enviar Currículo
+        Faça Parte da LifitSeg
       </button>
 
-      {modalAberto && <TrabalheConoscoModal onFechar={() => setModalAberto(false)} />}
+      {modalAberto && <FacaParteModal onFechar={() => setModalAberto(false)} />}
     </div>
   )
 }
 
-function TrabalheConoscoModal({ onFechar }: { onFechar: () => void }) {
+function FacaParteModal({ onFechar }: { onFechar: () => void }) {
+  const [etapa, setEtapa] = useState<Etapa>('escolha')
+  const [tipoCandidatura, setTipoCandidatura] = useState<TipoCandidatura | null>(null)
   const [form, setForm] = useState(ESTADO_INICIAL)
   const [status, setStatus] = useState<Status>('IDLE')
   const [errorMessage, setErrorMessage] = useState('')
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function escolherTipo(tipo: TipoCandidatura) {
+    setTipoCandidatura(tipo)
+    setEtapa('formulario')
+  }
+
+  function voltarParaEscolha() {
+    setEtapa('escolha')
+    setTipoCandidatura(null)
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
@@ -50,10 +75,11 @@ function TrabalheConoscoModal({ onFechar }: { onFechar: () => void }) {
     setErrorMessage('')
 
     try {
-      // CONNECT-002 — "Trabalhe Conosco": Website → Connect → People
+      // CONNECT-002 — "Faça Parte da LifitSeg": Website → Connect → People
       // (temporariamente Master, até o People Center existir).
       await lifcoreApi.submitCandidatura({
         origem: 'sobre-e-conhecimento',
+        tipoCandidatura,
         ...form,
       })
       setStatus('SUCCESS')
@@ -69,7 +95,7 @@ function TrabalheConoscoModal({ onFechar }: { onFechar: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-lifitseg-dark-deep/80 p-4 backdrop-blur-sm" onClick={onFechar}>
       <div
-        className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-lifitseg-dark p-6 shadow-2xl sm:p-8"
+        className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-lifitseg-dark p-6 shadow-2xl sm:p-8 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -86,15 +112,60 @@ function TrabalheConoscoModal({ onFechar }: { onFechar: () => void }) {
             </div>
             <h3 className="text-2xl font-bold text-lifitseg-offwhite">Recebemos seu contato!</h3>
             <p className="text-sm text-lifitseg-offwhite/70">
-              Seu interesse foi registrado. Se surgir uma oportunidade compatível, entraremos em contato.
+              Seu interesse foi registrado. Nossa equipe vai avaliar e entrar em contato quando fizer sentido.
             </p>
+          </div>
+        ) : etapa === 'escolha' ? (
+          <div>
+            <h3 className="mb-2 text-2xl font-bold text-lifitseg-offwhite">Faça Parte da LifitSeg</h3>
+            <p className="mb-6 text-sm text-lifitseg-offwhite/70">
+              Encontre uma forma de construir sua próxima oportunidade conosco. Como você gostaria de atuar?
+            </p>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={() => escolherTipo('corretor_externo')}
+                className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-lifitseg-dark-deep p-5 text-left transition-colors hover:border-primary"
+              >
+                <Briefcase className="h-6 w-6 shrink-0 text-primary" strokeWidth={1.5} />
+                <div>
+                  <p className="font-bold text-lifitseg-offwhite">Quero atuar como parceiro/corretor</p>
+                  <p className="mt-1 text-xs text-lifitseg-offwhite/60">
+                    Corretor PJ, autônomo ou corretora parceira — mesmo sem SUSEP ainda.
+                  </p>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => escolherTipo('candidato_interno')}
+                className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-lifitseg-dark-deep p-5 text-left transition-colors hover:border-primary"
+              >
+                <Users className="h-6 w-6 shrink-0 text-primary" strokeWidth={1.5} />
+                <div>
+                  <p className="font-bold text-lifitseg-offwhite">Quero trabalhar na LifitSeg</p>
+                  <p className="mt-1 text-xs text-lifitseg-offwhite/60">
+                    Vaga interna, CLT — comercial, administrativo ou corretagem.
+                  </p>
+                </div>
+              </button>
+            </div>
           </div>
         ) : (
           <div>
-            <h3 className="mb-2 text-2xl font-bold text-lifitseg-offwhite">Trabalhe Conosco</h3>
-            <p className="mb-6 text-xs text-lifitseg-offwhite/60">
-              Conte um pouco sobre você. Não temos upload de arquivo ainda — se tiver currículo online (LinkedIn, Drive), cole o link.
-            </p>
+            <button
+              type="button"
+              onClick={voltarParaEscolha}
+              className="mb-4 flex items-center gap-1.5 text-xs font-semibold text-lifitseg-offwhite/60 hover:text-primary"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Voltar
+            </button>
+
+            <h3 className="mb-6 text-2xl font-bold text-lifitseg-offwhite">
+              {tipoCandidatura === 'corretor_externo' ? 'Parceiro / Corretor' : 'Trabalhar na LifitSeg'}
+            </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -127,23 +198,107 @@ function TrabalheConoscoModal({ onFechar }: { onFechar: () => void }) {
                 />
               </div>
 
-              <input
-                type="text"
-                name="areaInteresse"
-                value={form.areaInteresse}
-                onChange={handleChange}
-                placeholder="Área de interesse"
-                className={inputClass}
-              />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <input
+                  type="text"
+                  name="cidadeRegiao"
+                  value={form.cidadeRegiao}
+                  onChange={handleChange}
+                  placeholder="Cidade/Região"
+                  className={inputClass}
+                />
+                <input
+                  type="text"
+                  name="experiencia"
+                  value={form.experiencia}
+                  onChange={handleChange}
+                  placeholder="Experiência (resumo)"
+                  className={inputClass}
+                />
+              </div>
 
-              <input
-                type="url"
-                name="curriculoUrl"
-                value={form.curriculoUrl}
-                onChange={handleChange}
-                placeholder="Link do currículo ou LinkedIn (opcional)"
-                className={inputClass}
-              />
+              {tipoCandidatura === 'corretor_externo' ? (
+                <>
+                  <select
+                    name="tipoAtuacao"
+                    value={form.tipoAtuacao}
+                    onChange={handleChange}
+                    className={inputClass}
+                  >
+                    <option value="">Tipo de atuação (opcional)</option>
+                    <option value="PJ">PJ</option>
+                    <option value="PF">PF</option>
+                    <option value="Ainda não definido">Ainda não definido</option>
+                  </select>
+                  <input
+                    type="text"
+                    name="corretora"
+                    value={form.corretora}
+                    onChange={handleChange}
+                    placeholder="Corretora (se tiver)"
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    name="produtosTrabalhados"
+                    value={form.produtosTrabalhados}
+                    onChange={handleChange}
+                    placeholder="Produtos que já trabalha"
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    name="susepCadastro"
+                    value={form.susepCadastro}
+                    onChange={handleChange}
+                    placeholder="SUSEP/cadastro (se tiver)"
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    name="operadorasRelacionamento"
+                    value={form.operadorasRelacionamento}
+                    onChange={handleChange}
+                    placeholder="Seguradoras/operadoras com relacionamento"
+                    className={inputClass}
+                  />
+                </>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    name="areaInteresse"
+                    value={form.areaInteresse}
+                    onChange={handleChange}
+                    placeholder="Área de interesse"
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    name="funcaoPretendida"
+                    value={form.funcaoPretendida}
+                    onChange={handleChange}
+                    placeholder="Função pretendida"
+                    className={inputClass}
+                  />
+                  <input
+                    type="url"
+                    name="curriculoUrl"
+                    value={form.curriculoUrl}
+                    onChange={handleChange}
+                    placeholder="Link do currículo ou LinkedIn (opcional)"
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    name="disponibilidade"
+                    value={form.disponibilidade}
+                    onChange={handleChange}
+                    placeholder="Disponibilidade"
+                    className={inputClass}
+                  />
+                </>
+              )}
 
               <textarea
                 name="mensagem"
