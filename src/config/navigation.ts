@@ -1,5 +1,7 @@
 // src/config/navigation.ts
 
+import { ESPECIALIDADES_SAUDE } from './referenciasSaudeEspecialidades'
+
 export type ItemNavegacao = {
   label: string
   href: string
@@ -38,3 +40,13 @@ export const NAV_INSTITUCIONAL: ItemNavegacao[] = [
   { label: 'Sobre a LifitSeg', href: '/sobre-e-conhecimento#sobre' },
   { label: 'Centro de Conhecimento', href: '/sobre-e-conhecimento#conhecimento' },
 ]
+
+/**
+ * Submenu "Referências em Saúde" (briefing do Chief, 11/08) —
+ * derivado direto de ESPECIALIDADES_SAUDE, nunca uma segunda lista
+ * escrita à mão (evita as duas divergirem com o tempo).
+ */
+export const NAV_REFERENCIAS_SAUDE: ItemNavegacao[] = ESPECIALIDADES_SAUDE.map((e) => ({
+  label: e.nome,
+  href: `/referencias-saude/${e.slug}`,
+}))
