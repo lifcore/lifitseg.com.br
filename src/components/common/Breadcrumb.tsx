@@ -14,13 +14,13 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <nav aria-label="breadcrumb" className="bg-[#F7F4EF] border-b border-[#05191b]/5">
+    <nav aria-label="breadcrumb" className="bg-[#e1e7e1] border-b border-[#00393f]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <ol className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           <li className="flex items-center gap-2">
             <Link
               href="/"
-              className="flex items-center gap-1 text-[#05191b]/50 transition-colors hover:text-[#E0A63D]"
+              className="flex items-center gap-1 text-[#00393f]/50 transition-colors hover:text-[#e2a535]"
             >
               <Home className="h-3.5 w-3.5" />
               <span>Início</span>
@@ -28,16 +28,16 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
           </li>
           {items.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2">
-              <ChevronRight className="h-3.5 w-3.5 text-[#05191b]/30" />
+              <ChevronRight className="h-3.5 w-3.5 text-[#00393f]/30" />
               {item.href ? (
                 <Link
                   href={item.href}
-                  className="font-medium text-[#05191b]/50 transition-colors hover:text-[#E0A63D]"
+                  className="font-medium text-[#00393f]/50 transition-colors hover:text-[#e2a535]"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className="font-bold text-[#05191b]">{item.label}</span>
+                <span className="font-bold text-[#00393f]">{item.label}</span>
               )}
             </li>
           ))}

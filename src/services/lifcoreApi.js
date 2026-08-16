@@ -57,6 +57,57 @@ async function postToFunction(functionName, payload) {
   }
 }
 
+/**
+ * Adaptadores de LEITURA (GET) — pro módulo Referências em Saúde e
+ * qualquer outra Edge Function futura de leitura pública. Separado
+ * dos adaptadores de POST acima porque a forma de montar a URL
+ * (query string, sem body) e o método HTTP são diferentes.
+ */
+const mockAdapterGet = async (endpoint, params) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`[LifCore MOCK] GET Endpoint: ${endpoint}`, params)
+      resolve({ success: true, data: [] })
+    }, 300)
+  })
+}
+
+const realAdapterGet = async (endpoint, params) => {
+  const query = params && Object.keys(params).length > 0
+    ? '?' + new URLSearchParams(params).toString()
+    : ''
+  const url = `${LifCoreConfig.baseUrl}${endpoint}${query}`
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-LifCore-Client': 'LifitSeg-WebFront',
+    },
+  })
+
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => ({}))
+    throw new Error(errorBody.message || `Erro de comunicação com o servidor: ${response.status}`)
+  }
+
+  return await response.json()
+}
+
+/** Chama uma Supabase Edge Function de LEITURA pelo nome (ex: 'listar-referencias-saude'). */
+async function getFromFunction(functionName, params) {
+  const endpoint = `/${functionName}`
+  try {
+    if (LifCoreConfig.useMock) {
+      return await mockAdapterGet(endpoint, params)
+    }
+    return await realAdapterGet(endpoint, params)
+  } catch (error) {
+    console.error('[LifCore API Error]:', error)
+    throw error
+  }
+}
+
 export const lifcoreApi = {
   /**
    * Usado pelo LeadModal (via useLifCoreLead). Bate na function
@@ -95,5 +146,23 @@ export const lifcoreApi = {
       throw new Error('Campos obrigatórios ausentes: Nome e E-mail são fundamentais.')
     }
     return postToFunction('receber-trabalhe-conosco', payload)
+  },
+
+  /**
+   * Módulo Referências em Saúde (V1, doc do Chief). Leitura pública,
+   * sem autenticação — bate na function `listar-referencias-saude`,
+   * já publicada e testada no Supabase.
+   *
+   * Sem argumentos: lista tudo (exceto MONITORAMENTO/INATIVO).
+   * `slug`: busca 1 instituição específica (qualquer status).
+   * `regiao`/`especialidade`/`patologia`: filtros combináveis.
+   */
+  async listarReferenciasSaude({ slug, regiao, especialidade, patologia } = {}) {
+    const params = {}
+    if (slug) params.slug = slug
+    if (regiao) params.regiao = regiao
+    if (especialidade) params.especialidade = especialidade
+    if (patologia) params.patologia = patologia
+    return getFromFunction('listar-referencias-saude', params)
   },
 }
