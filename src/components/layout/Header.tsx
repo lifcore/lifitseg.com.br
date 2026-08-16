@@ -91,14 +91,17 @@ export function Header() {
               </Link>
 
               {referenciasSaudeAberto && (
-                <div className="absolute top-full left-1/2 mt-1 grid w-72 -translate-x-1/2 grid-cols-2 gap-2 rounded-2xl border border-primary/30 bg-lifitseg-dark p-4 shadow-2xl">
+                <div className="absolute top-full left-1/2 mt-1 grid w-80 -translate-x-1/2 gap-2 rounded-2xl border border-primary/30 bg-lifitseg-dark p-4 shadow-2xl">
                   {NAV_REFERENCIAS_SAUDE.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-xl p-3 text-center transition-colors hover:bg-lifitseg-surface"
+                      className="block rounded-xl p-3 transition-colors hover:bg-lifitseg-surface"
                     >
                       <p className="text-sm font-bold text-lifitseg-offwhite">{item.label}</p>
+                      {item.descricao && (
+                        <p className="mt-0.5 text-xs text-lifitseg-offwhite/60">{item.descricao}</p>
+                      )}
                     </Link>
                   ))}
                 </div>
@@ -169,13 +172,6 @@ export function Header() {
 
           <div className="space-y-2 border-l-2 border-primary/40 py-2 pl-4">
             <p className="text-xs font-bold text-primary uppercase">Referências em Saúde</p>
-            <Link
-              href="/referencias-saude"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-1 text-sm font-semibold text-lifitseg-offwhite"
-            >
-              Ver todas as especialidades
-            </Link>
             {NAV_REFERENCIAS_SAUDE.map((item) => (
               <Link
                 key={item.href}

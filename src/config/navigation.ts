@@ -1,7 +1,5 @@
 // src/config/navigation.ts
 
-import { ESPECIALIDADES_SAUDE } from './referenciasSaudeEspecialidades'
-
 export type ItemNavegacao = {
   label: string
   href: string
@@ -42,11 +40,16 @@ export const NAV_INSTITUCIONAL: ItemNavegacao[] = [
 ]
 
 /**
- * Submenu "Referências em Saúde" (briefing do Chief, 11/08) —
- * derivado direto de ESPECIALIDADES_SAUDE, nunca uma segunda lista
- * escrita à mão (evita as duas divergirem com o tempo).
+ * Submenu "Referências em Saúde" — ATUALIZADO (doc
+ * REFERENCIAS_SAUDE_003, Etapa E): passou de lista direta de
+ * especialidades pra 4 categorias oficiais. Cada uma leva pra uma
+ * página própria com seleção de região (Hospitais/Laboratórios/
+ * Clínicas) ou lista de especialidades (Por Especialidades) — nunca
+ * lista instituição direto no menu.
  */
-export const NAV_REFERENCIAS_SAUDE: ItemNavegacao[] = ESPECIALIDADES_SAUDE.map((e) => ({
-  label: e.nome,
-  href: `/referencias-saude/${e.slug}`,
-}))
+export const NAV_REFERENCIAS_SAUDE: ItemNavegacao[] = [
+  { label: 'Hospitais', href: '/referencias-saude/hospitais', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
+  { label: 'Laboratórios', href: '/referencias-saude/laboratorios', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
+  { label: 'Clínicas', href: '/referencias-saude/clinicas', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
+  { label: 'Por Especialidades', href: '/referencias-saude/especialidades', descricao: 'Cardiologia, Oncologia e mais 28 outras' },
+]

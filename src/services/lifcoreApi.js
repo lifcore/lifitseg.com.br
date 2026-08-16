@@ -157,10 +157,11 @@ export const lifcoreApi = {
    * `slug`: busca 1 instituição específica (qualquer status).
    * `regiao`/`especialidade`/`patologia`: filtros combináveis.
    */
-  async listarReferenciasSaude({ slug, regiao, especialidade, patologia } = {}) {
+  async listarReferenciasSaude({ slug, regiao, tipo, especialidade, patologia } = {}) {
     const params = {}
     if (slug) params.slug = slug
     if (regiao) params.regiao = regiao
+    if (tipo) params.tipo = tipo
     if (especialidade) params.especialidade = especialidade
     if (patologia) params.patologia = patologia
     return getFromFunction('listar-referencias-saude', params)
