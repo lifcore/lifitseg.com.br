@@ -7,30 +7,76 @@ import { LeadModal } from '@/components/forms/LeadModal'
 // ==========================================
 // MOCK DATA & CONSTANTS
 // ==========================================
+// NOTA: categoria/destaque abaixo é uma classificação nossa em cima do array já existente
+// (spec WEB-001 pede separar Saúde/Benefícios de Seguros). Confirmar com Raphael se algum
+// item ficou na categoria errada — em especial Sobam e Yelum, cuja atuação exata não temos
+// 100% de certeza (assumimos Sobam como operador de saúde regional e Yelum como seguradora).
 const OPERATORS = [
-  { name: 'Bradesco Saúde', file: 'bradesco' },
-  { name: 'SulAmérica', file: 'sulamerica' },
-  { name: 'Amil', file: 'amil' },
-  { name: 'Porto Seguro', file: 'porto' },
-  { name: 'Omint', file: 'omint' },
-  { name: 'Care Plus', file: 'careplus' },
-  { name: 'Unimed', file: 'unimed' },
-  { name: 'Seguros Unimed', file: 'seguros_unimed' },
-  { name: 'Tokio Marine', file: 'tokio' },
-  { name: 'Liberty Seguros', file: 'liberty' },
-  { name: 'Mapfre', file: 'mapfre' },
-  { name: 'Sobam', file: 'sobam' },
-  { name: 'Hapvida', file: 'hapvida' },
-  { name: 'Allianz', file: 'allianz' },
-  { name: 'HDI Seguros', file: 'hdi' },
-  { name: 'Yelum', file: 'yelum' },
-  { name: 'Suhai', file: 'suhai' },
-  { name: 'Alice', file: 'alice' },
-  { name: 'Sami', file: 'sami' },
-  { name: 'New Leader Saúde', file: 'new' },
-  { name: 'Plena Saúde', file: 'plena' },
-  { name: 'Única Saúde', file: 'unica' },
-  { name: 'Zurich', file: 'zurich' },
+  { name: 'Bradesco Saúde', file: 'bradesco', categoria: 'saude', destaque: true },
+  { name: 'SulAmérica', file: 'sulamerica', categoria: 'saude', destaque: true },
+  { name: 'Amil', file: 'amil', categoria: 'saude', destaque: true },
+  { name: 'Porto Seguro', file: 'porto', categoria: 'saude', destaque: true },
+  { name: 'Omint', file: 'omint', categoria: 'saude', destaque: false },
+  { name: 'Care Plus', file: 'careplus', categoria: 'saude', destaque: false },
+  { name: 'Unimed', file: 'unimed', categoria: 'saude', destaque: true },
+  { name: 'Seguros Unimed', file: 'seguros_unimed', categoria: 'seguros', destaque: false },
+  { name: 'Tokio Marine', file: 'tokio', categoria: 'seguros', destaque: false },
+  { name: 'Liberty Seguros', file: 'liberty', categoria: 'seguros', destaque: false },
+  { name: 'Mapfre', file: 'mapfre', categoria: 'seguros', destaque: false },
+  { name: 'Sobam', file: 'sobam', categoria: 'saude', destaque: false },
+  { name: 'Hapvida', file: 'hapvida', categoria: 'saude', destaque: true },
+  { name: 'Allianz', file: 'allianz', categoria: 'seguros', destaque: false },
+  { name: 'HDI Seguros', file: 'hdi', categoria: 'seguros', destaque: false },
+  { name: 'Yelum', file: 'yelum', categoria: 'seguros', destaque: false },
+  { name: 'Suhai', file: 'suhai', categoria: 'seguros', destaque: false },
+  { name: 'Alice', file: 'alice', categoria: 'saude', destaque: false },
+  { name: 'Sami', file: 'sami', categoria: 'saude', destaque: false },
+  { name: 'New Leader Saúde', file: 'new', categoria: 'saude', destaque: false },
+  { name: 'Plena Saúde', file: 'plena', categoria: 'saude', destaque: false },
+  { name: 'Única Saúde', file: 'unica', categoria: 'saude', destaque: false },
+  { name: 'Zurich', file: 'zurich', categoria: 'seguros', destaque: false },
+]
+
+const DORES = [
+  'Seu plano está ficando caro a cada renovação?',
+  'Você sente que paga muito e recebe pouco?',
+  'A rede assistencial atende realmente o que sua equipe precisa?',
+  'Seu RH está absorvendo demandas que deveriam estar com a consultoria?',
+  'Você tem dificuldade para falar com o intermediador quando surge um problema?',
+  'Sua empresa não sabe exatamente o que está provocando a sinistralidade?',
+]
+
+const COMO_RESOLVEMOS = [
+  {
+    title: 'Comparação de Operadoras',
+    description:
+      'Análise técnica e imparcial entre as principais operadoras do mercado, sem vínculo que comprometa a recomendação.',
+  },
+  {
+    title: 'Análise Contratual',
+    description:
+      'Revisão detalhada de cláusulas, reajustes e coparticipação para identificar riscos e oportunidades.',
+  },
+  {
+    title: 'Negociação de Reajustes',
+    description:
+      'Dossiê técnico e argumentação baseada em dados para contestar aumentos desproporcionais na renovação.',
+  },
+  {
+    title: 'Gestão do Benefício',
+    description:
+      'Acompanhamento contínuo da apólice, sinistralidade e utilização ao longo de todo o contrato.',
+  },
+  {
+    title: 'Suporte ao RH',
+    description:
+      'Absorvemos as demandas operacionais do dia a dia: movimentações cadastrais, sinistros e reembolsos.',
+  },
+  {
+    title: 'Acompanhamento Próximo',
+    description:
+      'Canal direto com a LifitSeg, sem depender de centrais de atendimento genéricas da operadora.',
+  },
 ]
 
 const AUDIENCES = [
@@ -71,9 +117,9 @@ const DIFFERENTIALS = [
   },
   {
     number: '03',
-    title: 'Zero Fricção Operacional',
+    title: 'Seu RH não deveria ser o SAC do plano de saúde',
     description:
-      'Assumimos 100% das demandas burocráticas do seu RH: movimentações cadastrais, sinistros, reembolso e conciliação de faturas.',
+      'Assumimos as demandas burocráticas: movimentações cadastrais, sinistros, reembolso e conciliação de faturas.',
     badge: 'Suporte ao RH',
   },
   {
@@ -217,53 +263,160 @@ export default function HomePage() {
             </div>
 
             <h1 className="mb-6 text-4xl leading-[1.1] font-black tracking-tight sm:text-5xl lg:text-6xl">
-              Benefícios e seguros pensados para o que realmente importa para você e para o seu
-              negócio
+              Seu plano de saúde está custando mais do que deveria? Ou entregando menos do que
+              você ou sua empresa precisa?
             </h1>
 
             <p className="mb-10 text-lg leading-relaxed font-normal text-lifitseg-offwhite/70 sm:text-xl">
-              Da escolha da proteção à gestão da sua carteira, a LifitSeg combina conhecimento de
-              mercado, análise e atendimento próximo para ajudar você a tomar decisões melhores.
+              A LifitSeg compara operadoras, analisa contratos, negocia reajustes e assume a
+              gestão do benefício para reduzir custos e diminuir o trabalho operacional do RH.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
-                onClick={() => abrirModal()}
+                onClick={() => abrirModal('Diagnóstico de Plano')}
                 className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-8 py-4 text-base font-semibold text-lifitseg-dark shadow-xl transition-all hover:-translate-y-0.5 hover:opacity-90 active:translate-y-0 sm:w-auto"
               >
-                <span>Falar com um Especialista</span>
+                <span>Solicitar Diagnóstico</span>
                 <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
               <a
-                href="#solucoes"
+                href="#operadoras"
                 className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-8 py-4 text-base font-semibold text-lifitseg-offwhite transition-all hover:border-white/25 hover:bg-white/5 sm:w-auto"
               >
-                Conhecer nossas soluções
+                Comparar Operadoras
               </a>
             </div>
 
-            <div className="mt-14 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 text-center md:grid-cols-3">
-              <div>
-                <p className="text-2xl font-extrabold sm:text-3xl">99.2%</p>
-                <p className="mt-1 text-xs font-medium tracking-wider text-lifitseg-offwhite/60 uppercase">
-                  Retenção de Clientes
-                </p>
-              </div>
-              <div>
-                <p className="text-2xl font-extrabold sm:text-3xl">100%</p>
-                <p className="mt-1 text-xs font-medium tracking-wider text-lifitseg-offwhite/60 uppercase">
-                  Isenção de Fricção no RH
-                </p>
-              </div>
-              <div className="col-span-2 md:col-span-1">
-                <p className="text-2xl font-extrabold text-primary sm:text-3xl">LifCore</p>
-                <p className="mt-1 text-xs font-medium tracking-wider text-lifitseg-offwhite/60 uppercase">
-                  Gestão em Tempo Real
-                </p>
-              </div>
+            {/* Prova real (não números fabricados) — mesma avaliação Google já publicada em Sobre e Conhecimento */}
+            <div className="mt-14 flex flex-col items-center justify-center gap-4 border-t border-white/10 pt-8 sm:flex-row sm:gap-10">
+              <a
+                href="https://share.google/lQoH1vfK1Kqz2W04m"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-lifitseg-offwhite/80 transition-colors hover:text-lifitseg-offwhite"
+              >
+                <span className="flex text-primary">
+                  {'★★★★★'.split('').map((s, i) => (
+                    <span key={i}>{s}</span>
+                  ))}
+                </span>
+                <span className="text-sm font-semibold">4.9 no Google</span>
+                <span className="text-xs text-lifitseg-offwhite/50">(41 avaliações)</span>
+              </a>
+              <span className="hidden h-4 w-px bg-white/10 sm:block" />
+              <span className="text-xs font-medium tracking-wider text-lifitseg-offwhite/50 uppercase">
+                Consultor certificado SUSEP
+              </span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DORES — branco */}
+      <section id="dores" className="bg-white py-20">
+        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+          <span className="mb-3 block text-xs font-bold tracking-widest text-primary uppercase">
+            Reconhece isso?
+          </span>
+          <h2 className="mb-12 text-3xl font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
+            Os problemas que mais custam caro costumam passar despercebidos
+          </h2>
+
+          <div className="grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
+            {DORES.map((dor, idx) => (
+              <div
+                key={idx}
+                className="flex items-start gap-3 rounded-xl border border-black/10 bg-lifitseg-offwhite p-5"
+              >
+                <span className="mt-0.5 text-primary">●</span>
+                <p className="text-sm leading-relaxed text-lifitseg-dark/75">{dor}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-10 max-w-2xl text-base font-semibold text-lifitseg-dark">
+            É possível ter uma operação mais simples, com mais acompanhamento e menos fricção.
+          </p>
+        </div>
+      </section>
+
+      {/* COMO A LIFITSEG RESOLVE — off-white */}
+      <section id="como-resolvemos" className="bg-lifitseg-offwhite py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <span className="mb-3 block text-xs font-bold tracking-widest text-primary uppercase">
+              Como atuamos
+            </span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
+              A LifitSeg assume o que hoje sobra para o seu RH
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {COMO_RESOLVEMOS.map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition-all hover:border-primary/40"
+              >
+                <h3 className="mb-2 text-base font-bold text-lifitseg-dark">{item.title}</h3>
+                <p className="text-xs leading-relaxed text-lifitseg-dark/60">{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => abrirModal('Diagnóstico de Plano')}
+              className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 text-sm font-semibold text-lifitseg-dark shadow-lg transition-all hover:opacity-90"
+            >
+              Solicitar Diagnóstico
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* PROVA / AUTORIDADE — branco (prova real disponível hoje; cases de clientes entram aqui quando autorizados) */}
+      <section id="prova" className="bg-white py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+            <a
+              href="https://share.google/lQoH1vfK1Kqz2W04m"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col justify-between rounded-2xl border border-black/10 bg-lifitseg-offwhite p-8 transition-all hover:border-primary/40"
+            >
+              <div>
+                <span className="flex text-lg text-primary">
+                  {'★★★★★'.split('').map((s, i) => (
+                    <span key={i}>{s}</span>
+                  ))}
+                </span>
+                <p className="mt-3 text-2xl font-black text-lifitseg-dark">4.9 / 5.0</p>
+                <p className="mt-1 text-sm text-lifitseg-dark/60">41 avaliações reais no Google</p>
+              </div>
+              <span className="mt-6 text-xs font-semibold text-primary group-hover:underline">
+                Ver avaliações →
+              </span>
+            </a>
+
+            <a
+              href="/sobre-e-conhecimento#quem-somos"
+              className="flex flex-col justify-between rounded-2xl border border-black/10 bg-lifitseg-offwhite p-8 transition-all hover:border-primary/40"
+            >
+              <div>
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-lifitseg-dark text-sm font-bold text-lifitseg-offwhite">
+                  RA
+                </div>
+                <p className="text-lg font-bold text-lifitseg-dark">Raphael Abaid</p>
+                <p className="mt-1 text-sm text-lifitseg-dark/60">
+                  Sócio Diretor · Certificação SUSEP · MBA em Gestão de Saúde
+                </p>
+              </div>
+              <span className="mt-6 text-xs font-semibold text-primary">Conheça o fundador →</span>
+            </a>
           </div>
         </div>
       </section>
@@ -300,14 +453,127 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAIXA DE OPERADORAS — off-white com logos e nomes */}
-      <section className="bg-lifitseg-offwhite py-12">
+      {/* SAÚDE & BENEFÍCIOS — protagonismo + entrada para Referências em Saúde — branco */}
+      <section id="saude-beneficios" className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <span className="mb-3 block text-xs font-bold tracking-widest text-primary uppercase">
+                Nosso principal negócio
+              </span>
+              <h2 className="mb-6 text-3xl leading-tight font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
+                Saúde &amp; Benefícios Corporativos
+              </h2>
+              <p className="mb-6 text-base leading-relaxed text-lifitseg-dark/70">
+                Planos de saúde e odontológicos PME e corporativos, com redesenho de apólices,
+                coparticipação inteligente e negociação técnica de reajustes.
+              </p>
+              <a
+                href="/beneficios-corporativos"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:opacity-80"
+              >
+                <span>Conhecer Benefícios Corporativos</span>
+                <span>→</span>
+              </a>
+            </div>
+
+            {/* Bloco de acesso a Referências em Saúde — entrada, não duplica o catálogo */}
+            <div className="rounded-2xl border border-black/10 bg-lifitseg-offwhite p-8 lg:col-span-5">
+              <h3 className="mb-2 text-lg font-bold text-lifitseg-dark">Referências em Saúde</h3>
+              <p className="mb-6 text-sm leading-relaxed text-lifitseg-dark/60">
+                Encontre hospitais, laboratórios e clínicas de referência, organizados por região
+                e especialidade, para saber exatamente o que o seu plano precisa cobrir.
+              </p>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="/referencias-saude"
+                  className="inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-lifitseg-dark shadow-lg transition-opacity hover:opacity-90"
+                >
+                  Explorar Referências em Saúde
+                </a>
+                <button
+                  onClick={() => abrirModal('Referência em Saúde')}
+                  className="inline-flex items-center justify-center rounded-xl border border-black/10 px-6 py-3.5 text-sm font-semibold text-lifitseg-dark transition-colors hover:border-primary"
+                >
+                  Encontrar um plano com acesso
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEGUROS — apresentação enxuta, aprofundamento nas páginas específicas — off-white */}
+      <section id="seguros" className="bg-lifitseg-offwhite py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <span className="mb-3 block text-xs font-bold tracking-widest text-primary uppercase">
+              Além da saúde
+            </span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-lifitseg-dark sm:text-4xl">
+              Seguros
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <a
+              href="/seguros-corporativos"
+              className="rounded-2xl border border-black/10 bg-white p-8 transition-all hover:border-primary/40"
+            >
+              <h3 className="mb-2 text-lg font-bold text-lifitseg-dark">Seguros Corporativos</h3>
+              <p className="text-sm leading-relaxed text-lifitseg-dark/60">
+                Patrimônio, frota, responsabilidade civil e garantias para o seu negócio.
+              </p>
+            </a>
+            <a
+              href="/seguros-pessoais"
+              className="rounded-2xl border border-black/10 bg-white p-8 transition-all hover:border-primary/40"
+            >
+              <h3 className="mb-2 text-lg font-bold text-lifitseg-dark">Seguros Pessoais</h3>
+              <p className="text-sm leading-relaxed text-lifitseg-dark/60">
+                Auto, residencial, vida e proteção para você e sua família.
+              </p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAIXA DE OPERADORAS — off-white, dividida Saúde/Benefícios vs Seguros */}
+      <section id="operadoras" className="bg-lifitseg-offwhite py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="mb-8 text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase">
             Independência técnica com acesso às principais seguradoras e operadoras do mercado
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            {OPERATORS.map((op, idx) => (
+
+          <p className="mb-4 text-xs font-bold tracking-wider text-primary uppercase">
+            Saúde &amp; Benefícios
+          </p>
+          <div className="mb-10 flex flex-wrap items-center gap-4 sm:gap-6">
+            {OPERATORS.filter((op) => op.categoria === 'saude').map((op, idx) => (
+              <div
+                key={idx}
+                className={`flex flex-col items-center justify-center rounded-2xl border bg-white px-5 py-4 text-center shadow-sm transition-all hover:shadow-md ${
+                  op.destaque ? 'border-primary/30 hover:border-primary/60' : 'border-black/10 hover:border-primary/40'
+                }`}
+              >
+                <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
+                  <Image
+                    src={`/seguradoras/${op.file}.png`}
+                    alt={op.name}
+                    width={96}
+                    height={40}
+                    className="max-h-10 w-auto object-contain"
+                  />
+                </div>
+                <span className="text-xs font-bold tracking-tight text-lifitseg-dark/80">
+                  {op.name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <p className="mb-4 text-xs font-bold tracking-wider text-primary uppercase">Seguros</p>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            {OPERATORS.filter((op) => op.categoria === 'seguros').map((op, idx) => (
               <div
                 key={idx}
                 className="flex flex-col items-center justify-center rounded-2xl border border-black/10 bg-white px-5 py-4 text-center shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
@@ -620,8 +886,8 @@ export default function HomePage() {
                     <span className="text-lifitseg-success">AUTOMATED</span>
                   </div>
                   <div className="flex justify-between rounded-lg border border-white/10 bg-white/5 p-3 text-lifitseg-offwhite/70">
-                    <span>› SLA Resposta Média:</span>
-                    <span className="text-primary">&lt; 15 min</span>
+                    <span>› Acompanhamento:</span>
+                    <span className="text-primary">Contínuo</span>
                   </div>
                   <div className="flex justify-between rounded-lg border border-white/10 bg-white/5 p-3 text-lifitseg-offwhite/70">
                     <span>› Rastreabilidade:</span>
