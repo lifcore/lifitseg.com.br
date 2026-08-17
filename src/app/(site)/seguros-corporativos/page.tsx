@@ -145,6 +145,8 @@ export default function SegurosCorporativosPage() {
   // seguradoras atuam especificamente em corporativo vs pessoal, então por ora mantemos
   // a lista completa aqui e em Seguros Pessoais.
   const seguradoras = [
+    { nome: 'Bradesco Seguros', arquivo: 'bradesco' },
+    { nome: 'Porto Seguro', arquivo: 'porto' },
     { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
     { nome: 'Tokio Marine', arquivo: 'tokio' },
     { nome: 'Liberty Seguros', arquivo: 'liberty' },
@@ -154,6 +156,9 @@ export default function SegurosCorporativosPage() {
     { nome: 'Yelum', arquivo: 'yelum' },
     { nome: 'Suhai', arquivo: 'suhai' },
     { nome: 'Zurich', arquivo: 'zurich' },
+    { nome: 'Itaú Seguros', arquivo: 'itau' },
+    { nome: 'Azul Seguros', arquivo: 'azul' },
+    { nome: 'Mitsui Sumitomo', arquivo: 'mitsui' },
   ]
 
   return (

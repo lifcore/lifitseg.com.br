@@ -90,6 +90,8 @@ export default function SegurosPessoaisPage() {
   // (categoria 'seguros'); ainda não temos confirmação de quais atuam especificamente em
   // linhas pessoais vs corporativas, então por ora a lista é a mesma nas duas páginas.
   const seguradoras = [
+    { nome: 'Bradesco Seguros', arquivo: 'bradesco' },
+    { nome: 'Porto Seguro', arquivo: 'porto' },
     { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
     { nome: 'Tokio Marine', arquivo: 'tokio' },
     { nome: 'Liberty Seguros', arquivo: 'liberty' },
@@ -99,6 +101,9 @@ export default function SegurosPessoaisPage() {
     { nome: 'Yelum', arquivo: 'yelum' },
     { nome: 'Suhai', arquivo: 'suhai' },
     { nome: 'Zurich', arquivo: 'zurich' },
+    { nome: 'Itaú Seguros', arquivo: 'itau' },
+    { nome: 'Azul Seguros', arquivo: 'azul' },
+    { nome: 'Mitsui Sumitomo', arquivo: 'mitsui' },
   ]
 
   // Seção 06 — FAQ
