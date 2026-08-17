@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-/** Rótulo de seção discreto — pequeno, sem gritar. Substitui o antigo "ESPECIALIDADES" grande/maiúsculo. */
+/** Rótulo de seção — dourado/primary, maiúsculo (ajuste pedido pelo Raphael em 17/08). */
 function RotuloSecao({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-lifitseg-dark/40">{children}</h2>
+  return <h2 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-primary">{children}</h2>
 }
 
 function ChipsLista({ itens }: { itens: string[] }) {
