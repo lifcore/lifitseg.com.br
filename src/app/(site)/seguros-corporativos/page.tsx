@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import { LeadModal } from '@/components/forms/LeadModal'
 import {
@@ -139,7 +140,21 @@ export default function SegurosCorporativosPage() {
     { label: 'Construção', icon: HardHat },
   ]
 
-
+  // Seguradoras parceiras — mesmo cadastro/logos usados na Home (categoria 'seguros'),
+  // não é lista exclusiva de linhas corporativas: ainda não temos confirmação de quais
+  // seguradoras atuam especificamente em corporativo vs pessoal, então por ora mantemos
+  // a lista completa aqui e em Seguros Pessoais.
+  const seguradoras = [
+    { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
+    { nome: 'Tokio Marine', arquivo: 'tokio' },
+    { nome: 'Liberty Seguros', arquivo: 'liberty' },
+    { nome: 'Mapfre', arquivo: 'mapfre' },
+    { nome: 'Allianz', arquivo: 'allianz' },
+    { nome: 'HDI Seguros', arquivo: 'hdi' },
+    { nome: 'Yelum', arquivo: 'yelum' },
+    { nome: 'Suhai', arquivo: 'suhai' },
+    { nome: 'Zurich', arquivo: 'zurich' },
+  ]
 
   return (
     <>
@@ -321,6 +336,34 @@ export default function SegurosCorporativosPage() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. SEGURADORAS PARCEIRAS (Off White) */}
+      <section className="py-20 bg-lifitseg-offwhite border-b border-lifitseg-dark/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase mb-10">
+            Seguradoras parceiras
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            {seguradoras.map((seg, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col items-center justify-center rounded-2xl border border-lifitseg-dark/10 bg-white px-5 py-4 text-center shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+              >
+                <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
+                  <Image
+                    src={`/seguradoras/${seg.arquivo}.png`}
+                    alt={seg.nome}
+                    width={96}
+                    height={40}
+                    className="max-h-10 w-auto object-contain"
+                  />
+                </div>
+                <span className="text-xs font-bold tracking-tight text-lifitseg-dark/80">{seg.nome}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

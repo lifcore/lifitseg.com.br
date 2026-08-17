@@ -537,46 +537,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAIXA DE OPERADORAS — off-white, dividida Saúde/Benefícios vs Seguros */}
+      {/* FAIXA DE OPERADORAS — off-white, só Saúde & Benefícios (Seguros ficou nas páginas de Seguros Corporativos/Pessoais) */}
       <section id="operadoras" className="bg-lifitseg-offwhite py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="mb-8 text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase">
-            Independência técnica com acesso às principais seguradoras e operadoras do mercado
+            Independência técnica com acesso às principais operadoras de Saúde do mercado
           </p>
 
-          <p className="mb-4 text-xs font-bold tracking-wider text-primary uppercase">
-            Saúde &amp; Benefícios
-          </p>
-          <div className="mb-10 flex flex-wrap items-center gap-4 sm:gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {OPERATORS.filter((op) => op.categoria === 'saude').map((op, idx) => (
               <div
                 key={idx}
                 className={`flex flex-col items-center justify-center rounded-2xl border bg-white px-5 py-4 text-center shadow-sm transition-all hover:shadow-md ${
                   op.destaque ? 'border-primary/30 hover:border-primary/60' : 'border-black/10 hover:border-primary/40'
                 }`}
-              >
-                <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
-                  <Image
-                    src={`/seguradoras/${op.file}.png`}
-                    alt={op.name}
-                    width={96}
-                    height={40}
-                    className="max-h-10 w-auto object-contain"
-                  />
-                </div>
-                <span className="text-xs font-bold tracking-tight text-lifitseg-dark/80">
-                  {op.name}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <p className="mb-4 text-xs font-bold tracking-wider text-primary uppercase">Seguros</p>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            {OPERATORS.filter((op) => op.categoria === 'seguros').map((op, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center justify-center rounded-2xl border border-black/10 bg-white px-5 py-4 text-center shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
               >
                 <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
                   <Image
