@@ -14,7 +14,7 @@ export function Header() {
   const [modalAberto, setModalAberto] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-primary/20 bg-lifitseg-dark/95 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-primary/20 bg-lifitseg-dark">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="group flex items-center">
