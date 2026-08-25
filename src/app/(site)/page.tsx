@@ -25,6 +25,7 @@ const OPERATORS = [
   { name: 'Mapfre', file: 'mapfre', categoria: 'seguros', destaque: false },
   { name: 'Sobam', file: 'sobam', categoria: 'saude', destaque: false },
   { name: 'Hapvida', file: 'hapvida', categoria: 'saude', destaque: true },
+  { name: 'NotreDame', file: 'notredame', categoria: 'saude', destaque: false },
   { name: 'Allianz', file: 'allianz', categoria: 'seguros', destaque: false },
   { name: 'HDI Seguros', file: 'hdi', categoria: 'seguros', destaque: false },
   { name: 'Yelum', file: 'yelum', categoria: 'seguros', destaque: false },

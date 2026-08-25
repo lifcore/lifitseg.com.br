@@ -112,6 +112,8 @@ export default function SolucoesBeneficiosPage() {
     { nome: 'Hapvida', arquivo: 'hapvida' },
     { nome: 'Omint', arquivo: 'omint' },
     { nome: 'Care Plus', arquivo: 'careplus' },
+    { nome: 'NotreDame', arquivo: 'notredame' },
+    { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
   ];
 
   const timelineSteps = [

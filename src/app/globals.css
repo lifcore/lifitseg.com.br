@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta institucional LifitSeg — refinamento REV-SITE-001 (§22-26) */
-  --color-lifitseg-dark: #082124;      /* verde petróleo — fundo de marca, Hero, navegação */
-  --color-lifitseg-dark-deep: #041416; /* verde profundo — rodapé, áreas de maior contraste */
-  --color-lifitseg-surface: #102D2F;   /* verde superfície — cards e painéis sobre fundo escuro */
-  --color-lifitseg-primary: #C9A45A;   /* âmbar champagne — CTA, destaque, valor/ação */
-  --color-lifitseg-offwhite: #F7F4EF;  /* off-white — fundo claro principal */
+  /* Paleta institucional LifitSeg — atualizada para casar com o novo logo (coração laranja/ciano) */
+  --color-lifitseg-dark: #05191b;      /* verde petróleo — fundo de marca, Hero, navegação */
+  --color-lifitseg-dark-deep: #030f10; /* verde profundo — rodapé, áreas de maior contraste */
+  --color-lifitseg-surface: #0d2b2c;   /* verde superfície — cards e painéis sobre fundo escuro */
+  --color-lifitseg-primary: #ffbb44;   /* âmbar — CTA, destaque, valor/ação */
+  --color-lifitseg-offwhite: #e5e4e3;  /* off-white — fundo claro principal */
+
+  /* Acentos do coração da marca — usar com moderação, como assinatura visual pontual */
+  --color-lifitseg-coral: #fb9874;     /* laranja/pêssego — acento secundário quente */
+  --color-lifitseg-cyan: #00e6ee;      /* ciano — acento "vivo", links e detalhes de destaque */
+  --color-lifitseg-lime: #7ed957;      /* verde-lima — acento de confirmação/sucesso */
 
   /* Hierarquia de texto (§25) */
   --color-lifitseg-text: #293A38;      /* texto principal, em fundo claro */
@@ -23,13 +28,17 @@
 
   /* Disponibiliza a paleta como utilitários Tailwind:
      bg-primary, text-primary, bg-lifitseg-dark, text-lifitseg-offwhite,
-     text-lifitseg-text, text-lifitseg-text-soft, text-lifitseg-success etc. */
+     text-lifitseg-text, text-lifitseg-text-soft, text-lifitseg-success,
+     bg-lifitseg-coral, text-lifitseg-cyan, bg-lifitseg-lime etc. */
   --color-primary: var(--color-lifitseg-primary);
   --color-lifitseg-dark: var(--color-lifitseg-dark);
   --color-lifitseg-dark-deep: var(--color-lifitseg-dark-deep);
   --color-lifitseg-surface: var(--color-lifitseg-surface);
   --color-lifitseg-primary: var(--color-lifitseg-primary);
   --color-lifitseg-offwhite: var(--color-lifitseg-offwhite);
+  --color-lifitseg-coral: var(--color-lifitseg-coral);
+  --color-lifitseg-cyan: var(--color-lifitseg-cyan);
+  --color-lifitseg-lime: var(--color-lifitseg-lime);
   --color-lifitseg-text: var(--color-lifitseg-text);
   --color-lifitseg-text-soft: var(--color-lifitseg-text-soft);
   --color-lifitseg-success: var(--color-lifitseg-success);
@@ -71,4 +80,17 @@ h3 {
 }
 p {
   line-height: 1.6;
+}
+
+/* Gradiente de assinatura — ecoa as cores do coração do logo.
+   Usar com moderação: 1-2 pontos de destaque por página (ex: linha da timeline,
+   hover de um CTA), nunca como fundo de seção inteira. */
+.bg-gradient-heart {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-lifitseg-coral) 0%,
+    var(--color-lifitseg-primary) 35%,
+    var(--color-lifitseg-cyan) 70%,
+    var(--color-lifitseg-lime) 100%
+  );
 }
