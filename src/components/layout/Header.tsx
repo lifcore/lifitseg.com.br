@@ -20,11 +20,11 @@ export function Header() {
           <Link href="/" className="group flex items-center">
             <div className="relative flex items-center transition-transform group-hover:scale-105">
               <Image
-                src="/logo.png"
+                src="/logo-esc.png"
                 alt={siteConfig.nome}
-                width={180}
-                height={56}
-                className="h-14 w-auto object-contain"
+                width={244}
+                height={76}
+                className="h-[76px] w-auto object-contain"
                 priority
               />
             </div>
