@@ -20,7 +20,7 @@ export function Header() {
           <Link href="/" className="group flex items-center">
             <div className="relative flex items-center transition-transform group-hover:scale-105">
               <Image
-                src="/logo-esc.png"
+                src="/logo.png"
                 alt={siteConfig.nome}
                 width={244}
                 height={76}
