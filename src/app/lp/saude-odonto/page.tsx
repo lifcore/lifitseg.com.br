@@ -1,212 +1,136 @@
 // src/app/lp/saude-odonto/page.tsx
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MessageCircle } from 'lucide-react';
 import { captureAndPersistUtms } from '@/utils/tracking';
-import { LeadModal } from '@/components/forms/LeadModal'; // Reutilização obrigatória — named export, caminho real do componente
+import { DiagnosticoStepper } from '@/components/forms/DiagnosticoStepper';
+import { siteConfig } from '@/config/site';
+import { OPERADORAS_SAUDE } from '@/config/operadoras';
 
-// Lista fechada de "interesses" desta LP — proposital (estratégia de
-// anúncio por dor específica, não por nome de produto tradicional).
-// Trava o seletor do LeadModal pra nunca cair no fallback genérico
-// (que inclui Auto/Frota).
-const PRODUTOS_SAUDE_ODONTO = [
-  'Plano de Saúde (Consultoria)',
-  'Quero entender meu plano',
-  'Estou procurando um plano',
-  'Saúde Empresarial',
-  'Quero conversar com um consultor',
-]
+const linkWhatsapp = `https://wa.me/${siteConfig.contato.whatsapp}?text=${encodeURIComponent(
+  'Olá! Vim pela página de Plano de Saúde Empresarial e prefiro falar direto com um consultor.'
+)}`;
+
+function irParaDiagnostico() {
+  document.getElementById('diagnostico')?.scrollIntoView({ behavior: 'smooth' });
+}
 
 export default function LandingPageSaudeOdonto() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState('Plano de Saúde (Consultoria)');
-
   useEffect(() => {
     captureAndPersistUtms();
   }, []);
 
-  const handleOpenModal = (productDefault: string) => {
-    setSelectedProduct(productDefault);
-    setIsModalOpen(true);
-  };
-
   return (
-    <div className="min-h-screen bg-[#F4F6F4] text-lifitseg-dark font-sans selection:bg-primary/20 antialiased">
+    <div className="min-h-screen bg-[#F4F6F4] text-lifitseg-dark font-sans selection:bg-primary/20 antialiased pb-20 sm:pb-0">
       {/* TOPBAR MÍNIMA DE LP */}
       <header className="border-b border-primary/20 bg-lifitseg-dark/95 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image src="/logo.png" alt="LifitSeg" width={150} height={46} className="h-11 w-auto object-contain" priority />
           </Link>
-          <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-offwhite/70 bg-white/10 px-3 py-1.5 rounded-full">
-            Canal Consultivo Dedicado
+          <div className="text-xs font-semibold uppercase tracking-wider text-lifitseg-offwhite/70 bg-white/10 px-3 py-1.5 rounded-full hidden sm:block">
+            Gestão de Benefícios Corporativos
           </div>
         </div>
       </header>
 
-      {/* HERO SECTION — REVISADO */}
-      <section className="relative py-16 lg:py-24 overflow-hidden bg-white border-b border-black/5">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wide">
-              <ShieldCheck className="w-4 h-4" /> Revisão de Plano de Saúde
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-lifitseg-dark leading-[1.1]">
-              Seu plano ficou mais caro. Mas ficou melhor?
-            </h1>
-            
-            <p className="text-lg text-lifitseg-dark/70 leading-relaxed max-w-2xl">
-              Reajustes, mudanças na rede, dificuldades no atendimento ou simplesmente a sensação de que ninguém mais acompanha seu contrato. Antes de trocar de plano, vale entender o que está acontecendo.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
-              <button
-                onClick={() => handleOpenModal('Quero entender meu plano')}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-lifitseg-dark text-white font-semibold shadow-lg hover:bg-lifitseg-dark/90 transition-all cursor-pointer group text-base"
-              >
-                Quero entender meu plano
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              
-              <button
-                onClick={() => handleOpenModal('Estou procurando um plano')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-transparent border border-lifitseg-dark/20 text-lifitseg-dark font-semibold hover:bg-black/5 transition-all cursor-pointer text-sm"
-              >
-                Estou procurando um plano
-              </button>
-            </div>
+      {/* HERO — dor + promessa, sem foto hotlinkada (performance/confiabilidade) */}
+      <section className="relative py-20 lg:py-28 overflow-hidden bg-lifitseg-dark text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,187,68,0.12),transparent_45%)]" />
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wide">
+            Atendimento Especializado LifitSeg
           </div>
 
-          {/* IMAGEM E ELEMENTO VISUAL SOBREPOSTO */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-black/10 aspect-[4/3] bg-lifitseg-dark/5">
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1000"
-                alt="Consultor em conversa profissional e acolhedora"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Quadro visual sobreposto */}
-            <div className="absolute -bottom-6 -left-6 sm:left-6 bg-white p-5 rounded-2xl shadow-xl border border-black/10 max-w-xs space-y-1 hidden sm:block">
-              <div className="text-xs font-bold tracking-wider text-primary uppercase">Análise do seu cenário</div>
-              <div className="text-sm font-semibold text-lifitseg-dark">Plano atual • Necessidades • Alternativas</div>
-            </div>
-          </div>
-        </div>
-      </section>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+            Chega de renovar o plano de saúde no escuro.
+          </h1>
 
-      {/* GANCHO IMEDIATAMENTE APÓS O HERO */}
-      <section className="py-12 bg-[#F4F6F4] border-b border-black/5">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-6">
-          <p className="text-xl font-semibold text-lifitseg-dark">
-            Você não precisa trocar de plano antes de entender o que está acontecendo.
+          <p className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto">
+            Aplicamos a mesma metodologia técnica — VCMH, sinistralidade e prática de mercado — que as operadoras usam pra justificar seu reajuste, e usamos isso a favor da negociação da sua empresa.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm font-bold text-lifitseg-dark/70">
-            <span className="bg-white px-4 py-2 rounded-xl shadow-sm border border-black/5">SEU PLANO ATUAL</span>
-            <span className="text-primary">↓</span>
-            <span className="bg-white px-4 py-2 rounded-xl shadow-sm border border-black/5">O QUE MUDOU</span>
-            <span className="text-primary">↓</span>
-            <span className="bg-white px-4 py-2 rounded-xl shadow-sm border border-black/5">O QUE VOCÊ PRECISA</span>
-            <span className="text-primary">↓</span>
-            <span className="bg-white px-4 py-2 rounded-xl shadow-sm border border-black/5">O QUE PODE FAZER SENTIDO</span>
+
+          <div className="pt-4">
+            <button
+              onClick={irParaDiagnostico}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold shadow-lg hover:opacity-90 transition-all cursor-pointer group text-base"
+            >
+              Solicitar Diagnóstico
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <p className="text-xs text-white/40 mt-3">Saúde Empresarial • Benefícios • Odontológico</p>
           </div>
         </div>
       </section>
 
-      {/* SEÇÃO — IDENTIFICAÇÃO (4 CARDS) */}
-      <section className="py-20 bg-white">
+      {/* BLOCO DE DOR */}
+      <section className="py-20 bg-white border-b border-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
             <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-lifitseg-dark">
-              Talvez você esteja vivendo uma destas situações.
+              O problema nem sempre está no preço do plano.
             </h2>
             <p className="text-lifitseg-dark/60 text-base">
-              Algumas mudanças parecem pequenas até começarem a pesar no bolso, no atendimento ou na rotina.
+              Está na forma como ele é contratado e administrado.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 01 */}
-            <div className="p-8 rounded-3xl bg-[#F4F6F4] border border-black/5 space-y-4 hover:border-primary/40 transition-all group">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg group-hover:scale-105 transition-transform">
-                01
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            {[
+              'Reajuste elevado na renovação, sem explicação técnica clara',
+              'Rede credenciada que encolhe, mas o preço só sobe',
+              'Contrato sem estratégia de negociação',
+              'RH sobrecarregado com demandas que deveriam ser da operadora',
+              'Benefício caro e pouco percebido pelos colaboradores',
+              'Falta de alternativas comparáveis de mercado',
+            ].map((dor, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-[#F4F6F4] border border-black/5 flex items-start gap-3">
+                <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <p className="text-sm font-semibold text-lifitseg-dark">{dor}</p>
               </div>
-              <h3 className="font-bold text-xl text-lifitseg-dark">Seu plano ficou mais caro.</h3>
-              <p className="text-sm text-lifitseg-dark/70 leading-relaxed">
-                O valor aumentou novamente, mas você não sabe se a configuração atual ainda faz sentido.
-              </p>
-            </div>
+            ))}
+          </div>
 
-            {/* Card 02 */}
-            <div className="p-8 rounded-3xl bg-[#F4F6F4] border border-black/5 space-y-4 hover:border-primary/40 transition-all group">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg group-hover:scale-105 transition-transform">
-                02
-              </div>
-              <h3 className="font-bold text-xl text-lifitseg-dark">Quando precisa, começa a peregrinação.</h3>
-              <p className="text-sm text-lifitseg-dark/70 leading-relaxed">
-                Consulta, exame, autorização, rede credenciada, informação — e você acaba tentando resolver tudo sozinho.
-              </p>
-            </div>
+          <p className="text-center text-lg font-semibold text-lifitseg-dark max-w-2xl mx-auto mt-12">
+            Plano de saúde empresarial não deveria ser apenas uma despesa mensal. É um benefício estratégico que precisa ser administrado.
+          </p>
+        </div>
+      </section>
 
-            {/* Card 03 */}
-            <div className="p-8 rounded-3xl bg-[#F4F6F4] border border-black/5 space-y-4 hover:border-primary/40 transition-all group">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg group-hover:scale-105 transition-transform">
-                03
-              </div>
-              <h3 className="font-bold text-xl text-lifitseg-dark">Você tem um contrato, mas não tem clareza.</h3>
-              <p className="text-sm text-lifitseg-dark/70 leading-relaxed">
-                Cobertura, carência, rede, reembolso e regras parecem simples até o momento em que você precisa delas.
-              </p>
-            </div>
-
-            {/* Card 04 */}
-            <div className="p-8 rounded-3xl bg-[#F4F6F4] border border-black/5 space-y-4 hover:border-primary/40 transition-all group">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg group-hover:scale-105 transition-transform">
-                04
-              </div>
-              <h3 className="font-bold text-xl text-lifitseg-dark">Na contratação, alguém apareceu.</h3>
-              <p className="text-sm text-lifitseg-dark/70 leading-relaxed">
-                Depois dela, o acompanhamento deixou de existir ou ficou limitado à renovação.
-              </p>
-            </div>
+      {/* DIAGNÓSTICO — stepper, coração da conversão */}
+      <section id="diagnostico" className="py-20 bg-lifitseg-dark-deep scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-4 text-white">
+            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
+              Descubra o que pode estar custando caro no seu plano.
+            </h2>
+            <p className="text-white/60 leading-relaxed">
+              Responda algumas perguntas rápidas sobre o contrato atual da sua empresa. Não é uma cotação — é um raio-x inicial do seu cenário, pra saber por onde começar.
+            </p>
+          </div>
+          <div className="lg:col-span-7 max-w-xl w-full lg:ml-auto">
+            <DiagnosticoStepper />
           </div>
         </div>
       </section>
 
-      {/* SEÇÃO DE IMPACTO (VERDE PROFUNDO) */}
-      <section className="py-24 bg-lifitseg-dark text-white relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative z-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-            Não começamos perguntando qual plano você quer.
-          </h2>
-          <p className="text-xl sm:text-2xl text-primary font-semibold">
-            Começamos perguntando o que você precisa.
-          </p>
-          <p className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto pt-4">
-            Porque uma boa escolha depende do momento, das pessoas envolvidas, da utilização e da realidade de cada cliente.
-          </p>
-        </div>
-      </section>
-
-      {/* MÉTODO CONSULTIVO */}
+      {/* COMO FUNCIONA */}
       <section className="py-20 bg-[#F4F6F4]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">Nosso Método Consultivo</h2>
-            <p className="text-lifitseg-dark/60">Uma jornada estruturada para trazer clareza e segurança à sua decisão.</p>
+            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">Do diagnóstico à gestão</h2>
+            <p className="text-lifitseg-dark/60">Um processo estruturado, sem letra miúda.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { step: '01', title: 'ENTENDEMOS', desc: 'Seu momento, suas necessidades e o que está incomodando hoje.' },
-              { step: '02', title: 'ANALISAMOS', desc: 'O plano atual, suas características, rede e condições de contratação.' },
-              { step: '03', title: 'COMPARAMOS', desc: 'Alternativas compatíveis com o cenário identificado.' },
-              { step: '04', title: 'ORIENTAMOS', desc: 'Você entende as possibilidades e decide com mais segurança.' },
+              { step: '01', title: 'ENTENDEMOS', desc: 'Perfil da empresa, vidas, contrato atual e objetivos.' },
+              { step: '02', title: 'ANALISAMOS', desc: 'Contrato, reajuste, sinistralidade e condições comerciais.' },
+              { step: '03', title: 'NEGOCIAMOS', desc: 'Buscamos melhores condições — na operadora atual ou em alternativas de mercado.' },
+              { step: '04', title: 'ACOMPANHAMOS', desc: 'Gestão contínua do contrato via LifitSeg + Lifcore, do RH aos colaboradores.' },
             ].map((item, idx) => (
               <div key={idx} className="bg-white p-8 rounded-3xl border border-black/5 space-y-4 shadow-sm">
                 <div className="text-primary font-mono font-extrabold text-2xl">{item.step}</div>
@@ -218,94 +142,74 @@ export default function LandingPageSaudeOdonto() {
         </div>
       </section>
 
-      {/* SEÇÃO PF — EMPATIA */}
+      {/* A DIFERENÇA LIFITSEG */}
       <section className="py-20 bg-white border-t border-black/5">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-6">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">
-              E se você não souber exatamente o que precisa?
+              Mais do que vender um plano. Ajudamos sua empresa a administrar o benefício.
             </h2>
-            <p className="text-lg font-medium text-lifitseg-dark">Tudo bem.</p>
-            <p className="text-lifitseg-dark/70 leading-relaxed">
-              Você não precisa conhecer operadoras, tipos de contratação, redes credenciadas ou regras de plano de saúde para começar uma conversa conosco. Você conta o que precisa. Nós ajudamos a organizar o cenário.
-            </p>
           </div>
 
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
-              { title: 'Estou procurando um plano', desc: 'Para mim ou para minha família.' },
-              { title: 'Já tenho um plano', desc: 'Quero entender se ele ainda faz sentido.' },
-              { title: 'Preciso proteger minha família', desc: 'Quero encontrar uma opção compatível com meu momento.' },
-              { title: 'Estou passando por uma mudança', desc: 'Empresa, trabalho, família ou necessidade de cobertura.' },
-            ].map((box, i) => (
+              { title: 'Consultoria', desc: 'Estratégia de contratação, comparação de alternativas e negociação.' },
+              { title: 'Gestão', desc: 'Acompanhamento do contrato e das movimentações — inclusões, exclusões, alterações.' },
+              { title: 'Pós-venda', desc: 'Com a LifitSeg, suas demandas de plano deixam de ser só suas — nossa equipe vira um braço de apoio ao seu RH durante toda a vigência do contrato.' },
+              { title: 'Inteligência', desc: 'Dados e análise técnica de contrato e sinistralidade para apoiar cada decisão.' },
+              { title: 'Odontológico', desc: 'Estruturamos o benefício de saúde junto ao odontológico, quando fizer sentido pro perfil da empresa.' },
+            ].map((c, i) => (
               <div key={i} className="p-6 rounded-2xl bg-[#F4F6F4] border border-black/5 space-y-2">
-                <h3 className="font-bold text-base text-lifitseg-dark">{box.title}</h3>
-                <p className="text-xs text-lifitseg-dark/70">{box.desc}</p>
+                <h3 className="font-bold text-lg text-lifitseg-dark">{c.title}</h3>
+                <p className="text-xs text-lifitseg-dark/70 leading-relaxed">{c.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SEÇÃO EMPRESARIAL */}
-      <section className="py-20 bg-[#F4F6F4] border-t border-black/5">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">
-              Para empresas, a questão vai além do plano.
-            </h2>
-            <p className="text-lifitseg-dark/70 leading-relaxed text-base">
-              Benefícios impactam colaboradores, RH e a saúde financeira da empresa. Por isso, a análise precisa considerar o contrato, o perfil dos beneficiários, a utilização e o cenário da organização.
-            </p>
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              {['Gestão de benefícios', 'Análise de contratos', 'Rede e utilização', 'Reajustes e negociações', 'Acompanhamento'].map((feat, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-sm font-semibold text-lifitseg-dark">
-                  <CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> {feat}
-                </div>
-              ))}
-            </div>
-            <div className="pt-4">
-              <button
-                onClick={() => handleOpenModal('Saúde Empresarial')}
-                className="inline-flex items-center gap-2 text-sm font-bold text-lifitseg-dark hover:text-primary transition-colors cursor-pointer group"
-              >
-                Quero conversar sobre os benefícios da minha empresa
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl border border-black/10 aspect-[4/3] bg-white">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000"
-                alt="Ambiente corporativo contemporâneo"
-                className="w-full h-full object-cover"
-              />
-            </div>
+      {/* REAJUSTE — bloco de autoridade */}
+      <section className="py-24 bg-lifitseg-dark text-white text-center relative overflow-hidden">
+        <div className="max-w-3xl mx-auto px-6 space-y-6 relative z-10">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            Sua empresa recebeu um reajuste. E agora?
+          </h2>
+          <p className="text-white/70 text-lg leading-relaxed">
+            Explicamos a diferença entre reajuste por sinistralidade e reajuste contratual, analisamos o histórico do contrato e comparamos alternativas de mercado compatíveis com o porte da sua empresa — antes de você aceitar qualquer proposta de renovação.
+          </p>
+          <p className="text-primary font-semibold text-lg">
+            Não aceite um reajuste antes de entender o que está sendo reajustado.
+          </p>
+          <div className="pt-2">
+            <button
+              onClick={irParaDiagnostico}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold hover:opacity-90 transition-all cursor-pointer text-base shadow-xl"
+            >
+              Quero analisar meu reajuste
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </section>
 
-      {/* SEÇÃO DE CONFIANÇA */}
-      <section className="py-20 bg-white border-t border-black/5">
+      {/* TIPOS DE CONTRATO */}
+      <section className="py-20 bg-[#F4F6F4] border-t border-black/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">
-              Uma consultoria que continua depois da contratação.
-            </h2>
+            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">Qual é o perfil do seu contrato?</h2>
             <p className="text-lifitseg-dark/60 text-base">
-              A relação não termina quando o plano é contratado. O acompanhamento faz parte da nossa atuação.
+              Cada faixa de vidas tem dinâmicas comerciais e contratuais diferentes — inclusive no espaço de negociação.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { title: 'Orientação', desc: 'Quando surgir uma dúvida, existe alguém para conversar.' },
-              { title: 'Acompanhamento', desc: 'Demandas relacionadas ao benefício continuam sendo acompanhadas.' },
-              { title: 'Relacionamento', desc: 'A consultoria conhece o contexto do cliente e não começa do zero a cada necessidade.' },
+              { faixa: '2 a 29 vidas', desc: 'Regras específicas de agrupamento e reajuste — menor margem individual, mas ainda assim negociável.' },
+              { faixa: '30 a 99 vidas', desc: 'Maior espaço para negociação e análise comparativa entre operadoras.' },
+              { faixa: '100+ vidas', desc: 'Contratos com maior possibilidade de estruturação personalizada e negociação direta.' },
             ].map((c, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-[#F4F6F4] border border-black/5 space-y-3">
-                <h3 className="font-bold text-xl text-lifitseg-dark">{c.title}</h3>
+              <div key={i} className="p-8 rounded-3xl bg-white border border-black/5 shadow-sm space-y-3">
+                <h3 className="font-bold text-xl text-lifitseg-dark">{c.faixa}</h3>
                 <p className="text-sm text-lifitseg-dark/70 leading-relaxed">{c.desc}</p>
               </div>
             ))}
@@ -313,51 +217,67 @@ export default function LandingPageSaudeOdonto() {
         </div>
       </section>
 
-      {/* SEÇÃO DE DESMISTIFICAÇÃO */}
-      <section className="py-20 bg-[#F4F6F4] border-t border-black/5">
+      {/* CONFIANÇA / AUTORIDADE VERIFICÁVEL */}
+      <section className="py-16 bg-white border-t border-black/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl font-bold tracking-tight text-lifitseg-dark">
-              Antes de tomar uma decisão, vale olhar o cenário inteiro.
-            </h2>
-          </div>
+          <p className="mb-8 text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase">
+            Independência técnica com acesso às principais operadoras de Saúde do mercado
+          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              'Plano mais barato ≠ necessariamente melhor',
-              'Rede maior ≠ necessariamente mais adequada',
-              'Reajuste menor ≠ necessariamente melhor contrato',
-              'Trocar de operadora ≠ necessariamente resolver o problema',
-            ].map((text, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-white border border-black/5 flex items-center shadow-sm">
-                <p className="text-sm font-semibold text-lifitseg-dark">{text}</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            {OPERADORAS_SAUDE.map((op) => (
+              <div
+                key={op.file}
+                className={`flex flex-col items-center justify-center rounded-2xl border bg-white px-5 py-4 text-center shadow-sm transition-all hover:shadow-md ${
+                  op.destaque ? 'border-primary/30 hover:border-primary/60' : 'border-black/10 hover:border-primary/40'
+                }`}
+              >
+                <div className="relative mb-3 flex h-10 w-24 items-center justify-center">
+                  <Image
+                    src={`/seguradoras/${op.file}.png`}
+                    alt={op.name}
+                    width={96}
+                    height={40}
+                    className="max-h-10 w-auto object-contain"
+                  />
+                </div>
+                <span className="text-xs font-bold tracking-tight text-lifitseg-dark/80">{op.name}</span>
               </div>
             ))}
           </div>
-          <div className="text-center mt-10">
-            <p className="text-base font-bold text-primary">É por isso que começamos pela análise.</p>
-          </div>
+
+          <p className="mt-10 text-center text-sm font-semibold text-lifitseg-dark/60">
+            LifitSeg Consultoria &amp; Corretagem de Seguros — Registro SUSEP nº {siteConfig.juridico.registroSusep}
+          </p>
         </div>
       </section>
 
-      {/* CTA FINAL (VERDE PROFUNDO) */}
+      {/* CTA FINAL */}
       <section className="py-24 bg-lifitseg-dark text-white text-center relative overflow-hidden">
         <div className="max-w-3xl mx-auto px-6 space-y-6 relative z-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Vamos olhar para o seu caso?
+            Vamos descobrir se sua empresa está pagando o valor certo pelo benefício certo?
           </h2>
           <p className="text-white/70 text-lg max-w-xl mx-auto leading-relaxed">
-            Conte brevemente o que está acontecendo. A primeira conversa serve para entender o cenário — não para empurrar uma solução.
+            Leva menos de 2 minutos. Sem compromisso, sem custo pra empresa.
           </p>
           <div className="pt-4">
             <button
-              onClick={() => handleOpenModal('Quero conversar com um consultor')}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold hover:bg-primary/90 transition-all cursor-pointer text-base shadow-xl"
+              onClick={irParaDiagnostico}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold hover:opacity-90 transition-all cursor-pointer text-base shadow-xl"
             >
-              Quero conversar com um consultor
+              Solicitar Diagnóstico
               <ArrowRight className="w-4 h-4" />
             </button>
-            <p className="text-xs text-white/50 mt-4">Atendimento consultivo e sem compromisso.</p>
+            <a
+              href={linkWhatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-white/50 hover:text-white/80 block"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              Ou fale direto com um consultor pelo WhatsApp
+            </a>
           </div>
         </div>
       </section>
@@ -367,14 +287,24 @@ export default function LandingPageSaudeOdonto() {
         <p>Privacidade | LifitSeg — Todos os direitos reservados.</p>
       </footer>
 
-      {/* LEAD MODAL COM ORIGEM FORÇADA */}
-      <LeadModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        defaultProduto={selectedProduct}
-        origem="lp-saude-odonto"
-        produtos={PRODUTOS_SAUDE_ODONTO}
-      />
+      {/* CTA FIXO MOBILE */}
+      <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden bg-primary px-4 py-3 flex items-center justify-between gap-3 shadow-2xl">
+        <button
+          onClick={irParaDiagnostico}
+          className="flex-1 text-center font-bold text-lifitseg-dark text-sm cursor-pointer"
+        >
+          Solicitar Diagnóstico →
+        </button>
+        <a
+          href={linkWhatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Fale conosco pelo WhatsApp"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white"
+        >
+          <MessageCircle className="w-5 h-5" />
+        </a>
+      </div>
     </div>
   );
 }

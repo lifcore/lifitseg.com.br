@@ -3,40 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { LeadModal } from '@/components/forms/LeadModal'
+import { OPERADORAS as OPERATORS } from '@/config/operadoras'
 
 // ==========================================
 // MOCK DATA & CONSTANTS
 // ==========================================
-// NOTA: categoria/destaque abaixo é uma classificação nossa em cima do array já existente
-// (spec WEB-001 pede separar Saúde/Benefícios de Seguros). Confirmar com Raphael se algum
-// item ficou na categoria errada — em especial Sobam e Yelum, cuja atuação exata não temos
-// 100% de certeza (assumimos Sobam como operador de saúde regional e Yelum como seguradora).
-const OPERATORS = [
-  { name: 'Bradesco Saúde', file: 'bradesco', categoria: 'saude', destaque: true },
-  { name: 'SulAmérica', file: 'sulamerica', categoria: 'saude', destaque: true },
-  { name: 'Amil', file: 'amil', categoria: 'saude', destaque: true },
-  { name: 'Porto Seguro', file: 'porto', categoria: 'saude', destaque: true },
-  { name: 'Omint', file: 'omint', categoria: 'saude', destaque: false },
-  { name: 'Care Plus', file: 'careplus', categoria: 'saude', destaque: false },
-  { name: 'Unimed', file: 'unimed', categoria: 'saude', destaque: true },
-  { name: 'Seguros Unimed', file: 'seguros_unimed', categoria: 'seguros', destaque: false },
-  { name: 'Tokio Marine', file: 'tokio', categoria: 'seguros', destaque: false },
-  { name: 'Liberty Seguros', file: 'liberty', categoria: 'seguros', destaque: false },
-  { name: 'Mapfre', file: 'mapfre', categoria: 'seguros', destaque: false },
-  { name: 'Sobam', file: 'sobam', categoria: 'saude', destaque: false },
-  { name: 'Hapvida', file: 'hapvida', categoria: 'saude', destaque: true },
-  { name: 'NotreDame', file: 'notredame', categoria: 'saude', destaque: false },
-  { name: 'Allianz', file: 'allianz', categoria: 'seguros', destaque: false },
-  { name: 'HDI Seguros', file: 'hdi', categoria: 'seguros', destaque: false },
-  { name: 'Yelum', file: 'yelum', categoria: 'seguros', destaque: false },
-  { name: 'Suhai', file: 'suhai', categoria: 'seguros', destaque: false },
-  { name: 'Alice', file: 'alice', categoria: 'saude', destaque: false },
-  { name: 'Sami', file: 'sami', categoria: 'saude', destaque: false },
-  { name: 'New Leader Saúde', file: 'new', categoria: 'saude', destaque: false },
-  { name: 'Plena Saúde', file: 'plena', categoria: 'saude', destaque: false },
-  { name: 'Única Saúde', file: 'unica', categoria: 'saude', destaque: false },
-  { name: 'Zurich', file: 'zurich', categoria: 'seguros', destaque: false },
-]
 
 const DORES = [
   'Seu plano está ficando caro a cada renovação?',
