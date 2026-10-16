@@ -192,10 +192,16 @@ export const SOBRE = {
   ],
 }
 
-/** Seguradoras parceiras exibidas nas páginas de seguros (lista do site anterior, uso confirmado por Raphael). */
-export const SEGURADORAS = [
-  { nome: 'Bradesco Seguros', arquivo: 'bradesco' },
-  { nome: 'Porto Seguro', arquivo: 'porto' },
+/**
+ * Seguradoras parceiras exibidas nas páginas de seguros (lista do site
+ * anterior, uso confirmado por Raphael). Sem `arquivo`, o cartão mostra o
+ * nome em texto: os logos de Bradesco e Porto em public/seguradoras são das
+ * marcas de saúde, e Itaú, Azul e Mitsui nunca tiveram arquivo. Trocar pelo
+ * logo de ramos elementares quando for entregue.
+ */
+export const SEGURADORAS: { nome: string; arquivo?: string }[] = [
+  { nome: 'Bradesco Seguros' },
+  { nome: 'Porto Seguro' },
   { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
   { nome: 'Tokio Marine', arquivo: 'tokio' },
   { nome: 'Liberty Seguros', arquivo: 'liberty' },
@@ -205,9 +211,9 @@ export const SEGURADORAS = [
   { nome: 'Yelum', arquivo: 'yelum' },
   { nome: 'Suhai', arquivo: 'suhai' },
   { nome: 'Zurich', arquivo: 'zurich' },
-  // Itaú Seguros, Azul Seguros e Mitsui Sumitomo estavam na lista antiga, mas
-  // os arquivos de logo nunca existiram em public/seguradoras (imagem
-  // quebrada no site publicado). Voltam quando os logos forem entregues.
+  { nome: 'Itaú Seguros' },
+  { nome: 'Azul Seguros' },
+  { nome: 'Mitsui Sumitomo' },
 ]
 
 export const FONTES_SUSEP = [

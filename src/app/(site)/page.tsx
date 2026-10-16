@@ -69,7 +69,7 @@ export default function HomePage() {
             />
             <div className="mt-4 rounded-2xl border border-white/10 bg-lifitseg-surface p-5">
               <p className="text-sm font-bold tracking-wide text-white">{POSICIONAMENTO}</p>
-              <p className="mt-2 text-sm text-lifitseg-offwhite/70">Mais de 100 empresas na carteira, de pequenas operações a organizações corporativas.</p>
+              <p className="mt-2 text-sm text-lifitseg-offwhite/70">Da contratação à gestão do benefício, com apoio ao RH.</p>
               <a href="#gestao" className="mt-3 inline-block text-sm font-semibold text-lifitseg-mint hover:underline">
                 Conhecer a gestão da Lifitseg <span aria-hidden="true">→</span>
               </a>
@@ -122,7 +122,7 @@ export default function HomePage() {
           />
           <div className="mt-12"><FrentesGestao /></div>
           <div className="mt-12 flex flex-col gap-4 rounded-2xl bg-lifitseg-paper p-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-2xl text-sm text-lifitseg-text">{CARTEIRA}</p>
+            <p className="max-w-2xl text-sm text-lifitseg-text">Os serviços acompanham a realidade de cada cliente e o escopo contratado.</p>
             <Link href="/beneficios-corporativos#servicos" className="shrink-0 text-sm font-bold text-lifitseg-green hover:underline">
               Ver os serviços em detalhe <span aria-hidden="true">→</span>
             </Link>
@@ -140,7 +140,8 @@ export default function HomePage() {
       <section aria-labelledby="titulo-exemplos" className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Cabecalho id="titulo-exemplos" titulo="Situações que ajudam a entender nossa atuação." texto="Exemplos educativos mostram quais perguntas orientam a análise e como a consultoria pode apoiar. Cada contratação e demanda exige avaliação própria." />
-          <div className="mt-10"><ExemplosEducativos /></div>
+          <div className="mt-10"><ExemplosEducativos limite={2} /></div>
+          <Link href="/beneficios-corporativos#exemplos" className="mt-8 inline-block text-sm font-bold text-lifitseg-green hover:underline">Ver mais situações <span aria-hidden="true">→</span></Link>
         </div>
       </section>
 
@@ -149,6 +150,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <Cabecalho id="titulo-equipe" titulo={EQUIPE.titulo} texto={EQUIPE.texto} />
+            <p className="mt-4 max-w-xl rounded-2xl bg-white p-4 text-sm font-semibold text-lifitseg-dark">{CARTEIRA}</p>
             <Link href="/sobre-e-conhecimento#quem-somos" className="mt-6 inline-block text-sm font-bold text-lifitseg-green hover:underline">
               Conhecer a Lifitseg <span aria-hidden="true">→</span>
             </Link>

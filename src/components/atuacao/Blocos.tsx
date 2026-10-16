@@ -105,10 +105,10 @@ export function PerguntasDiagnostico() {
   )
 }
 
-export function ExemplosEducativos() {
+export function ExemplosEducativos({ limite }: { limite?: number } = {}) {
   return (
     <div className="grid gap-5 lg:grid-cols-2">
-      {EXEMPLOS_EDUCATIVOS.map((e) => (
+      {EXEMPLOS_EDUCATIVOS.slice(0, limite).map((e) => (
         <article key={e.titulo} className="rounded-2xl border border-lifitseg-line bg-white p-6">
           <p className="text-xs font-bold tracking-wide text-lifitseg-green uppercase">Exemplo educativo</p>
           <h3 className="mt-2 text-lifitseg-dark" style={{ fontSize: '1.1rem' }}>{e.titulo}</h3>

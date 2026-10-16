@@ -19,7 +19,7 @@ const C = CORPORATIVO
 export default function SegurosCorporativosPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Seguros corporativos' }]} />
+      <Breadcrumb items={[{ label: 'Seguros corporativos' }]} />
 
       <section className="bg-lifitseg-dark text-lifitseg-offwhite">
         <div className="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:px-8">

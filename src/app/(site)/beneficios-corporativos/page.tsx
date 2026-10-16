@@ -5,7 +5,7 @@ import { CardsFaixas } from '@/components/home/CardsFaixas'
 import { DuvidasHome } from '@/components/home/DuvidasHome'
 import { GradeMarcas } from '@/components/home/GradeMarcas'
 import { FormularioEmpresarial } from '@/components/forms/FormularioEmpresarial'
-import { MetodoEtapas, ComplexidadeBloco, CriteriosComparacao, GuiasDestaque } from '@/components/atuacao/Blocos'
+import { MetodoEtapas, ComplexidadeBloco, CriteriosComparacao, ExemplosEducativos, GuiasDestaque } from '@/components/atuacao/Blocos'
 import { CARTEIRA, FAQ_BENEFICIOS, POSICIONAMENTO } from '@/content/atuacao'
 
 // Benefícios Corporativos / Saúde — segunda etapa do Chief Chat (M-27 /
@@ -51,7 +51,7 @@ const SERVICOS = [
 export default function BeneficiosCorporativosPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Plano de saúde empresarial' }]} />
+      <Breadcrumb items={[{ label: 'Plano de saúde empresarial' }]} />
 
       <section className="bg-lifitseg-dark text-lifitseg-offwhite">
         <div className="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:px-8">
@@ -125,6 +125,14 @@ export default function BeneficiosCorporativosPage() {
       </section>
 
       <ComplexidadeBloco />
+
+      <section id="exemplos" aria-labelledby="titulo-exemplos-beneficios" className="scroll-mt-20 bg-lifitseg-paper py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 id="titulo-exemplos-beneficios" className="text-lifitseg-dark">Situações que ajudam a entender nossa atuação.</h2>
+          <p className="mt-3 max-w-3xl text-sm text-lifitseg-text-soft">Exemplos educativos, sem nomes reais. Cada contratação e demanda exige avaliação própria.</p>
+          <div className="mt-8"><ExemplosEducativos /></div>
+        </div>
+      </section>
 
       <GradeMarcas />
 

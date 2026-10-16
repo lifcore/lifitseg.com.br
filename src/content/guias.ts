@@ -20,6 +20,8 @@ export type Guia = {
   fontes: { rotulo: string; url: string }[]
   tema: 'Contratação' | 'Renovação' | 'Rede' | 'Gestão' | 'Atendimento' | 'Conceitos' | 'Vigência' | 'Empresarial' | 'Sinistro'
   area: 'saude' | 'seguros'
+  /** Aguardando revisão técnica: aparece só em desenvolvimento, fora do build de produção. */
+  revisaoPendente?: boolean
 }
 
 export const AREAS_GUIAS = [
@@ -254,6 +256,7 @@ const GUIAS_SEGUROS: Omit<Guia, 'area'>[] = [
     ],
     apoio: 'A Lifitseg organiza a leitura dos ativos e da operação e compara condições entre seguradoras parceiras. Aceitação, coberturas e valores dependem da análise de cada seguradora.',
     cta: { texto: 'Avaliar os seguros da empresa', destino: 'contato', href: CONTATO_CORPORATIVO },
+    revisaoPendente: true,
     fontes: [],
   },
   {
@@ -300,10 +303,13 @@ const GUIAS_SEGUROS: Omit<Guia, 'area'>[] = [
   },
 ]
 
-export const GUIAS: Guia[] = [
+const TODOS_GUIAS: Guia[] = [
   ...GUIAS_SAUDE.map((g) => ({ ...g, area: 'saude' as const })),
   ...GUIAS_SEGUROS.map((g) => ({ ...g, area: 'seguros' as const })),
 ]
+
+/** Guias publicáveis: os que aguardam revisão técnica ficam fora do build de produção. */
+export const GUIAS: Guia[] = TODOS_GUIAS.filter((g) => !g.revisaoPendente || process.env.NODE_ENV !== 'production')
 
 export function obterGuia(slug: string): Guia | undefined {
   return GUIAS.find((g) => g.slug === slug)

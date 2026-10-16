@@ -1,129 +1,107 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import { siteConfig } from '@/config/site'
 
-/**
- * ATENÇÃO: o texto abaixo é um RASCUNHO ESTRUTURAL, não texto jurídico
- * pronto. Cobre as seções que a LGPD normalmente espera ver numa
- * política de privacidade, mas os detalhes reais (quais dados exatos
- * são retidos, por quanto tempo, com quem são compartilhados, quem é
- * o encarregado/DPO da LifitSeg) precisam ser preenchidos e revisados
- * por um advogado antes de considerar essa página "pronta" de verdade.
- * Procure por "REVISAR" nos comentários abaixo pra achar os pontos
- * que precisam de decisão/confirmação de vocês.
- */
-export default function PoliticaPrivacidadePage() {
-  const breadcrumbItems = [{ label: 'Política de Privacidade' }]
-  const atualizadoEm = '11 de agosto de 2026' // REVISAR: atualizar toda vez que o texto mudar
+// Política de Privacidade — corpo editorial do Chief Chat
+// (`Lifitseg_Privacidade_e_Revisao_Site_v1.md`), ajustado por Claude ao que o
+// código faz de fato (conferido em 16/10/2026):
+// - origem: UTMs e IDs de clique (gclid, fbclid, li_fat_id) na sessão; com
+//   medição, primeiro e último toque por 90 dias no navegador; revogar apaga;
+// - medição: só contagens diárias por página/evento/campanha, sem
+//   identificador de pessoa, sessão, clique ou IP (`registrar-evento-site`);
+// - segurança dos formulários: IP transformado em código (hash) para
+//   detectar envios repetidos; CNPJ conferido em base pública.
+// ANTES DE PUBLICAR (M-26): Raphael/jurídico valida bases legais, retenção
+// efetiva e fornecedores. Não há pixels de terceiros nesta versão.
 
+export const metadata: Metadata = {
+  title: 'Política de Privacidade',
+  description: 'Como a Lifitseg utiliza dados pessoais nos contatos, no atendimento e na medição própria do site.',
+}
+
+const ATUALIZADO_EM = '16 de outubro de 2026'
+
+function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <h2 className="text-lifitseg-dark" style={{ fontSize: '1.15rem' }}>{titulo}</h2>
+      <div className="mt-3 space-y-3">{children}</div>
+    </section>
+  )
+}
+
+export default function PoliticaPrivacidadePage() {
+  const email = siteConfig.contato.email
   return (
     <>
-      <Breadcrumb items={breadcrumbItems} />
+      <Breadcrumb items={[{ label: 'Política de Privacidade' }]} />
+      <article className="bg-white py-14">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <h1 className="text-3xl text-lifitseg-dark sm:text-4xl">Política de Privacidade</h1>
+          <p className="mt-3 text-sm text-lifitseg-text-soft">Última atualização: {ATUALIZADO_EM}</p>
 
-      <section className="bg-lifitseg-offwhite py-16 lg:py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h1 className="mb-2 text-3xl font-black text-lifitseg-dark sm:text-4xl">
-            Política de Privacidade
-          </h1>
-          <p className="mb-12 text-sm text-lifitseg-dark/50">
-            Última atualização: {atualizadoEm}
-          </p>
-
-          <div className="space-y-10 text-sm leading-relaxed text-lifitseg-dark/80">
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">1. Quem somos</h2>
+          <div className="mt-10 space-y-10 text-lifitseg-text">
+            <Secao titulo="Quem trata seus dados">
               <p>
-                Esta política descreve como a {siteConfig.nomeCompleto} (CNPJ{' '}
-                {siteConfig.juridico.cnpj}) coleta, usa e protege os dados pessoais de
-                quem visita este site ou preenche algum de nossos formulários de
-                contato, em conformidade com a Lei Geral de Proteção de Dados
-                (Lei nº 13.709/2018 — LGPD).
+                A {siteConfig.juridico.razaoSocial}, CNPJ {siteConfig.juridico.cnpj}, utiliza dados pessoais para atender contatos, orientar sobre benefícios e seguros e operar seus canais digitais. Para assuntos de privacidade, entre em contato por{' '}
+                <a href={`mailto:${email}`} className="font-semibold text-lifitseg-green underline underline-offset-2">{email}</a>.
               </p>
-            </div>
+            </Secao>
 
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">2. Quais dados coletamos</h2>
-              <p className="mb-2">
-                Quando você preenche um formulário neste site, podemos coletar:
-                nome, e-mail, telefone, nome da empresa (quando aplicável), CPF ou
-                CNPJ (quando informado voluntariamente) e o conteúdo da mensagem
-                enviada.
+            <Secao titulo="Informações fornecidas por você">
+              <p>
+                Ao solicitar atendimento, podemos receber os dados apresentados no formulário, como nome, empresa, canal de contato, município e assunto de interesse. Na saúde empresarial, também podem ser solicitados faixa de vidas, objetivo e, conforme o formulário, CNPJ e cargo. Nos seguros, pedimos o tipo de seguro e, para empresas, o objetivo do contato. As informações solicitadas variam conforme a necessidade.
               </p>
               <p>
-                {/* REVISAR: confirmar se isso reflete exatamente o que é armazenado hoje no LifCore/Supabase */}
-                Também coletamos automaticamente dados de navegação, como
-                parâmetros de origem de campanha (UTM), quando você chega ao site
-                através de um link de anúncio ou divulgação.
+                Quem se apresenta para parceria ou para integrar a equipe informa dados de contato e de atuação profissional em um canal próprio, separado do atendimento a clientes.
               </p>
-            </div>
-
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">3. Para que usamos esses dados</h2>
               <p>
-                Usamos os dados informados para entrar em contato sobre a
-                solicitação feita, apresentar propostas e soluções em seguros e
-                benefícios, e manter um relacionamento comercial com você ou sua
-                empresa. Não vendemos nem alugamos dados pessoais para terceiros.
+                Não envie diagnósticos, documentos médicos ou dados de beneficiários no formulário comercial inicial. Quando documentos específicos forem necessários ao atendimento, a equipe orientará o canal adequado.
               </p>
-            </div>
+            </Secao>
 
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">4. Base legal</h2>
+            <Secao titulo="Para que utilizamos essas informações">
               <p>
-                {/* REVISAR: confirmar com jurídico qual base legal da LGPD se aplica a cada tratamento */}
-                O tratamento dos seus dados é feito com base no seu consentimento,
-                dado no momento em que você preenche um dos formulários deste
-                site, e/ou na execução de procedimentos preliminares relacionados
-                a um contrato do seu interesse.
+                Utilizamos as informações para responder à solicitação, encaminhar o atendimento, compreender a necessidade apresentada e apoiar procedimentos relacionados à contratação ou à gestão solicitada. A permissão opcional de medição não é condição para receber atendimento.
               </p>
-            </div>
+              <p>
+                Para proteger os formulários contra envios automáticos e repetidos, o endereço IP de quem envia é transformado em um código que não permite recuperá-lo, usado apenas nessa verificação. Quando um CNPJ é informado, ele pode ser conferido em base pública de dados cadastrais de empresas.
+              </p>
+            </Secao>
 
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">5. Compartilhamento de dados</h2>
+            <Secao titulo="Origem da visita e armazenamento no navegador">
               <p>
-                {/* REVISAR: listar parceiros reais — seguradoras, plataforma de e-mail/CRM, etc. */}
-                Seus dados podem ser compartilhados com seguradoras e operadoras
-                parceiras estritamente para fins de cotação e contratação de
-                apólices, e com fornecedores de tecnologia que operam nossa
-                plataforma interna (LifCore), sempre sob obrigação de
-                confidencialidade.
+                O site pode registrar a página de entrada, o domínio de referência, parâmetros de campanha e identificadores de clique de anúncios. Sem permissão de medição, a origem fica vinculada à sessão atual no navegador e é utilizada para informar a origem do contato que você decidir enviar. Com sua permissão, informações de primeiro e último acesso de origem podem ser guardadas no navegador por até 90 dias, conforme a atualização do histórico. Recusar ou revogar a medição remove esse histórico persistente.
               </p>
-            </div>
+              <p>
+                Sua escolha de preferência é guardada no navegador para ser respeitada nas visitas seguintes. Essa preferência tem finalidade diferente do histórico de origem. Você pode alterá-la a qualquer momento pelo link &quot;Alterar preferências de privacidade&quot;, no rodapé. Limpar o armazenamento do navegador também pode remover suas escolhas.
+              </p>
+            </Secao>
 
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">6. Seus direitos</h2>
+            <Secao titulo="Medição e plataformas externas">
               <p>
-                Conforme a LGPD, você pode solicitar a qualquer momento a
-                confirmação de que tratamos seus dados, acesso a eles,
-                correção de dados incompletos ou desatualizados, anonimização,
-                bloqueio ou eliminação de dados desnecessários, portabilidade, e
-                revogação do consentimento dado.
+                Quando autorizada, a medição própria registra interações como visualizações de página, cliques em botões e início ou envio de formulários. Esses registros são somados por dia, página e campanha, sem identificar a pessoa que navegou. A origem da visita, por outro lado, pode acompanhar o contato que você decidir enviar.
               </p>
-            </div>
+              <p>
+                Este site não utiliza pixels ou ferramentas de publicidade de terceiros. Uma eventual adoção exigirá atualização desta política e das preferências. Não envie dados de saúde, documentos ou descrições de casos a ferramentas de publicidade.
+              </p>
+            </Secao>
 
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">7. Cookies</h2>
+            <Secao titulo="Compartilhamento, conservação e direitos">
               <p>
-                {/* REVISAR: atualizar esta seção se/quando Pixel de terceiros (Meta, Google Ads) for ativado */}
-                Este site utiliza apenas armazenamento técnico de sessão para
-                lembrar de onde você veio (parâmetros de campanha), sem uso de
-                cookies de rastreamento de terceiros no momento.
+                Dados necessários ao atendimento podem envolver prestadores de tecnologia, como hospedagem do site e banco de dados, e, quando a solicitação exigir, participantes da contratação ou da gestão do benefício ou seguro, como operadoras e seguradoras. Não vendemos dados pessoais.
               </p>
-            </div>
-
-            <div>
-              <h2 className="mb-3 text-lg font-bold text-lifitseg-dark">8. Como falar conosco sobre seus dados</h2>
               <p>
-                {/* REVISAR: definir quem é o encarregado (DPO) e o canal oficial de privacidade */}
-                Para exercer qualquer um dos direitos acima, ou tirar dúvidas
-                sobre esta política, entre em contato pelo e-mail{' '}
-                <strong className="text-lifitseg-dark">{siteConfig.contato.email}</strong>.
+                Os prazos de conservação variam conforme a finalidade, a relação contratual e as obrigações aplicáveis. O prazo de 90 dias descrito acima se refere ao histórico de origem no navegador; não é o prazo de todos os registros de atendimento.
               </p>
-            </div>
+              <p>
+                Você pode entrar em contato para solicitar informações sobre o tratamento e exercer os direitos aplicáveis, como acesso, correção e solicitações de exclusão ou revogação, observados os requisitos legais e de identificação necessários ao atendimento. Canal:{' '}
+                <a href={`mailto:${email}`} className="font-semibold text-lifitseg-green underline underline-offset-2">{email}</a>.
+              </p>
+            </Secao>
           </div>
         </div>
-      </section>
+      </article>
     </>
   )
 }

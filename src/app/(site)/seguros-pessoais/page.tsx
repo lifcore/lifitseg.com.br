@@ -20,7 +20,7 @@ const P = PESSOAL
 export default function SegurosPessoaisPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Seguros pessoais' }]} />
+      <Breadcrumb items={[{ label: 'Seguros pessoais' }]} />
 
       <section className="bg-lifitseg-dark text-lifitseg-offwhite">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pt-14 pb-16 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:px-8">

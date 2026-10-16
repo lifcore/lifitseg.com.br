@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ConhecimentoPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Guias' }]} />
+      <Breadcrumb items={[{ label: 'Guias' }]} />
       <section className="bg-lifitseg-paper py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-bold tracking-widest text-lifitseg-green uppercase">Conhecimento</p>

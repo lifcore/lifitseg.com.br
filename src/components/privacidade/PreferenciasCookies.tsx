@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, salvarPreferencias } from '@/utils/consentimento'
 
 /**
- * Preferências de cookies e medição (D-30). Nesta fase só existe a
- * medição PRÓPRIA da Lifitseg (origem dos contatos e contagem de uso do
- * site); não há pixels nem ferramentas de terceiros. Nenhuma opção vem
- * marcada; nada é medido antes da escolha. O rodapé reabre este painel.
+ * Preferências de privacidade (D-30). Só existe a medição PRÓPRIA da
+ * Lifitseg (origem dos contatos e contagem agregada de uso); não há pixels
+ * nem ferramentas de terceiros. Nada vem marcado, nada é medido antes da
+ * escolha, e recusar não bloqueia formulário. O rodapé reabre o painel.
  *
- * Textos provisórios: o Chief Chat revisa a redação e a política de
- * privacidade antes da publicação (plano M-24, seção 4).
+ * Texto do Chief Chat (`Lifitseg_Privacidade_e_Revisao_Site_v1.md`):
+ * dois botões de mesmo destaque, sem "aceite para continuar".
  */
 
 // Lê a escolha guardada como "loja externa": no servidor ainda não se sabe
@@ -20,6 +20,7 @@ function assinar(aviso: () => void) {
   window.addEventListener(EVENTO_MUDOU, aviso)
   return () => window.removeEventListener(EVENTO_MUDOU, aviso)
 }
+
 function escolhaAtual(): 'sim' | 'nao' | 'pendente' {
   const p = obterPreferencias()
   return p ? (p.medicao ? 'sim' : 'nao') : 'pendente'
@@ -28,15 +29,12 @@ function escolhaAtual(): 'sim' | 'nao' | 'pendente' {
 export function PreferenciasCookies() {
   const escolha = useSyncExternalStore(assinar, escolhaAtual, () => 'servidor' as const)
   const [reaberto, setReaberto] = useState(false)
-  const [personalizando, setPersonalizando] = useState(false)
-  const [medicao, setMedicao] = useState(false)
+  const [detalhes, setDetalhes] = useState(false)
   const tituloId = useId()
   const painelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     function abrir() {
-      setMedicao(obterPreferencias()?.medicao ?? false)
-      setPersonalizando(true)
       setReaberto(true)
     }
     window.addEventListener(EVENTO_ABRIR, abrir)
@@ -47,16 +45,17 @@ export function PreferenciasCookies() {
 
   useEffect(() => {
     if (visivel) painelRef.current?.focus()
-  }, [visivel, personalizando])
+  }, [visivel])
 
   if (!visivel) return null
 
   function decidir(valor: boolean) {
     salvarPreferencias(valor)
-    setMedicao(valor)
     setReaberto(false)
-    setPersonalizando(false)
+    setDetalhes(false)
   }
+
+  const botao = 'rounded-xl border-2 border-lifitseg-green px-5 py-2.5 text-sm font-bold text-lifitseg-green hover:bg-lifitseg-paper'
 
   return (
     <div
@@ -68,63 +67,41 @@ export function PreferenciasCookies() {
       className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-2xl border border-lifitseg-line bg-white p-5 text-lifitseg-text shadow-2xl outline-none sm:inset-x-6 sm:p-6"
     >
       <h2 id={tituloId} className="font-bold text-lifitseg-dark" style={{ fontSize: '1rem' }}>
-        Preferências de cookies e medição
+        Suas preferências de privacidade
       </h2>
       <p className="mt-2 text-sm text-lifitseg-text-soft">
-        Usamos armazenamento necessário para o site funcionar e guardar esta escolha. Com a sua permissão, também
-        medimos de forma própria como as pessoas chegam até nós e usam o site, para melhorar a comunicação. Não
-        usamos ferramentas de publicidade de terceiros. Saiba mais na{' '}
-        <Link href="/privacidade" className="font-semibold text-lifitseg-green underline underline-offset-2">
-          Política de Privacidade
-        </Link>
-        .
+        Usamos armazenamento necessário para registrar suas escolhas e manter o funcionamento do site. Se você permitir a
+        medição, poderemos registrar interações e guardar informações de origem da visita para entender quais conteúdos
+        ajudam nossos visitantes. Você pode recusar a medição e continuar usando o site.
       </p>
 
-      {personalizando && (
-        <div className="mt-4 space-y-3 rounded-xl bg-lifitseg-paper p-4 text-sm">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="font-semibold text-lifitseg-dark">Necessários</p>
-              <p className="text-lifitseg-text-soft">Funcionamento do site, segurança dos formulários e esta preferência.</p>
-            </div>
-            <span className="shrink-0 text-xs font-semibold text-lifitseg-text-soft">Sempre ativos</span>
-          </div>
-          <label className="flex cursor-pointer items-start justify-between gap-4">
-            <span>
-              <span className="block font-semibold text-lifitseg-dark">Medição própria</span>
-              <span className="block text-lifitseg-text-soft">
-                Guarda por até 90 dias a origem da sua visita (campanha ou site que indicou) e conta acessos e cliques, sem
-                identificar você.
-              </span>
-            </span>
-            <input
-              type="checkbox"
-              checked={medicao}
-              onChange={(e) => setMedicao(e.target.checked)}
-              className="mt-1 h-5 w-5 shrink-0 accent-lifitseg-green"
-            />
-          </label>
-        </div>
+      {detalhes && (
+        <p className="mt-3 rounded-xl bg-lifitseg-paper p-4 text-sm text-lifitseg-text-soft">
+          Sem medição, a origem da visita atual pode acompanhar um contato que você decidir enviar. Com medição permitida,
+          informações de primeiro e último acesso de origem podem ser mantidas por até 90 dias no navegador. Revogar a
+          medição remove esse histórico persistente do navegador.
+        </p>
       )}
 
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-end">
-        {personalizando ? (
-          <button type="button" onClick={() => decidir(medicao)} className="rounded-xl bg-lifitseg-green px-5 py-2.5 text-sm font-bold text-white hover:opacity-90">
-            Salvar preferências
+      {escolha !== 'pendente' && escolha !== 'servidor' && (
+        <p className="mt-3 text-xs font-semibold text-lifitseg-dark">
+          Escolha atual: {escolha === 'sim' ? 'medição permitida' : 'medição recusada'}.
+        </p>
+      )}
+
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex gap-4 text-sm">
+          <button type="button" onClick={() => setDetalhes((d) => !d)} aria-expanded={detalhes} className="font-semibold text-lifitseg-green underline underline-offset-2">
+            {detalhes ? 'Ocultar detalhes' : 'Mais detalhes'}
           </button>
-        ) : (
-          <>
-            <button type="button" onClick={() => setPersonalizando(true)} className="rounded-xl border border-lifitseg-line px-5 py-2.5 text-sm font-semibold text-lifitseg-dark hover:bg-lifitseg-paper">
-              Personalizar
-            </button>
-            <button type="button" onClick={() => decidir(false)} className="rounded-xl border border-lifitseg-line px-5 py-2.5 text-sm font-semibold text-lifitseg-dark hover:bg-lifitseg-paper">
-              Rejeitar não necessários
-            </button>
-            <button type="button" onClick={() => decidir(true)} className="rounded-xl bg-lifitseg-green px-5 py-2.5 text-sm font-bold text-white hover:opacity-90">
-              Aceitar todos
-            </button>
-          </>
-        )}
+          <Link href="/privacidade" className="font-semibold text-lifitseg-green underline underline-offset-2">
+            Entender o uso de dados
+          </Link>
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button type="button" onClick={() => decidir(false)} className={botao}>Recusar medição</button>
+          <button type="button" onClick={() => decidir(true)} className={botao}>Permitir medição</button>
+        </div>
       </div>
     </div>
   )

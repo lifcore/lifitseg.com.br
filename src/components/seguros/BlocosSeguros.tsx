@@ -59,8 +59,12 @@ export function GradeSeguradoras() {
         </p>
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
           {SEGURADORAS.map((s) => (
-            <li key={s.arquivo} className="flex h-20 items-center justify-center rounded-2xl border border-lifitseg-line bg-white p-4">
-              <Image src={`/seguradoras/${s.arquivo}.png`} alt={s.nome} width={120} height={44} className="max-h-10 w-auto object-contain" />
+            <li key={s.nome} className="flex h-20 items-center justify-center rounded-2xl border border-lifitseg-line bg-white p-4 text-center">
+              {s.arquivo ? (
+                <Image src={`/seguradoras/${s.arquivo}.png`} alt={s.nome} width={120} height={44} className="max-h-10 w-auto object-contain" />
+              ) : (
+                <span className="text-sm font-bold text-lifitseg-dark">{s.nome}</span>
+              )}
             </li>
           ))}
         </ul>

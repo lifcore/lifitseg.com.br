@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Breadcrumb from '@/components/common/Breadcrumb'
 import { LinkWhatsApp } from '@/components/common/LinkWhatsApp'
 import { ContatoForm } from '@/components/forms/ContatoForm'
+import { TrabalheConoscoCTA } from '@/components/sobre/TrabalheConoscoCTA'
 import { GuiasDestaque } from '@/components/atuacao/Blocos'
 import { SOBRE } from '@/content/seguros'
 import { EQUIPE, LINK_AVALIACOES_GOOGLE } from '@/content/atuacao'
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 export default function SobreEConhecimentoPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'A Lifitseg' }]} />
+      <Breadcrumb items={[{ label: 'A Lifitseg' }]} />
 
       <section id="sobre" className="scroll-mt-20 bg-lifitseg-dark text-lifitseg-offwhite">
         <div className="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:px-8">
@@ -87,6 +88,20 @@ export default function SobreEConhecimentoPage() {
         </div>
       </section>
 
+      {/* Parcerias e vagas: canal próprio (`receber-trabalhe-conosco` → People),
+          fora do funil comercial e do filtro anti-corretor dos leads (D-16). */}
+      <section id="trabalhe-conosco" aria-labelledby="titulo-parcerias" className="scroll-mt-20 bg-lifitseg-dark py-16 text-lifitseg-offwhite">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1.3fr_1fr] lg:px-8">
+          <div>
+            <h2 id="titulo-parcerias" className="text-white">Faça parte da Lifitseg.</h2>
+            <p className="mt-4 max-w-2xl text-lifitseg-offwhite/80">
+              Corretores que queiram desenvolver uma parceria e profissionais interessados em integrar a equipe podem se apresentar por aqui. Este canal é separado do atendimento a clientes.
+            </p>
+          </div>
+          <TrabalheConoscoCTA />
+        </div>
+      </section>
+
       <section id="contato" aria-labelledby="titulo-contato-sobre" className="scroll-mt-20 bg-lifitseg-paper py-16">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.3fr] lg:px-8">
           <div>
@@ -103,6 +118,10 @@ export default function SobreEConhecimentoPage() {
               <li>
                 <p className="text-xs font-bold tracking-wide text-lifitseg-text-soft uppercase">Endereço</p>
                 <p className="font-semibold text-lifitseg-dark">{siteConfig.endereco.completo}</p>
+              </li>
+              <li>
+                <p className="text-xs font-bold tracking-wide text-lifitseg-text-soft uppercase">Horário de atendimento</p>
+                <p className="font-semibold text-lifitseg-dark">{siteConfig.contato.horario}</p>
               </li>
             </ul>
           </div>

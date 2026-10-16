@@ -34,7 +34,7 @@ export default async function GuiaPage({ params }: PageProps) {
 
   return (
     <>
-      <Breadcrumb items={[{ label: 'Início', href: '/' }, { label: 'Guias', href: '/conhecimento' }, { label: guia.titulo }]} />
+      <Breadcrumb items={[{ label: 'Guias', href: '/conhecimento' }, { label: guia.titulo }]} />
       <article className="bg-white py-14">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <p className="text-xs font-bold tracking-widest text-lifitseg-green uppercase">{guia.tema}</p>

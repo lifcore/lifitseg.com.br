@@ -16,6 +16,7 @@ const NAVEGACAO = [
   { label: 'Seguros pessoais', href: '/seguros-pessoais' },
   { label: 'Referências em saúde', href: '/referencias-saude' },
   { label: 'A Lifitseg', href: '/sobre-e-conhecimento#sobre' },
+  { label: 'Faça parte', href: '/sobre-e-conhecimento#trabalhe-conosco' },
   { label: 'Contato', href: '/#contato' },
 ]
 
@@ -32,7 +33,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Image src="/marca/Lifitseg_logo_compacto_escuro.svg" alt={siteConfig.nome} width={190} height={45} className="h-11 w-auto" />
-            <p className="mt-4 max-w-sm text-sm text-lifitseg-offwhite/70">{siteConfig.descricaoCurta}</p>
+            <p className="mt-4 max-w-sm text-sm text-lifitseg-offwhite/70">Consultoria em benefícios e seguros.</p>
             {REDES.length > 0 && (
               <ul className="mt-6 flex gap-4 text-sm">
                 {REDES.map((r) => (
@@ -72,6 +73,7 @@ export function Footer() {
               </a>
             </p>
             <p>{siteConfig.endereco.completo}</p>
+            <p>{siteConfig.contato.horario}</p>
           </div>
         </div>
 
@@ -81,7 +83,7 @@ export function Footer() {
           </p>
           <div className="flex gap-5">
             <Link href="/privacidade" className="hover:text-lifitseg-mint">Política de Privacidade</Link>
-            <button type="button" onClick={abrirPreferencias} className="hover:text-lifitseg-mint">Preferências de cookies</button>
+            <button type="button" onClick={abrirPreferencias} className="hover:text-lifitseg-mint">Alterar preferências de privacidade</button>
           </div>
         </div>
       </div>
