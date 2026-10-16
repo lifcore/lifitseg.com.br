@@ -7,7 +7,7 @@
 
 import { lifcoreApi } from '@/services/lifcoreApi'
 import { medicaoPermitida } from './consentimento'
-import { obterRastreio } from './tracking'
+import { caminhoMedivel, obterRastreio } from './tracking'
 
 export type EventoSite = 'page_view' | 'cta_click' | 'whatsapp_click' | 'form_start' | 'form_submit_ok' | 'form_submit_error'
 
@@ -16,7 +16,7 @@ export function registrarEvento(evento: EventoSite, rotulo = ''): void {
   const ultimo = obterRastreio().ultimo
   void lifcoreApi.registrarEvento({
     evento,
-    pagina: window.location.pathname,
+    pagina: caminhoMedivel(window.location.pathname),
     rotulo: rotulo.slice(0, 80),
     campanha: ultimo ? { source: ultimo.source, medium: ultimo.medium, campaign: ultimo.campaign, content: ultimo.content } : null,
   })

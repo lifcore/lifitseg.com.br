@@ -38,6 +38,18 @@ export interface UtmParams {
   utm_term: string | null
 }
 
+/**
+ * Barreira de rotas sensíveis (M-29 do Chat): páginas de especialidade,
+ * região ou instituição de saúde revelam interesse de saúde. Na medição e na
+ * página de entrada guardamos só a raiz da seção, nunca o caminho completo.
+ */
+const ROTAS_SENSIVEIS = ['/referencias-saude']
+
+export function caminhoMedivel(caminho: string): string {
+  const raiz = ROTAS_SENSIVEIS.find((r) => caminho === r || caminho.startsWith(`${r}/`))
+  return (raiz ?? caminho).slice(0, 200)
+}
+
 export const PRAZO_DIAS = 90
 const CHAVE_SESSAO = 'lifitseg_origem_sessao'
 const CHAVE_PERSISTENTE = 'lifitseg_origem_90d'
@@ -87,7 +99,7 @@ export function toqueDaUrl(url: URL, referrer: string, agora = new Date()): Toqu
     t[chave] = valor
   }
   if (Object.keys(t).length === 0) return null
-  t.landing = url.pathname.slice(0, 200)
+  t.landing = caminhoMedivel(url.pathname)
   const ref = dominioExterno(referrer, url.hostname)
   if (ref) t.referencia = ref
   t.em = agora.toISOString()
@@ -161,7 +173,7 @@ export function capturarOrigem(agora = new Date()): void {
 }
 
 function semCampanha(url: URL, agora: Date): Toque {
-  const t: Toque = { landing: url.pathname.slice(0, 200), em: agora.toISOString() }
+  const t: Toque = { landing: caminhoMedivel(url.pathname), em: agora.toISOString() }
   const ref = dominioExterno(document.referrer, url.hostname)
   if (ref) t.referencia = ref
   return t
