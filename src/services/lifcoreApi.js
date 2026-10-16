@@ -1,6 +1,7 @@
 // /services/lifcoreApi.js
 
 import { LifCoreConfig } from '../config/lifcore.config.js'
+import { obterRastreio } from '../utils/tracking'
 
 /**
  * Simula a resposta da API em ambiente de desenvolvimento — não
@@ -115,24 +116,46 @@ export const lifcoreApi = {
    * cliente/prospect + contato primário de verdade.
    */
   async submitLead(payload) {
-    if (!payload.nome || !payload.email || !payload.telefone) {
-      throw new Error('Campos obrigatórios ausentes: Nome, E-mail e Telefone são fundamentais.')
+    // F1 (D-34): nome e ao menos um contato (e-mail ou telefone).
+    if (!payload.nome || (!payload.email && !payload.telefone)) {
+      throw new Error('Informe seu nome e um e-mail ou telefone para contato.')
     }
-    return postToFunction('receber-lead-site', payload)
+    // A origem do visitante (D-30) segue sempre junto, no campo `rastreio`.
+    return postToFunction('receber-lead-site', { ...payload, rastreio: obterRastreio() })
   },
 
   /**
-   * Usado pelo ContatoForm (WEB-005, "Fale com a LifitSeg").
-   * ⚠️ AINDA NÃO EXISTE a function `receber-fale-conosco` no
-   * Supabase — vai retornar 404 até alguém criá-la (mesmo padrão de
-   * segurança/estrutura de `receber-lead-site`, adaptado pros campos
-   * do ContatoForm: assunto, mensagem, sem numeroColaboradores).
+   * Usado pelo ContatoForm (WEB-005, "Fale com a LifitSeg"). A function
+   * `receber-fale-conosco` existe e, desde a F1, usa o mesmo fluxo de
+   * recepção do `receber-lead-site` (origem, filtro e quarentena).
    */
   async submitContato(payload) {
-    if (!payload.nome || !payload.email) {
-      throw new Error('Campos obrigatórios ausentes: Nome e E-mail são fundamentais.')
+    if (!payload.nome || (!payload.email && !payload.telefone)) {
+      throw new Error('Informe seu nome e um e-mail ou telefone para contato.')
     }
-    return postToFunction('receber-fale-conosco', payload)
+    return postToFunction('receber-fale-conosco', { ...payload, rastreio: obterRastreio() })
+  },
+
+  /**
+   * Eventos de navegação agregados (H2). Só é chamado quando o visitante
+   * aceitou a medição (ver utils/eventos.ts). Não bloqueia a página:
+   * falha é ignorada.
+   */
+  async registrarEvento(corpo) {
+    if (LifCoreConfig.useMock) {
+      console.log('[LifCore MOCK] evento', corpo)
+      return
+    }
+    try {
+      await fetch(`${LifCoreConfig.baseUrl}/registrar-evento-site`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-LifCore-Client': 'LifitSeg-WebFront' },
+        body: JSON.stringify(corpo),
+        keepalive: true,
+      })
+    } catch {
+      // medição nunca atrapalha a navegação
+    }
   },
 
   /**

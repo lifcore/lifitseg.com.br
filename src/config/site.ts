@@ -5,11 +5,13 @@
 // daqui — nunca escrevem telefone/e-mail/endereço direto no componente.
 
 export const siteConfig = {
-  nome: 'LifitSeg',
+  nome: 'Lifitseg', // grafia editorial da nova comunicação (Chat, Diretriz Central)
   nomeCompleto: 'LifitSeg Consultoria & Corretagem de Seguros',
-  tagline: 'Consultoria & Riscos',
+  tagline: 'Planos de saúde empresariais',
+  // Home v3 do Chat (M-21): conhecimento técnico para a decisão empresarial.
   descricao:
-    'A estratégia certa para proteger pessoas, empresas e patrimônios começa com um bom diagnóstico.',
+    'Conhecimento técnico para compreender alternativas, contratar e planejar a gestão do plano de saúde empresarial da sua empresa.',
+  descricaoCurta: 'Conhecimento técnico em planos de saúde empresariais.',
 
   url: 'https://www.lifitseg.com.br',
 
@@ -34,9 +36,10 @@ export const siteConfig = {
     registroSusep: '232149012',
   },
 
+  // URLs informadas por Raphael e conferidas em 16/10/2026 (respondem 200).
   redesSociais: {
-    // preencher quando existirem — mantido vazio de propósito, não inventado
-    instagram: '',
-    linkedin: '',
+    instagram: 'https://www.instagram.com/lifitseg/',
+    facebook: 'https://www.facebook.com/lifitsegbeneficios/',
+    linkedin: 'https://br.linkedin.com/company/lifitseg-consultoria-de-benef%C3%ADcios-ltda',
   },
 } as const

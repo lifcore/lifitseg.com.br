@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { siteConfig } from '@/config/site'
+import { registrarEvento } from '@/utils/eventos'
 
 export function FloatingActionButtons() {
   const [mostrarVoltarTopo, setMostrarVoltarTopo] = useState(false)
@@ -25,6 +26,7 @@ export function FloatingActionButtons() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Fale conosco pelo WhatsApp"
+        onClick={() => registrarEvento('whatsapp_click', 'botao-flutuante')}
         className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-all hover:scale-105 hover:bg-[#20ba5a]"
       >
         <svg className="h-7 w-7 fill-current" viewBox="0 0 24 24">

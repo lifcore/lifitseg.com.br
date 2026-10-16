@@ -1,99 +1,86 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/config/site'
-import { NAV_SOLUCOES, NAV_INSTITUCIONAL } from '@/config/navigation'
+import { abrirPreferencias } from '@/utils/consentimento'
+import { registrarEvento } from '@/utils/eventos'
+
+// Rodapé da home v3 (Chief Chat, M-21): logo B1, descrição curta,
+// navegação, dados institucionais do siteConfig (fonte única), redes e
+// acesso real às preferências de cookies (D-30).
+const NAVEGACAO = [
+  { label: 'Plano empresarial', href: '/beneficios-corporativos' },
+  { label: 'Seguros corporativos', href: '/seguros-corporativos' },
+  { label: 'Seguros pessoais', href: '/seguros-pessoais' },
+  { label: 'Referências em saúde', href: '/referencias-saude' },
+  { label: 'A Lifitseg', href: '/sobre-e-conhecimento#sobre' },
+  { label: 'Contato', href: '/#contato' },
+]
+
+const REDES = [
+  { label: 'Instagram', href: siteConfig.redesSociais.instagram },
+  { label: 'LinkedIn', href: siteConfig.redesSociais.linkedin },
+  { label: 'Facebook', href: siteConfig.redesSociais.facebook },
+].filter((r) => r.href)
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-lifitseg-dark-deep text-lifitseg-offwhite">
+    <footer className="bg-lifitseg-dark text-lifitseg-offwhite">
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Image src="/logo.png" alt={siteConfig.nome} width={423} height={119} className="mb-4 h-[119px] w-auto" />
-            <p className="text-sm leading-relaxed text-lifitseg-offwhite/60">
-              Consultoria e Arquitetura de Riscos Corporativos. Transição da corretagem tradicional
-              para a governança de alta autoridade.
+            <Image src="/marca/Lifitseg_logo_compacto_escuro.svg" alt={siteConfig.nome} width={190} height={45} className="h-11 w-auto" />
+            <p className="mt-4 max-w-sm text-sm text-lifitseg-offwhite/70">{siteConfig.descricaoCurta}</p>
+            {REDES.length > 0 && (
+              <ul className="mt-6 flex gap-4 text-sm">
+                {REDES.map((r) => (
+                  <li key={r.label}>
+                    <a href={r.href} target="_blank" rel="noopener noreferrer" className="text-lifitseg-offwhite/80 underline-offset-4 hover:text-lifitseg-mint hover:underline">
+                      {r.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <nav aria-label="Rodapé">
+            <ul className="space-y-2.5 text-sm">
+              {NAVEGACAO.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-lifitseg-offwhite/75 transition-colors hover:text-lifitseg-mint">{item.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="space-y-2 text-sm text-lifitseg-offwhite/75">
+            <p>
+              <a href={`mailto:${siteConfig.contato.email}`} className="hover:text-lifitseg-mint">{siteConfig.contato.email}</a>
             </p>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
-              Soluções Corporativas
-            </h4>
-            <ul className="space-y-2.5">
-              {NAV_SOLUCOES.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
-              Institucional
-            </h4>
-            <ul className="space-y-2.5">
-              {NAV_INSTITUCIONAL.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/#metodo" className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
-                  Método de Trabalho
-                </Link>
-              </li>
-              <li>
-                <Link href="/#strategy" className="text-sm text-lifitseg-offwhite/70 transition-colors hover:text-primary">
-                  Strategy Business
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
-              Contato &amp; Governança
-            </h4>
-            <p className="mb-3 text-sm text-lifitseg-offwhite/70">Atendimento Corporativo Nacional</p>
-            <ul className="space-y-2 text-sm text-lifitseg-offwhite/70">
-              <li>
-                <a href={`mailto:${siteConfig.contato.email}`} className="transition-colors hover:text-primary">
-                  {siteConfig.contato.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`https://wa.me/${siteConfig.contato.whatsapp}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="transition-colors hover:text-primary"
-                >
-                  WhatsApp: {siteConfig.contato.whatsappExibicao}
-                </a>
-              </li>
-              <li>{siteConfig.endereco.completo}</li>
-              <li className="pt-1 text-xs text-lifitseg-offwhite/50">
-                SUSEP {siteConfig.juridico.registroSusep}
-              </li>
-            </ul>
+            <p>
+              <a
+                href={`https://wa.me/${siteConfig.contato.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => registrarEvento('whatsapp_click', 'rodape')}
+                className="hover:text-lifitseg-mint"
+              >
+                WhatsApp {siteConfig.contato.whatsappExibicao}
+              </a>
+            </p>
+            <p>{siteConfig.endereco.completo}</p>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-lifitseg-offwhite/50 sm:flex-row">
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-lifitseg-offwhite/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {siteConfig.nomeCompleto}. Todos os direitos reservados.
+            © {new Date().getFullYear()} {siteConfig.nomeCompleto} · CNPJ {siteConfig.juridico.cnpj} · SUSEP {siteConfig.juridico.registroSusep}
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacidade" className="transition-colors hover:text-primary">
-              Política de Privacidade
-            </Link>
-            <span>CNPJ {siteConfig.juridico.cnpj}</span>
+          <div className="flex gap-5">
+            <Link href="/privacidade" className="hover:text-lifitseg-mint">Política de Privacidade</Link>
+            <button type="button" onClick={abrirPreferencias} className="hover:text-lifitseg-mint">Preferências de cookies</button>
           </div>
         </div>
       </div>

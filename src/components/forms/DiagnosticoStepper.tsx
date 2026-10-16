@@ -5,6 +5,8 @@ import { ArrowRight, ArrowLeft, MessageCircle } from 'lucide-react'
 import { useLifCoreLead } from '@/hooks/useLifCoreLead'
 import { getStoredUtms } from '@/utils/tracking'
 import { siteConfig } from '@/config/site'
+import { MUNICIPIOS_ATENDIDOS, CODIGO_OUTRA_CIDADE } from '@/config/municipios'
+import { cnpjValido, mascararCnpj, somenteDigitos } from './validacao'
 
 type CampoEscolha = 'qtdVidas' | 'operadoraAtual' | 'vigencia' | 'valorMensal' | 'sinistralidade' | 'avaliacaoContrato'
 
@@ -78,9 +80,15 @@ type ContatoForm = {
   empresa: string
   email: string
   telefone: string
+  cnpj: string
+  municipio: string
+  municipioTexto: string
 }
 
-const CONTATO_INICIAL: ContatoForm = { nome: '', empresa: '', email: '', telefone: '' }
+// Plano M-24: LP paga exige CNPJ (D-17) e município (D-32); empresa passa a ser obrigatória (D-34).
+const CONTATO_INICIAL: ContatoForm = { nome: '', empresa: '', email: '', telefone: '', cnpj: '', municipio: '', municipioTexto: '' }
+
+const REGIOES_LP = ['Jundiaí', 'Campinas', 'São Paulo', 'Baixada Santista']
 
 const linkWhatsapp = `https://wa.me/${siteConfig.contato.whatsapp}?text=${encodeURIComponent(
   'Olá! Vim pela página de Plano de Saúde Empresarial e prefiro falar direto com um consultor.'
@@ -109,20 +117,31 @@ export function DiagnosticoStepper() {
     irParaProximo()
   }
 
-  function handleContatoChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const [erroCnpj, setErroCnpj] = useState('')
+
+  function handleContatoChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target
-    setContato((prev) => ({ ...prev, [name]: value }))
+    setContato((prev) => ({ ...prev, [name]: name === 'cnpj' ? mascararCnpj(value) : value }))
+    if (name === 'cnpj') setErroCnpj('')
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!cnpjValido(contato.cnpj)) {
+      setErroCnpj('Confira o CNPJ da empresa.')
+      return
+    }
     const utms = getStoredUtms()
+    const { cnpj, municipio, municipioTexto, ...dadosContato } = contato
     await submit({
-      ...contato,
+      ...dadosContato,
       produto: 'Plano de Saúde Empresarial',
       origem: 'lp-saude-odonto',
       utm: utms,
       diagnostico: respostas,
+      cnpj: somenteDigitos(cnpj),
+      municipioCodigoIbge: municipio === CODIGO_OUTRA_CIDADE ? undefined : municipio,
+      municipioTexto: municipio === CODIGO_OUTRA_CIDADE ? municipioTexto.trim() : undefined,
     })
   }
 
@@ -228,11 +247,61 @@ export function DiagnosticoStepper() {
           <input
             type="text"
             name="empresa"
+            required
             value={contato.empresa}
             onChange={handleContatoChange}
-            placeholder="Empresa"
+            placeholder="Empresa *"
+            aria-label="Empresa"
             className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
           />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <input
+                type="text"
+                name="cnpj"
+                required
+                inputMode="numeric"
+                value={contato.cnpj}
+                onChange={handleContatoChange}
+                placeholder="CNPJ *"
+                aria-label="CNPJ"
+                aria-invalid={!!erroCnpj}
+                className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+              />
+              {erroCnpj && <p className="mt-1 text-sm text-red-400">{erroCnpj}</p>}
+            </div>
+            <select
+              name="municipio"
+              required
+              value={contato.municipio}
+              onChange={handleContatoChange}
+              aria-label="Município da empresa"
+              className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+            >
+              <option value="">Município da empresa *</option>
+              {REGIOES_LP.map((regiao) => (
+                <optgroup key={regiao} label={regiao}>
+                  {MUNICIPIOS_ATENDIDOS.filter((m) => m.regiao === regiao).map((m) => (
+                    <option key={m.codigo} value={m.codigo}>{m.nome}</option>
+                  ))}
+                </optgroup>
+              ))}
+              <option value={CODIGO_OUTRA_CIDADE}>Outra cidade</option>
+            </select>
+          </div>
+          {contato.municipio === CODIGO_OUTRA_CIDADE && (
+            <input
+              type="text"
+              name="municipioTexto"
+              required
+              maxLength={80}
+              value={contato.municipioTexto}
+              onChange={handleContatoChange}
+              placeholder="Qual cidade? *"
+              aria-label="Qual cidade?"
+              className="w-full rounded-xl border border-white/10 bg-lifitseg-dark-deep px-4 py-3 text-sm text-lifitseg-offwhite focus:border-primary focus:outline-none"
+            />
+          )}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <input
               type="email"

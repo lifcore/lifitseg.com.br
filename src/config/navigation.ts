@@ -8,9 +8,9 @@ export type ItemNavegacao = {
 
 /** Itens de âncora na própria Home (rolagem interna) */
 export const NAV_HOME: ItemNavegacao[] = [
-  { label: 'Diferenciais', href: '/#diferenciais' },
-  { label: 'Como Trabalhamos', href: '/#metodo' },
-  { label: 'Tecnologia', href: '/#tecnologia' },
+  { label: 'Por porte', href: '/#por-porte' },
+  { label: 'Como atuamos', href: '/#como-atuamos' },
+  { label: 'Dúvidas', href: '/#duvidas' },
   { label: 'Contato', href: '/#contato' },
 ]
 
@@ -35,7 +35,7 @@ export const NAV_SOLUCOES: ItemNavegacao[] = [
 
 /** Itens institucionais */
 export const NAV_INSTITUCIONAL: ItemNavegacao[] = [
-  { label: 'Sobre a LifitSeg', href: '/sobre-e-conhecimento#sobre' },
+  { label: 'A Lifitseg', href: '/sobre-e-conhecimento#sobre' },
   { label: 'Centro de Conhecimento', href: '/sobre-e-conhecimento#conhecimento' },
 ]
 

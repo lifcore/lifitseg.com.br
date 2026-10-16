@@ -42,3 +42,12 @@ export const OPERADORAS = [
 ] as const
 
 export const OPERADORAS_SAUDE = OPERADORAS.filter((op) => op.categoria === 'saude')
+
+// Home v3 (Chief Chat, M-21): grade de marcas da home.
+// A seleção abaixo é a das pranchas v3 — ilustrativa, NÃO é ranking,
+// recomendação nem confirmação de parceria vigente. Só aparece no site
+// publicado quando Raphael confirmar portfólio, categoria e direito de uso
+// das marcas (plano M-24, seção 4) e mudar PORTFOLIO_HOME_CONFIRMADO para
+// true. Até lá, aparece apenas em desenvolvimento, marcada "em revisão".
+export const PORTFOLIO_HOME_CONFIRMADO = false
+export const MARCAS_HOME = ['bradesco', 'sulamerica', 'amil', 'porto', 'omint', 'careplus'] as const

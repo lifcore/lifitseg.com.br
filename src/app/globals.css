@@ -1,22 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta institucional LifitSeg — atualizada para casar com o novo logo (coração laranja/ciano) */
+  /* Paleta institucional Lifitseg — identidade B1 (D-28, kit do Chief Chat).
+     Nomes antigos mantidos para não quebrar páginas existentes; valores B1. */
   --color-lifitseg-dark: #05191b;      /* verde petróleo — fundo de marca, Hero, navegação */
   --color-lifitseg-dark-deep: #030f10; /* verde profundo — rodapé, áreas de maior contraste */
   --color-lifitseg-surface: #0d2b2c;   /* verde superfície — cards e painéis sobre fundo escuro */
   --color-lifitseg-primary: #ffbb44;   /* âmbar — CTA, destaque, valor/ação */
-  --color-lifitseg-offwhite: #e5e4e3;  /* off-white — fundo claro principal */
+  --color-lifitseg-offwhite: #eeecea;  /* off-white B1 — texto sobre fundo escuro */
 
   /* Acentos do coração da marca — usar com moderação, como assinatura visual pontual */
   --color-lifitseg-coral: #fb9874;     /* laranja/pêssego — acento secundário quente */
-  --color-lifitseg-cyan: #00e6ee;      /* ciano — acento "vivo", links e detalhes de destaque */
-  --color-lifitseg-lime: #7ed957;      /* verde-lima — acento de confirmação/sucesso */
+  --color-lifitseg-cyan: #7cffc1;      /* verde-menta B1 (símbolo no escuro) — links e detalhes sobre fundo escuro */
+  --color-lifitseg-lime: #7cffc1;      /* verde-menta B1 — confirmação sobre fundo escuro */
+
+  /* B1 sobre fundo claro (contraste para texto e ações) */
+  --color-lifitseg-green: #087f6d;     /* verde B1 — links, rótulos e botão secundário em fundo claro */
+  --color-lifitseg-gold: #b77a16;      /* dourado B1 — detalhe em fundo claro (não usar em texto pequeno) */
+  --color-lifitseg-mint: #7cffc1;      /* verde-menta B1 — detalhe em fundo escuro */
+  --color-lifitseg-paper: #f3f4f3;     /* fundo claro alternado das seções */
+  --color-lifitseg-line: #dfe3e1;      /* bordas e divisores em fundo claro */
 
   /* Hierarquia de texto (§25) */
   --color-lifitseg-text: #293A38;      /* texto principal, em fundo claro */
   --color-lifitseg-text-soft: #687673; /* texto secundário/legenda */
-  --color-lifitseg-success: #4A9589;   /* verde positivo — resultado, confirmação, checks */
+  --color-lifitseg-success: #087f6d;   /* verde B1 — resultado, confirmação, checks */
 
   --background: #ffffff;
   --foreground: #171717;
@@ -42,6 +50,11 @@
   --color-lifitseg-text: var(--color-lifitseg-text);
   --color-lifitseg-text-soft: var(--color-lifitseg-text-soft);
   --color-lifitseg-success: var(--color-lifitseg-success);
+  --color-lifitseg-green: var(--color-lifitseg-green);
+  --color-lifitseg-gold: var(--color-lifitseg-gold);
+  --color-lifitseg-mint: var(--color-lifitseg-mint);
+  --color-lifitseg-paper: var(--color-lifitseg-paper);
+  --color-lifitseg-line: var(--color-lifitseg-line);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -101,4 +114,24 @@ p {
 .bg-dot-grid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* Campos de formulário (home v3, plano M-24): rótulo persistente fora do
+   campo, foco visível, erro sinalizado. */
+.campo-formulario {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #b9c2bf;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--color-lifitseg-text);
+}
+.campo-formulario:focus {
+  outline: 2px solid var(--color-lifitseg-green);
+  outline-offset: 1px;
+  border-color: var(--color-lifitseg-green);
+}
+.campo-formulario[aria-invalid='true'] {
+  border-color: #b91c1c;
 }
