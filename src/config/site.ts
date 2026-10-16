@@ -19,7 +19,7 @@ export const siteConfig = {
     email: 'atendimento@lifitseg.com.br',
     whatsapp: '5511940543808', // formato internacional, sem símbolos — pronto pro link wa.me
     whatsappExibicao: '(11) 94054-3808',
-    horario: 'Segunda a sexta, das 8h às 18h', // confirmado por Raphael em 16/10/2026
+    horario: 'Segunda a sexta, das 8h às 17h30', // confirmado por Raphael em 16/10/2026 (igual ao Facebook)
   },
 
   endereco: {
