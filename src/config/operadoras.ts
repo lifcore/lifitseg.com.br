@@ -18,7 +18,7 @@ export const OPERADORAS = [
   { name: 'Omint', file: 'omint', categoria: 'saude', destaque: false },
   { name: 'Care Plus', file: 'careplus', categoria: 'saude', destaque: false },
   { name: 'Unimed', file: 'unimed', categoria: 'saude', destaque: true },
-  { name: 'Seguros Unimed', file: 'seguros_unimed', categoria: 'seguros', destaque: false },
+  { name: 'Seguros Unimed', file: 'seguros_unimed', categoria: 'saude', destaque: false },
   { name: 'Tokio Marine', file: 'tokio', categoria: 'seguros', destaque: false },
   { name: 'Liberty Seguros', file: 'liberty', categoria: 'seguros', destaque: false },
   { name: 'Mapfre', file: 'mapfre', categoria: 'seguros', destaque: false },
@@ -35,6 +35,10 @@ export const OPERADORAS = [
   { name: 'Plena Saúde', file: 'plena', categoria: 'saude', destaque: false },
   { name: 'Única Saúde', file: 'unica', categoria: 'saude', destaque: false },
   { name: 'Zurich', file: 'zurich', categoria: 'seguros', destaque: false },
+  { name: 'GoCare', file: 'gocare', categoria: 'saude', destaque: false },
+  { name: 'Saúde Beneficência', file: 'beneficencia', categoria: 'saude', destaque: false },
+  { name: 'VeraCruz', file: 'veracruz', categoria: 'saude', destaque: false },
+  { name: 'MedSênior', file: 'medsenior', categoria: 'saude', destaque: false },
 ] as const
 
 export const OPERADORAS_SAUDE = OPERADORAS.filter((op) => op.categoria === 'saude')

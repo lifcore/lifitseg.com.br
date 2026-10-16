@@ -4,7 +4,21 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, CheckCircle2, MessageCircle } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  MessageCircle,
+  ShieldCheck,
+  Search,
+  BarChart3,
+  Handshake,
+  RefreshCw,
+  ClipboardCheck,
+  Settings2,
+  HeartHandshake,
+  LineChart,
+  Smile,
+} from 'lucide-react';
 import { captureAndPersistUtms } from '@/utils/tracking';
 import { DiagnosticoStepper } from '@/components/forms/DiagnosticoStepper';
 import { siteConfig } from '@/config/site';
@@ -37,31 +51,75 @@ export default function LandingPageSaudeOdonto() {
         </div>
       </header>
 
-      {/* HERO — dor + promessa, sem foto hotlinkada (performance/confiabilidade) */}
+      {/* HERO — dor + promessa, sem foto hotlinkada (performance/confiabilidade).
+          Visual do lado direito é um mockup do próprio diagnóstico (dado real do
+          produto), não uma foto de banco — mantém a autoridade técnica sem
+          depender de imagem genérica. */}
       <section className="relative py-20 lg:py-28 overflow-hidden bg-lifitseg-dark text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,187,68,0.12),transparent_45%)]" />
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wide">
-            Atendimento Especializado LifitSeg
+        <div className="absolute inset-0 bg-dot-grid opacity-[0.15]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,187,68,0.14),transparent_45%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_80%,rgba(205,250,154,0.08),transparent_40%)]" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wide">
+              Atendimento Especializado LifitSeg
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+              Chega de renovar o plano de saúde no escuro.
+            </h1>
+
+            <p className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              Aplicamos a mesma metodologia técnica — VCMH, sinistralidade e prática de mercado — que as operadoras usam pra justificar seu reajuste, e usamos isso a favor da negociação da sua empresa.
+            </p>
+
+            <div className="pt-4">
+              <button
+                onClick={irParaDiagnostico}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold shadow-lg hover:opacity-90 transition-all cursor-pointer group text-base"
+              >
+                Solicitar Diagnóstico
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <p className="text-xs text-white/40 mt-3">Saúde Empresarial • Benefícios • Odontológico</p>
+            </div>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
-            Chega de renovar o plano de saúde no escuro.
-          </h1>
+          {/* MOCKUP DO DIAGNÓSTICO — substitui foto por uma prévia do produto */}
+          <div className="lg:col-span-5 relative hidden sm:block">
+            <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 sm:p-7 shadow-2xl">
+              <div className="h-1 w-16 rounded-full bg-gradient-heart mb-5" />
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-white/50">Diagnóstico de Contrato</span>
+                <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">Análise Técnica</span>
+              </div>
 
-          <p className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto">
-            Aplicamos a mesma metodologia técnica — VCMH, sinistralidade e prática de mercado — que as operadoras usam pra justificar seu reajuste, e usamos isso a favor da negociação da sua empresa.
-          </p>
+              <div className="space-y-3">
+                {[
+                  { label: 'Reajuste vs. sinistralidade', status: 'Em análise' },
+                  { label: 'Rede credenciada atual', status: 'Mapeada' },
+                  { label: 'Alternativas de mercado', status: 'Comparando' },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3"
+                  >
+                    <span className="text-sm font-semibold text-white/80">{item.label}</span>
+                    <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary">
+                      {item.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-          <div className="pt-4">
-            <button
-              onClick={irParaDiagnostico}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-lifitseg-dark font-bold shadow-lg hover:opacity-90 transition-all cursor-pointer group text-base"
-            >
-              Solicitar Diagnóstico
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <p className="text-xs text-white/40 mt-3">Saúde Empresarial • Benefícios • Odontológico</p>
+              <p className="mt-5 text-[11px] text-white/40">Baseado nas respostas do diagnóstico ao lado.</p>
+            </div>
+
+            <div className="absolute -bottom-5 left-6 hidden items-center gap-2 rounded-2xl border border-black/5 bg-white px-5 py-3 text-lifitseg-dark shadow-xl sm:flex">
+              <ShieldCheck className="h-4 w-4 text-primary" />
+              <span className="text-xs font-bold">SUSEP nº {siteConfig.juridico.registroSusep}</span>
+            </div>
           </div>
         </div>
       </section>
@@ -87,7 +145,10 @@ export default function LandingPageSaudeOdonto() {
               'Benefício caro e pouco percebido pelos colaboradores',
               'Falta de alternativas comparáveis de mercado',
             ].map((dor, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-[#F4F6F4] border border-black/5 flex items-start gap-3">
+              <div
+                key={idx}
+                className="p-5 rounded-2xl bg-[#F4F6F4] border border-black/5 flex items-start gap-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30"
+              >
                 <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <p className="text-sm font-semibold text-lifitseg-dark">{dor}</p>
               </div>
@@ -127,13 +188,21 @@ export default function LandingPageSaudeOdonto() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { step: '01', title: 'ENTENDEMOS', desc: 'Perfil da empresa, vidas, contrato atual e objetivos.' },
-              { step: '02', title: 'ANALISAMOS', desc: 'Contrato, reajuste, sinistralidade e condições comerciais.' },
-              { step: '03', title: 'NEGOCIAMOS', desc: 'Buscamos melhores condições — na operadora atual ou em alternativas de mercado.' },
-              { step: '04', title: 'ACOMPANHAMOS', desc: 'Gestão contínua do contrato via LifitSeg + Lifcore, do RH aos colaboradores.' },
+              { step: '01', icon: Search, title: 'ENTENDEMOS', desc: 'Perfil da empresa, vidas, contrato atual e objetivos.' },
+              { step: '02', icon: BarChart3, title: 'ANALISAMOS', desc: 'Contrato, reajuste, sinistralidade e condições comerciais.' },
+              { step: '03', icon: Handshake, title: 'NEGOCIAMOS', desc: 'Buscamos melhores condições — na operadora atual ou em alternativas de mercado.' },
+              { step: '04', icon: RefreshCw, title: 'ACOMPANHAMOS', desc: 'Gestão contínua do contrato via LifitSeg + Lifcore, do RH aos colaboradores.' },
             ].map((item, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-3xl border border-black/5 space-y-4 shadow-sm">
-                <div className="text-primary font-mono font-extrabold text-2xl">{item.step}</div>
+              <div
+                key={idx}
+                className="bg-white p-8 rounded-3xl border border-black/5 space-y-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:border-primary/30"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="text-primary font-mono font-extrabold text-2xl">{item.step}</div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <item.icon className="h-5 w-5" />
+                  </div>
+                </div>
                 <h3 className="font-bold text-xl text-lifitseg-dark">{item.title}</h3>
                 <p className="text-sm text-lifitseg-dark/70 leading-relaxed">{item.desc}</p>
               </div>
@@ -153,13 +222,19 @@ export default function LandingPageSaudeOdonto() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
-              { title: 'Consultoria', desc: 'Estratégia de contratação, comparação de alternativas e negociação.' },
-              { title: 'Gestão', desc: 'Acompanhamento do contrato e das movimentações — inclusões, exclusões, alterações.' },
-              { title: 'Pós-venda', desc: 'Com a LifitSeg, suas demandas de plano deixam de ser só suas — nossa equipe vira um braço de apoio ao seu RH durante toda a vigência do contrato.' },
-              { title: 'Inteligência', desc: 'Dados e análise técnica de contrato e sinistralidade para apoiar cada decisão.' },
-              { title: 'Odontológico', desc: 'Estruturamos o benefício de saúde junto ao odontológico, quando fizer sentido pro perfil da empresa.' },
+              { icon: ClipboardCheck, title: 'Consultoria', desc: 'Estratégia de contratação, comparação de alternativas e negociação.' },
+              { icon: Settings2, title: 'Gestão', desc: 'Acompanhamento do contrato e das movimentações — inclusões, exclusões, alterações.' },
+              { icon: HeartHandshake, title: 'Pós-venda', desc: 'Com a LifitSeg, suas demandas de plano deixam de ser só suas — nossa equipe vira um braço de apoio ao seu RH durante toda a vigência do contrato.' },
+              { icon: LineChart, title: 'Inteligência', desc: 'Dados e análise técnica de contrato e sinistralidade para apoiar cada decisão.' },
+              { icon: Smile, title: 'Odontológico', desc: 'Estruturamos o benefício de saúde junto ao odontológico, quando fizer sentido pro perfil da empresa.' },
             ].map((c, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-[#F4F6F4] border border-black/5 space-y-2">
+              <div
+                key={i}
+                className="p-6 rounded-2xl bg-[#F4F6F4] border border-black/5 space-y-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <c.icon className="h-5 w-5" />
+                </div>
                 <h3 className="font-bold text-lg text-lifitseg-dark">{c.title}</h3>
                 <p className="text-xs text-lifitseg-dark/70 leading-relaxed">{c.desc}</p>
               </div>
@@ -170,6 +245,8 @@ export default function LandingPageSaudeOdonto() {
 
       {/* REAJUSTE — bloco de autoridade */}
       <section className="py-24 bg-lifitseg-dark text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid opacity-[0.12]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,187,68,0.1),transparent_50%)]" />
         <div className="max-w-3xl mx-auto px-6 space-y-6 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Sua empresa recebeu um reajuste. E agora?
@@ -208,7 +285,10 @@ export default function LandingPageSaudeOdonto() {
               { faixa: '30 a 99 vidas', desc: 'Maior espaço para negociação e análise comparativa entre operadoras.' },
               { faixa: '100+ vidas', desc: 'Contratos com maior possibilidade de estruturação personalizada e negociação direta.' },
             ].map((c, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white border border-black/5 shadow-sm space-y-3">
+              <div
+                key={i}
+                className="p-8 rounded-3xl bg-white border border-black/5 shadow-sm space-y-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30"
+              >
                 <h3 className="font-bold text-xl text-lifitseg-dark">{c.faixa}</h3>
                 <p className="text-sm text-lifitseg-dark/70 leading-relaxed">{c.desc}</p>
               </div>
@@ -220,6 +300,25 @@ export default function LandingPageSaudeOdonto() {
       {/* CONFIANÇA / AUTORIDADE VERIFICÁVEL */}
       <section className="py-16 bg-white border-t border-black/5">
         <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-14">
+            <div className="text-center p-5 rounded-2xl bg-[#F4F6F4] border border-black/5">
+              <div className="text-3xl font-extrabold bg-gradient-heart bg-clip-text text-transparent">
+                {OPERADORAS_SAUDE.length}+
+              </div>
+              <div className="text-xs font-semibold text-lifitseg-dark/60 mt-1">Operadoras parceiras</div>
+            </div>
+            <div className="text-center p-5 rounded-2xl bg-[#F4F6F4] border border-black/5">
+              <div className="text-3xl font-extrabold text-primary">100%</div>
+              <div className="text-xs font-semibold text-lifitseg-dark/60 mt-1">Sem custo para a empresa</div>
+            </div>
+            <div className="text-center p-5 rounded-2xl bg-[#F4F6F4] border border-black/5">
+              <div className="text-3xl font-extrabold text-primary">SUSEP</div>
+              <div className="text-xs font-semibold text-lifitseg-dark/60 mt-1">
+                Nº {siteConfig.juridico.registroSusep}
+              </div>
+            </div>
+          </div>
+
           <p className="mb-8 text-center text-xs font-bold tracking-widest text-lifitseg-dark/50 uppercase">
             Independência técnica com acesso às principais operadoras de Saúde do mercado
           </p>
@@ -254,6 +353,8 @@ export default function LandingPageSaudeOdonto() {
 
       {/* CTA FINAL */}
       <section className="py-24 bg-lifitseg-dark text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid opacity-[0.12]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(205,250,154,0.08),transparent_50%)]" />
         <div className="max-w-3xl mx-auto px-6 space-y-6 relative z-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Vamos descobrir se sua empresa está pagando o valor certo pelo benefício certo?

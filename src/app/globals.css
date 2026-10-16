@@ -94,3 +94,11 @@ p {
     var(--color-lifitseg-lime) 100%
   );
 }
+
+/* Textura de fundo sutil pra seções escuras premium (Hero, CTAs) —
+   ponto de luz + malha de pontos, discreto o bastante pra não competir
+   com o texto. Usar sobre fundo escuro apenas. Usada pela LP Saúde. */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
