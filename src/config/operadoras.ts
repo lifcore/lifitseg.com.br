@@ -43,11 +43,11 @@ export const OPERADORAS = [
 
 export const OPERADORAS_SAUDE = OPERADORAS.filter((op) => op.categoria === 'saude')
 
-// Home v3 (Chief Chat, M-21): grade de marcas da home.
-// A seleção abaixo é a das pranchas v3 — ilustrativa, NÃO é ranking,
-// recomendação nem confirmação de parceria vigente. Só aparece no site
-// publicado quando Raphael confirmar portfólio, categoria e direito de uso
-// das marcas (plano M-24, seção 4) e mudar PORTFOLIO_HOME_CONFIRMADO para
-// true. Até lá, aparece apenas em desenvolvimento, marcada "em revisão".
-export const PORTFOLIO_HOME_CONFIRMADO = false
-export const MARCAS_HOME = ['bradesco', 'sulamerica', 'amil', 'porto', 'omint', 'careplus'] as const
+// Grade de parceiros de saúde da home (M-27). Raphael confirmou ao Chief
+// Chat, em 16/10/2026, o direito de uso das imagens dos parceiros
+// credenciados que já constam no site (Lifitseg_Site_Etapa2_INDICE.md).
+// A confirmação não se estende a novos parceiros nem promete que todo
+// produto está disponível para toda região ou faixa; a ordem da lista não
+// é ranking nem recomendação. Para esconder a grade em produção, voltar
+// esta constante para false.
+export const PORTFOLIO_HOME_CONFIRMADO = true

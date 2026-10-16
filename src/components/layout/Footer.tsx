@@ -11,6 +11,7 @@ import { registrarEvento } from '@/utils/eventos'
 // acesso real às preferências de cookies (D-30).
 const NAVEGACAO = [
   { label: 'Plano empresarial', href: '/beneficios-corporativos' },
+  { label: 'Guias', href: '/conhecimento' },
   { label: 'Seguros corporativos', href: '/seguros-corporativos' },
   { label: 'Seguros pessoais', href: '/seguros-pessoais' },
   { label: 'Referências em saúde', href: '/referencias-saude' },

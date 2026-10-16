@@ -1,28 +1,24 @@
 import Image from 'next/image'
-import { OPERADORAS, MARCAS_HOME, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
+import { OPERADORAS_SAUDE, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
 
 /**
- * Operadoras na home v3: apoio à decisão, sem dominar a marca. Grade
- * estática, marcas originais, mesma altura óptica. Bloqueada em produção
- * até a confirmação do portfólio (PORTFOLIO_HOME_CONFIRMADO).
+ * Parceiros de saúde (redação da etapa 2 do Chat, bloco H-07): apoio à
+ * decisão, sem dominar a marca e sem hierarquia que pareça recomendação.
+ * Logos originais, mesma altura óptica. Uso das imagens confirmado por
+ * Raphael (ver src/config/operadoras.ts).
  */
 export function GradeMarcas() {
-  const emRevisao = !PORTFOLIO_HOME_CONFIRMADO
-  if (emRevisao && process.env.NODE_ENV === 'production') return null
-
-  const marcas = MARCAS_HOME.map((file) => OPERADORAS.find((o) => o.file === file)).filter((o) => o !== undefined)
+  if (!PORTFOLIO_HOME_CONFIRMADO && process.env.NODE_ENV === 'production') return null
 
   return (
     <section id="operadoras" aria-labelledby="titulo-operadoras" className="scroll-mt-20 bg-lifitseg-paper py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 id="titulo-operadoras" className="text-lifitseg-dark">Alternativas de mercado, com critérios para comparar.</h2>
-        <p className="mt-3 text-sm text-lifitseg-text-soft">
-          {emRevisao
-            ? 'Seleção ilustrativa do cadastro atual · portfólio e uso das marcas em revisão (não publicado).'
-            : 'Conheça algumas das marcas presentes no nosso portfólio comercial, sujeito à confirmação de disponibilidade para cada contratação.'}
+        <h2 id="titulo-operadoras" className="text-lifitseg-dark">Parceiros de mercado e análise centrada na sua empresa.</h2>
+        <p className="mt-3 max-w-3xl text-lifitseg-text-soft">
+          Trabalhamos com parceiros credenciados para avaliar alternativas pertinentes ao cenário empresarial. A comparação considera as condições dos produtos disponíveis, a localização e os requisitos da contratação.
         </p>
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {marcas.map((m) => (
+          {OPERADORAS_SAUDE.map((m) => (
             <li key={m.file} className="flex flex-col items-start gap-3 rounded-2xl border border-lifitseg-line bg-white p-4">
               <div className="flex h-12 w-full items-center">
                 <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={140} height={48} className="max-h-10 w-auto object-contain" />
@@ -31,9 +27,7 @@ export function GradeMarcas() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-sm text-lifitseg-text-soft">
-          Disponibilidade, condições e rede dependem do produto e da análise comercial. A presença de uma marca não garante contratação ou cobertura.
-        </p>
+        <p className="mt-6 text-sm text-lifitseg-text-soft">Disponibilidade, rede e condições dependem do produto e da análise comercial.</p>
       </div>
     </section>
   )
