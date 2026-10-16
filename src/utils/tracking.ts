@@ -39,15 +39,21 @@ export interface UtmParams {
 }
 
 /**
- * Barreira de rotas sensíveis (M-29 do Chat): páginas de especialidade,
- * região ou instituição de saúde revelam interesse de saúde. Na medição e na
- * página de entrada guardamos só a raiz da seção, nunca o caminho completo.
+ * Exclusão de rotas sensíveis (M-29, plano v1.1 §2.1): páginas de
+ * especialidade, região ou instituição de saúde revelam interesse de saúde.
+ * Nelas não há evento de medição, e a página de entrada vira só o marcador
+ * `sensivel`, sem caminho. O servidor repete a regra.
  */
 const ROTAS_SENSIVEIS = ['/referencias-saude']
+export const MARCADOR_SENSIVEL = 'sensivel'
+
+export function ehRotaSensivel(caminho: string): boolean {
+  const limpo = caminho.split('?')[0].split('#')[0].toLowerCase()
+  return ROTAS_SENSIVEIS.some((r) => limpo === r || limpo.startsWith(`${r}/`))
+}
 
 export function caminhoMedivel(caminho: string): string {
-  const raiz = ROTAS_SENSIVEIS.find((r) => caminho === r || caminho.startsWith(`${r}/`))
-  return (raiz ?? caminho).slice(0, 200)
+  return ehRotaSensivel(caminho) ? MARCADOR_SENSIVEL : caminho.slice(0, 200)
 }
 
 export const PRAZO_DIAS = 90
