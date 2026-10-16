@@ -139,7 +139,7 @@ export default function BeneficiosCorporativosPage() {
       <section aria-labelledby="titulo-guias-beneficios" className="bg-lifitseg-paper py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 id="titulo-guias-beneficios" className="text-lifitseg-dark">Guias para aprofundar.</h2>
-          <div className="mt-8"><GuiasDestaque /></div>
+          <div className="mt-8"><GuiasDestaque area="saude" /></div>
           <Link href="/conhecimento" className="mt-8 inline-block text-sm font-bold text-lifitseg-green hover:underline">Ver todos os guias <span aria-hidden="true">→</span></Link>
         </div>
       </section>

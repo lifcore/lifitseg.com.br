@@ -29,7 +29,8 @@ export default async function GuiaPage({ params }: PageProps) {
   const guia = obterGuia(slug)
   if (!guia) notFound()
 
-  const outros = GUIAS.filter((g) => g.slug !== guia.slug).slice(0, 3)
+  const outros = GUIAS.filter((g) => g.area === guia.area && g.slug !== guia.slug).slice(0, 3)
+  const seguros = guia.area === 'seguros'
 
   return (
     <>
@@ -59,13 +60,13 @@ export default async function GuiaPage({ params }: PageProps) {
             <h2 id="titulo-apoio" className="text-lifitseg-dark" style={{ fontSize: '1.15rem' }}>Como a Lifitseg pode apoiar</h2>
             <p className="mt-3 text-lifitseg-text">{guia.apoio}</p>
             {guia.cta.destino === 'contato' ? (
-              <Link href="/#contato" className="mt-6 inline-block rounded-xl bg-lifitseg-green px-6 py-3 text-sm font-bold text-white hover:opacity-90">
+              <Link href={guia.cta.href ?? "/#contato"} className="mt-6 inline-block rounded-xl bg-lifitseg-green px-6 py-3 text-sm font-bold text-white hover:opacity-90">
                 {guia.cta.texto}
               </Link>
             ) : (
               <div className="mt-6 rounded-2xl border border-lifitseg-line p-5 text-sm">
                 <p className="font-semibold text-lifitseg-dark">{guia.cta.texto}</p>
-                <p className="mt-2 text-lifitseg-text-soft">Clientes Lifitseg: use o canal de atendimento. Não envie documentos ou informações de saúde por redes sociais ou formulários públicos.</p>
+                <p className="mt-2 text-lifitseg-text-soft">Clientes Lifitseg: use o canal de atendimento. {seguros ? 'Em ocorrência, priorize a segurança e os canais indicados na apólice. Não envie documentos por redes sociais ou formulários públicos.' : 'Não envie documentos ou informações de saúde por redes sociais ou formulários públicos.'}</p>
                 <div className="mt-4 flex flex-wrap gap-4">
                   <LinkWhatsApp rotulo={`guia-${guia.slug}`} className="font-bold text-lifitseg-green hover:underline">WhatsApp {siteConfig.contato.whatsappExibicao}</LinkWhatsApp>
                   <a href={`mailto:${siteConfig.contato.email}`} className="font-bold text-lifitseg-green hover:underline">{siteConfig.contato.email}</a>
@@ -73,6 +74,12 @@ export default async function GuiaPage({ params }: PageProps) {
               </div>
             )}
           </section>
+
+          {guia.fontes.length === 0 && (
+            <p className="mt-10 border-t border-lifitseg-line pt-6 text-sm text-lifitseg-text-soft">
+              Este guia reúne a orientação prática da equipe Lifitseg; não cita fonte pública específica. As condições aplicáveis estão no contrato ou na apólice de cada caso.
+            </p>
+          )}
 
           {guia.fontes.length > 0 && (
             <section aria-labelledby="titulo-fontes" className="mt-10 border-t border-lifitseg-line pt-6 text-sm">
@@ -88,7 +95,9 @@ export default async function GuiaPage({ params }: PageProps) {
           )}
 
           <p className="mt-10 text-xs text-lifitseg-text-soft">
-            Conteúdo educativo. Não substitui a análise das condições do seu contrato, a orientação do profissional de saúde nem os canais oficiais da operadora e da ANS. Em urgência, procure atendimento assistencial.
+            {seguros
+              ? 'Conteúdo educativo. Coberturas, limites e condições dependem da proposta, da apólice e da análise da seguradora. Não substitui a leitura do seu contrato nem os canais oficiais da seguradora e da SUSEP.'
+              : 'Conteúdo educativo. Não substitui a análise das condições do seu contrato, a orientação do profissional de saúde nem os canais oficiais da operadora e da ANS. Em urgência, procure atendimento assistencial.'}
           </p>
         </div>
       </article>

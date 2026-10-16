@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { METODO, FRENTES_GESTAO, COMPLEXIDADE, CRITERIOS, PERGUNTAS_DIAGNOSTICO, EXEMPLOS_EDUCATIVOS } from '@/content/atuacao'
-import { GUIAS } from '@/content/guias'
+import { GUIAS, type Guia } from '@/content/guias'
 
 // Blocos de conteúdo técnico (M-27 / D-36), compartilhados pela home e pela
 // página de Benefícios Corporativos. Resumo sempre visível; detalhe em
@@ -125,10 +125,11 @@ export function ExemplosEducativos() {
   )
 }
 
-export function GuiasDestaque({ limite = 6 }: { limite?: number }) {
+export function GuiasDestaque({ limite = 6, area }: { limite?: number; area?: Guia['area'] }) {
+  const lista = area ? GUIAS.filter((g) => g.area === area) : GUIAS
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {GUIAS.slice(0, limite).map((g) => (
+      {lista.slice(0, limite).map((g) => (
         <li key={g.slug}>
           <Link href={`/conhecimento/${g.slug}`} className="flex h-full flex-col rounded-2xl border border-lifitseg-line bg-white p-5 transition-colors hover:border-lifitseg-green">
             <span className="text-xs font-bold tracking-wide text-lifitseg-green uppercase">{g.tema}</span>

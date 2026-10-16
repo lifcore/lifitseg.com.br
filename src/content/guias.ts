@@ -14,17 +14,25 @@ export type Guia = {
   listaTitulo: string
   lista: string[]
   apoio: string
-  cta: { texto: string; destino: 'contato' | 'atendimento' }
+  /** `href` quando o contato comercial não é o da home (guias de seguros). */
+  cta: { texto: string; destino: 'contato' | 'atendimento'; href?: string }
+  /** Vazio = orientação prática da equipe; a página diz isso, sem inventar fonte. */
   fontes: { rotulo: string; url: string }[]
-  tema: 'Contratação' | 'Renovação' | 'Rede' | 'Gestão' | 'Atendimento'
+  tema: 'Contratação' | 'Renovação' | 'Rede' | 'Gestão' | 'Atendimento' | 'Conceitos' | 'Vigência' | 'Empresarial' | 'Sinistro'
+  area: 'saude' | 'seguros'
 }
+
+export const AREAS_GUIAS = [
+  { id: 'saude', titulo: 'Plano de saúde empresarial' },
+  { id: 'seguros', titulo: 'Seguros' },
+] as const
 
 export const DATA_REVISAO_GUIAS = '2026-10-16'
 export const AUTORIA_GUIAS = 'Equipe Lifitseg'
 
 const ANS_REAJUSTE = { rotulo: 'ANS — Reajuste anual de planos coletivos', url: 'https://www.gov.br/ans/pt-br/assuntos/consumidor/reajuste-variacao-de-mensalidade/reajuste-anual-de-planos-coletivos' }
 
-export const GUIAS: Guia[] = [
+const GUIAS_SAUDE: Omit<Guia, 'area'>[] = [
   {
     slug: 'como-comparar-propostas-de-plano-empresarial',
     titulo: 'Como comparar propostas de plano empresarial',
@@ -151,6 +159,150 @@ export const GUIAS: Guia[] = [
     cta: { texto: 'Fale com o canal de atendimento para orientar o encaminhamento', destino: 'atendimento' },
     fontes: [{ rotulo: 'ANS — Reclamações e NIP', url: 'https://www.gov.br/ans/pt-br/assuntos/consumidor/notificacao-de-intermediacao-preliminar-nip' }],
   },
+]
+
+// Segunda coleção (etapa 3): `marketing/entregas/chief-chat/Lifitseg_Guias_Seguros_v1.md`.
+// Situações educativas sem casos reais. O guia de seguro empresarial pede
+// revisão técnica nas condições do produto antes de publicar (QUADRO).
+const SUSEP_AUTO = { rotulo: 'SUSEP — Seguro de automóveis', url: 'https://www.gov.br/susep/pt-br/assuntos/meu-futuro-seguro/seguros-previdencia-e-capitalizacao/seguros/seguro-de-automoveis' }
+const SUSEP_RC = { rotulo: 'SUSEP — Seguro de responsabilidade civil', url: 'https://www.gov.br/susep/pt-br/assuntos/meu-futuro-seguro/seguros-previdencia-e-capitalizacao/seguros/seguro-responsabilidade-civil' }
+const CONTATO_PESSOAL = '/seguros-pessoais#contato'
+const CONTATO_CORPORATIVO = '/seguros-corporativos#contato'
+
+const GUIAS_SEGUROS: Omit<Guia, 'area'>[] = [
+  {
+    slug: 'comparar-propostas-seguro',
+    titulo: 'Como comparar propostas de seguro além do preço',
+    resumo: 'Um preço menor pode vir acompanhado de limites, franquias ou condições diferentes. Veja como organizar a comparação.',
+    tema: 'Contratação',
+    paragrafos: [
+      'Comece pelo mesmo risco. Confira se as propostas consideram o mesmo bem, atividade, endereço e uso: uma diferença nesses dados pode comprometer a comparação. Não compare apenas o título comercial do produto.',
+      'Organize o que foi contratado. Separe coberturas, limites, sublimites, franquias, exclusões e assistências, e identifique o que existe em uma proposta e não aparece na outra. Quando uma informação estiver pouco clara, peça explicação antes de decidir.',
+      'Considere sua participação. Franquias e participações podem alterar o valor suportado pelo segurado em uma ocorrência. Confira se a regra é percentual, fixa ou tem valor mínimo, e a quais coberturas se aplica.',
+    ],
+    listaTitulo: 'Checklist para a conversa',
+    lista: [
+      'Quais eventos estão abrangidos?',
+      'Quais limites se aplicam e o que não está incluído?',
+      'Há obrigações de proteção ou de comunicação?',
+      'A assistência atende à rotina?',
+      'Preço e condições foram comparados para o mesmo risco?',
+    ],
+    apoio: 'Situação educativa: duas propostas de auto apresentam preços diferentes, e a comparação revela diferenças na franquia e no limite para terceiros. O aprendizado é colocar essas condições lado a lado antes de decidir. A Lifitseg organiza essa comparação e explica as diferenças, sem garantir que uma alternativa seja melhor para todos os casos.',
+    cta: { texto: 'Pedir ajuda para comparar minha proteção', destino: 'contato', href: CONTATO_PESSOAL },
+    fontes: [SUSEP_AUTO],
+  },
+  {
+    slug: 'franquia-limite-assistencia',
+    titulo: 'Franquia, limite e assistência: três conceitos diferentes',
+    resumo: 'Entender essas diferenças ajuda a ler uma proposta e evitar expectativas incorretas.',
+    tema: 'Conceitos',
+    paragrafos: [
+      'Limite é o valor máximo previsto para determinada cobertura ou conjunto, conforme a estrutura contratual. Um limite geral pode conviver com sublimites; consulte a definição e a aplicação no contrato.',
+      'Franquia e participação representam a parte prevista para o segurado em determinadas ocorrências. A aplicação varia conforme produto e cobertura; não pressuponha que toda ocorrência usa a mesma regra.',
+      'Assistência é o serviço disponibilizado nas condições contratadas, como um atendimento emergencial. Tem escopo, canais e limites próprios, e sua existência não significa que qualquer dano relacionado será indenizado.',
+    ],
+    listaTitulo: 'Ao ler a proposta, procure',
+    lista: [
+      'O limite de cada cobertura e eventuais sublimites.',
+      'A regra de franquia ou participação e onde ela se aplica.',
+      'O escopo e os canais das assistências.',
+      'A diferença entre pedir assistência e avisar um sinistro.',
+    ],
+    apoio: 'Situação educativa: solicitar um serviço de assistência e abrir um aviso de sinistro são caminhos diferentes. A equipe ajuda a identificar o canal adequado e os documentos, sem antecipar cobertura. Para produtos distintos, a apólice e as condições específicas devem ser conferidas.',
+    cta: { texto: 'Esclarecer uma condição da minha proposta', destino: 'contato', href: CONTATO_PESSOAL },
+    fontes: [SUSEP_AUTO],
+  },
+  {
+    slug: 'atualizar-apolice-endosso',
+    titulo: 'Mudou o risco? Entenda a importância de atualizar a apólice',
+    resumo: 'Mudanças no uso, nos bens ou na operação podem exigir nova avaliação durante a vigência.',
+    tema: 'Vigência',
+    paragrafos: [
+      'Endereço, atividade, utilização de veículo, inclusão de bens e alterações operacionais são exemplos de mudanças a comunicar. O que é relevante depende do produto e do contrato.',
+      'O endosso é o documento utilizado para formalizar alterações no contrato de seguro, conforme as condições aplicáveis. A solicitação não significa que a mudança já foi aceita: pode haver avaliação, documentos e ajuste de prêmio.',
+      'Comunique a mudança pelo canal orientado, confira os dados, acompanhe a resposta e guarde os documentos. Não presuma que uma mensagem informal substitui a formalização contratual.',
+    ],
+    listaTitulo: 'Como se organizar',
+    lista: [
+      'Identificar o que mudou e desde quando.',
+      'Comunicar pelo canal orientado.',
+      'Acompanhar a avaliação e eventuais ajustes.',
+      'Guardar o endosso emitido com a apólice.',
+    ],
+    apoio: 'Situação educativa: a operação passa a usar um veículo de forma diferente. O ponto central é informar o novo uso para avaliação, em vez de assumir que a proteção anterior se aplica da mesma maneira. A Lifitseg acompanha esse pedido junto à seguradora; prazos e aceitação dependem de cada contrato.',
+    cta: { texto: 'Conversar sobre uma alteração no meu seguro', destino: 'contato', href: CONTATO_PESSOAL },
+    fontes: [SUSEP_AUTO],
+  },
+  {
+    slug: 'seguro-empresarial-patrimonio-continuidade',
+    titulo: 'Seguro empresarial: patrimônio e continuidade precisam conversar',
+    resumo: 'Proteger bens e avaliar os efeitos de uma interrupção são análises relacionadas, com condições próprias.',
+    tema: 'Empresarial',
+    paragrafos: [
+      'Conheça os ativos e a operação. Organize imóveis, equipamentos, mercadorias e valores, considerando os critérios do produto. A descrição da atividade e as medidas de proteção precisam refletir a realidade.',
+      'Compare eventos e condições. Confira eventos contratados, limites, franquias e exclusões. Danos elétricos, equipamentos e outras coberturas adicionais não devem ser presumidos a partir do nome do seguro.',
+      'Interrupção não é cobertura automática. Lucros cessantes exige contratação e análise próprias, incluindo os eventos que acionam a cobertura, o período e os critérios de apuração. Não significa que qualquer queda de faturamento esteja protegida.',
+    ],
+    listaTitulo: 'Checklist',
+    lista: [
+      'Atividade atualizada e valores coerentes.',
+      'Dependências críticas da operação.',
+      'Coberturas, limites e obrigações.',
+      'Impacto de uma paralisação.',
+      'Documentos e canais de aviso.',
+    ],
+    apoio: 'A Lifitseg organiza a leitura dos ativos e da operação e compara condições entre seguradoras parceiras. Aceitação, coberturas e valores dependem da análise de cada seguradora.',
+    cta: { texto: 'Avaliar os seguros da empresa', destino: 'contato', href: CONTATO_CORPORATIVO },
+    fontes: [],
+  },
+  {
+    slug: 'responsabilidade-civil-atividade',
+    titulo: 'Responsabilidade civil: por que a atividade declarada importa',
+    resumo: 'Operação, serviço profissional, produtos e administração podem exigir modalidades diferentes.',
+    tema: 'Empresarial',
+    paragrafos: [
+      'O risco precisa ser identificado. Uma reclamação pode estar ligada à atividade, à entrega de um produto ou à atuação profissional. Descrever a operação ajuda a avaliar qual modalidade merece análise.',
+      'Modalidades não são intercambiáveis. RC geral, profissional, produtos e D&O têm objetos e condições distintos. Analise quem está segurado, quais atividades estão abrangidas e que danos são considerados.',
+      'Leia também a dimensão temporal. Vigência, comunicação da reclamação e outras condições temporais podem ser relevantes. A comparação deve examinar o contrato: não há uma regra única aplicável a toda modalidade.',
+    ],
+    listaTitulo: 'Perguntas para a análise',
+    lista: [
+      'Quais atividades a empresa realmente exerce?',
+      'Quem precisa estar segurado?',
+      'Qual modalidade corresponde a cada risco?',
+      'Quais condições temporais o contrato prevê?',
+    ],
+    apoio: 'Situação educativa: uma empresa amplia seus serviços. O aprendizado é revisar se a nova atividade está corretamente considerada na proteção, sem assumir cobertura automática.',
+    cta: { texto: 'Conversar sobre as responsabilidades da operação', destino: 'contato', href: CONTATO_CORPORATIVO },
+    fontes: [SUSEP_RC],
+  },
+  {
+    slug: 'sinistro-comunicacao-documentos',
+    titulo: 'Sinistro: como organizar a comunicação e os documentos',
+    resumo: 'Segurança, canal correto e informações organizadas ajudam a acompanhar a ocorrência.',
+    tema: 'Sinistro',
+    paragrafos: [
+      'Primeiro, cuide da segurança. Siga os canais de emergência adequados e as orientações de assistência do contrato. Não se exponha a risco para registrar imagens ou coletar documentos.',
+      'Comunique pelo canal indicado. Consulte a apólice ou a equipe para o aviso, relate os fatos com precisão e guarde protocolo e comprovantes. Os documentos solicitados variam conforme o evento e o produto.',
+      'Acompanhe as solicitações. Organize documentos, respostas e pendências. A consultoria pode apoiar a comunicação; a seguradora realiza a análise conforme o contrato e as regras aplicáveis.',
+    ],
+    listaTitulo: 'O que não antecipar',
+    lista: [
+      'Cobertura ou valor de indenização a partir de uma descrição inicial.',
+      'Autorização de reparos sem a orientação pertinente.',
+      'Acordos com terceiros antes de verificar o contrato.',
+      'Descarte de bens danificados.',
+    ],
+    apoio: 'A Lifitseg apoia a comunicação e o acompanhamento da ocorrência, sem antecipar a decisão da seguradora.',
+    cta: { texto: 'Preciso de orientação sobre uma ocorrência', destino: 'atendimento' },
+    fontes: [SUSEP_AUTO, SUSEP_RC],
+  },
+]
+
+export const GUIAS: Guia[] = [
+  ...GUIAS_SAUDE.map((g) => ({ ...g, area: 'saude' as const })),
+  ...GUIAS_SEGUROS.map((g) => ({ ...g, area: 'seguros' as const })),
 ]
 
 export function obterGuia(slug: string): Guia | undefined {

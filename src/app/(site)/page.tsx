@@ -56,14 +56,24 @@ export default function HomePage() {
             <p className="mt-8 text-sm text-lifitseg-offwhite/60">PME 2–29 · PME 30–99 · PJ/Corporativo 100+ vidas</p>
           </div>
 
-          <aside className="rounded-3xl border border-white/10 bg-lifitseg-surface p-8">
-            <Image src="/marca/Lifitseg_icone_escuro.svg" alt="" width={120} height={120} className="h-24 w-24 rounded-xl" />
-            <div className="my-6 h-px bg-white/10" />
-            <p className="text-sm font-bold tracking-wide text-white">{POSICIONAMENTO}</p>
-            <p className="mt-3 text-sm text-lifitseg-offwhite/70">Mais de 100 empresas na carteira, de pequenas operações a organizações corporativas.</p>
-            <a href="#gestao" className="mt-5 inline-block text-sm font-semibold text-lifitseg-mint hover:underline">
-              Conhecer a gestão da Lifitseg <span aria-hidden="true">→</span>
-            </a>
+          <aside>
+            {/* Foto ilustrativa de banco (Canva, licença gratuita): não representa a equipe nem clientes. */}
+            <Image
+              src="/fotos/consultoria.png"
+              alt="Pessoas analisando documentos e informações em uma reunião de trabalho"
+              width={1600}
+              height={900}
+              priority
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="aspect-video w-full rounded-3xl object-cover"
+            />
+            <div className="mt-4 rounded-2xl border border-white/10 bg-lifitseg-surface p-5">
+              <p className="text-sm font-bold tracking-wide text-white">{POSICIONAMENTO}</p>
+              <p className="mt-2 text-sm text-lifitseg-offwhite/70">Mais de 100 empresas na carteira, de pequenas operações a organizações corporativas.</p>
+              <a href="#gestao" className="mt-3 inline-block text-sm font-semibold text-lifitseg-mint hover:underline">
+                Conhecer a gestão da Lifitseg <span aria-hidden="true">→</span>
+              </a>
+            </div>
           </aside>
         </div>
       </section>
@@ -88,7 +98,7 @@ export default function HomePage() {
       {/* H-04 Método */}
       <section id="como-atuamos" aria-labelledby="titulo-metodo" className="scroll-mt-20 bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Cabecalho id="titulo-metodo" rotulo="Como atuamos" titulo="Como transformamos informação em uma decisão mais clara." texto="Conhecimento técnico aparece no método e nas entregas: cada etapa diz o que é analisado e o que a empresa leva para a decisão." />
+          <Cabecalho id="titulo-metodo" rotulo="Como atuamos" titulo="Como transformamos informação em uma decisão mais clara." texto="Da análise inicial ao acompanhamento, organizamos informações e próximos passos para apoiar as decisões da empresa." />
           <div className="mt-10"><MetodoEtapas /></div>
         </div>
       </section>
