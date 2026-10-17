@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { siteConfig } from '@/config/site'
 import { abrirPreferencias } from '@/utils/consentimento'
 import { registrarEvento } from '@/utils/eventos'
+import { SocialLinks } from '@/components/common/SocialLinks'
 
 // Rodapé da home v3 (Chief Chat, M-21): logo B1, descrição curta,
 // navegação, dados institucionais do siteConfig (fonte única), redes e
@@ -18,13 +19,8 @@ const NAVEGACAO = [
   { label: 'A Lifitseg', href: '/sobre-e-conhecimento#sobre' },
   { label: 'Faça parte', href: '/sobre-e-conhecimento#trabalhe-conosco' },
   { label: 'Contato', href: '/#contato' },
+  { label: 'Comece por aqui', href: '/links' },
 ]
-
-const REDES = [
-  { label: 'Instagram', href: siteConfig.redesSociais.instagram },
-  { label: 'LinkedIn', href: siteConfig.redesSociais.linkedin },
-  { label: 'Facebook', href: siteConfig.redesSociais.facebook },
-].filter((r) => r.href)
 
 export function Footer() {
   return (
@@ -34,17 +30,10 @@ export function Footer() {
           <div>
             <Image src="/marca/Lifitseg_logo_compacto_escuro.svg" alt={siteConfig.nome} width={190} height={45} className="h-11 w-auto" />
             <p className="mt-4 max-w-sm text-sm text-lifitseg-offwhite/70">Consultoria em benefícios e seguros.</p>
-            {REDES.length > 0 && (
-              <ul className="mt-6 flex gap-4 text-sm">
-                {REDES.map((r) => (
-                  <li key={r.label}>
-                    <a href={r.href} target="_blank" rel="noopener noreferrer" className="text-lifitseg-offwhite/80 underline-offset-4 hover:text-lifitseg-mint hover:underline">
-                      {r.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className="mt-6">
+              <p className="mb-3 text-sm font-medium">Redes sociais</p>
+              <SocialLinks />
+            </div>
           </div>
 
           <nav aria-label="Rodapé">

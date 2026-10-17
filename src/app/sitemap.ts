@@ -5,6 +5,11 @@ import { GUIAS, DATA_REVISAO_GUIAS } from '@/content/guias'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
+      url: `${siteConfig.url}/links`,
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
       url: siteConfig.url,
       lastModified: new Date(),
       changeFrequency: 'weekly',
