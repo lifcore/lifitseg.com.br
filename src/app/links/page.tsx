@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowUpRight, Building2, HeartHandshake, ShieldCheck, BookOpen, MessageCircle, Headphones } from 'lucide-react'
 import { siteConfig } from '@/config/site'
 import { SocialLinks } from '@/components/common/SocialLinks'
+import { OpcaoLinks } from '@/components/links/OpcaoLinks'
 
 export const metadata: Metadata = {
   title: 'Comece por aqui',
@@ -14,12 +15,12 @@ export const metadata: Metadata = {
 
 const whatsapp = `https://wa.me/${siteConfig.contato.whatsapp}`
 const paths = [
-  { title: 'Saúde para minha empresa', detail: 'Contratação e gestão do benefício.', href: '/beneficios-corporativos', Icon: HeartHandshake },
-  { title: 'Seguros para minha empresa', detail: 'Proteção alinhada ao contexto da operação.', href: '/seguros-corporativos', Icon: Building2 },
-  { title: 'Seguros para mim e minha família', detail: 'Conheça as soluções para cada momento.', href: '/seguros-pessoais', Icon: ShieldCheck },
-  { title: 'Já sou cliente', detail: 'Preciso de atendimento da Lifitseg.', href: whatsapp, Icon: Headphones },
-  { title: 'Quero falar com a Lifitseg', detail: 'Uma conversa para entender sua necessidade.', href: whatsapp, Icon: MessageCircle },
-  { title: 'Guias para decidir melhor', detail: 'Conhecimento para orientar suas escolhas.', href: '/conhecimento', Icon: BookOpen },
+  { id: 'saude-empresa', title: 'Saúde para minha empresa', detail: 'Contratação e gestão do benefício.', href: '/beneficios-corporativos', Icon: HeartHandshake },
+  { id: 'seguros-empresa', title: 'Seguros para minha empresa', detail: 'Proteção alinhada ao contexto da operação.', href: '/seguros-corporativos', Icon: Building2 },
+  { id: 'seguros-pessoais', title: 'Seguros para mim e minha família', detail: 'Conheça as soluções para cada momento.', href: '/seguros-pessoais', Icon: ShieldCheck },
+  { id: 'ja-sou-cliente', title: 'Já sou cliente', detail: 'Preciso de atendimento da Lifitseg.', href: whatsapp, Icon: Headphones },
+  { id: 'falar-com-a-lifitseg', title: 'Quero falar com a Lifitseg', detail: 'Uma conversa para entender sua necessidade.', href: whatsapp, Icon: MessageCircle },
+  { id: 'guias', title: 'Guias para decidir melhor', detail: 'Conhecimento para orientar suas escolhas.', href: '/conhecimento', Icon: BookOpen },
 ]
 
 export default function LinksPage() {
@@ -36,16 +37,16 @@ export default function LinksPage() {
         </header>
 
         <nav aria-label="Soluções e atendimento" className="space-y-3">
-          {paths.map(({ title, detail, href, Icon }, index) => {
+          {paths.map(({ id, title, detail, href, Icon }, index) => {
             const external = href.startsWith('https:')
             return (
-              <Link key={title} href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              <OpcaoLinks key={id} href={href} rotulo={`links-${id}`}
                 className={`group flex items-center gap-4 rounded-2xl border p-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lifitseg-mint ${index === 0 ? 'border-lifitseg-mint/40 bg-lifitseg-mint/10' : 'border-white/15 bg-white/[0.025] hover:border-lifitseg-mint/50 hover:bg-white/5'}`}>
                 <Icon size={23} className="shrink-0 text-lifitseg-mint" aria-hidden="true" />
                 <span className="min-w-0 flex-1"><span className="block text-base font-medium">{title}</span><span className="mt-1 block text-sm leading-relaxed text-lifitseg-offwhite/65">{detail}</span></span>
                 <ArrowUpRight size={18} className="shrink-0 text-lifitseg-offwhite/50 group-hover:text-lifitseg-mint" aria-hidden="true" />
                 {external && <span className="sr-only">Abre WhatsApp em nova aba</span>}
-              </Link>
+              </OpcaoLinks>
             )
           })}
         </nav>
