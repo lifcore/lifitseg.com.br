@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
-import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, salvarPreferencias } from '@/utils/consentimento'
+import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, precisaEscolher, salvarPreferencias } from '@/utils/consentimento'
 
 /**
  * Preferências de privacidade (D-30). Só existe a medição PRÓPRIA da
@@ -21,9 +21,10 @@ function assinar(aviso: () => void) {
   return () => window.removeEventListener(EVENTO_MUDOU, aviso)
 }
 
-function escolhaAtual(): 'sim' | 'nao' | 'pendente' {
+function escolhaAtual(): 'publicidade' | 'sim' | 'nao' | 'pendente' {
+  if (precisaEscolher()) return 'pendente'
   const p = obterPreferencias()
-  return p ? (p.medicao ? 'sim' : 'nao') : 'pendente'
+  return p?.medicao ? (p.publicidade ? 'publicidade' : 'sim') : 'nao'
 }
 
 export function PreferenciasCookies() {
@@ -49,8 +50,8 @@ export function PreferenciasCookies() {
 
   if (!visivel) return null
 
-  function decidir(valor: boolean) {
-    salvarPreferencias(valor)
+  function decidir(medicao: boolean, publicidade = false) {
+    salvarPreferencias(medicao, publicidade)
     setReaberto(false)
     setDetalhes(false)
   }
@@ -70,9 +71,12 @@ export function PreferenciasCookies() {
         Suas preferências de privacidade
       </h2>
       <p className="mt-2 text-sm text-lifitseg-text-soft">
+        {/* TEXTO PROVISÓRIO (Etapa C): o texto v2 é do Chief Chat; substituir antes de publicar. */}
         Usamos armazenamento necessário para registrar suas escolhas e manter o funcionamento do site. Se você permitir a
-        medição, poderemos registrar interações e guardar informações de origem da visita para entender quais conteúdos
-        ajudam nossos visitantes. Você pode recusar a medição e continuar usando o site.
+        medição, poderemos registrar interações, guardar informações de origem da visita e usar o Google Analytics para
+        entender quais conteúdos ajudam nossos visitantes. Se também permitir publicidade, ferramentas de anúncios do
+        LinkedIn, da Meta e do Google poderão medir o resultado das nossas campanhas nas páginas corporativas. Você pode
+        recusar e continuar usando o site.
       </p>
 
       {detalhes && (
@@ -85,7 +89,7 @@ export function PreferenciasCookies() {
 
       {escolha !== 'pendente' && escolha !== 'servidor' && (
         <p className="mt-3 text-xs font-semibold text-lifitseg-dark">
-          Escolha atual: {escolha === 'sim' ? 'medição permitida' : 'medição recusada'}.
+          Escolha atual: {escolha === 'publicidade' ? 'medição e publicidade permitidas' : escolha === 'sim' ? 'medição permitida, publicidade recusada' : 'medição e publicidade recusadas'}.
         </p>
       )}
 
@@ -99,8 +103,9 @@ export function PreferenciasCookies() {
           </Link>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" onClick={() => decidir(false)} className={botao}>Recusar medição</button>
+          <button type="button" onClick={() => decidir(false)} className={botao}>Recusar</button>
           <button type="button" onClick={() => decidir(true)} className={botao}>Permitir medição</button>
+          <button type="button" onClick={() => decidir(true, true)} className={botao}>Permitir medição e publicidade</button>
         </div>
       </div>
     </div>

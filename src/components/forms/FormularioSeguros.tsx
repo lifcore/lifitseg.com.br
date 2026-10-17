@@ -80,7 +80,7 @@ export function FormularioSeguros({ variante, pontoEntrada }: Props) {
     if (Object.values(e).some(Boolean)) return
     setEstado('enviando')
     try {
-      await lifcoreApi.submitLead({
+      const resposta = await lifcoreApi.submitLead({
         nome: dados.nome.trim(),
         empresa: corporativo ? dados.empresa.trim() : undefined,
         email: dados.email.trim() || undefined,
@@ -93,7 +93,7 @@ export function FormularioSeguros({ variante, pontoEntrada }: Props) {
         website: honeypot,
       })
       setEstado('sucesso')
-      registrarEvento('form_submit_ok', pontoEntrada)
+      registrarEvento('form_submit_ok', pontoEntrada, { eventId: resposta?.protocolo ?? null })
     } catch (erro) {
       setEstado('falha')
       setFalha(erro instanceof Error && erro.message ? erro.message : 'Não foi possível enviar agora.')
