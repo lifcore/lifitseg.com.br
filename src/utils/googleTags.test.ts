@@ -3,10 +3,35 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
   CONSENTIMENTO_PADRAO, caminhoParaTags, cookiesParaApagar, deveCarregarGtm, estadoConsentimento,
-  eventoParaDataLayer, paginaPermiteAnuncio,
+  eventoParaDataLayer, paginaPermiteAnuncio, escolhaDasPreferencias, acaoNaTrocaDeRota, acaoAoMudarPreferencia,
 } from './googleTags.ts'
 
 const PROTOCOLO = '3f1c2a7e-9b1d-4c2e-8f3a-0a1b2c3d4e5f'
+
+test('preferência v1 nunca vira publicidade; v2 respeita a escolha', () => {
+  assert.equal(escolhaDasPreferencias(null), null)
+  assert.deepEqual(escolhaDasPreferencias({ medicao: true }), { medicao: true, publicidade: false })
+  assert.deepEqual(escolhaDasPreferencias({ medicao: true, publicidade: true, versao: 1 }), { medicao: true, publicidade: false })
+  assert.deepEqual(escolhaDasPreferencias({ medicao: true, publicidade: true, versao: 2 }), { medicao: true, publicidade: true })
+})
+
+test('troca de rota: rota de saúde com GTM na página recarrega; sem GTM, carrega só se permitido e fora da saúde', () => {
+  const medicao = { medicao: true, publicidade: false }
+  assert.equal(acaoNaTrocaDeRota({ gtmId: 'GTM-KB8C46R', gtmCarregado: true, escolha: medicao, pathname: '/referencias-saude' }), 'recarregar')
+  assert.equal(acaoNaTrocaDeRota({ gtmId: 'GTM-KB8C46R', gtmCarregado: true, escolha: medicao, pathname: '/beneficios-corporativos' }), 'nada')
+  assert.equal(acaoNaTrocaDeRota({ gtmId: 'GTM-KB8C46R', gtmCarregado: false, escolha: medicao, pathname: '/' }), 'carregar')
+  assert.equal(acaoNaTrocaDeRota({ gtmId: 'GTM-KB8C46R', gtmCarregado: false, escolha: medicao, pathname: '/referencias-saude' }), 'nada')
+  assert.equal(acaoNaTrocaDeRota({ gtmId: 'GTM-KB8C46R', gtmCarregado: false, escolha: null, pathname: '/' }), 'nada')
+  assert.equal(acaoNaTrocaDeRota({ gtmId: undefined, gtmCarregado: false, escolha: medicao, pathname: '/' }), 'nada')
+})
+
+test('mudança de preferência: revogar medição com GTM carregado apaga cookies e recarrega', () => {
+  const base = { gtmId: 'GTM-KB8C46R', pathname: '/' }
+  assert.deepEqual(acaoAoMudarPreferencia({ ...base, gtmCarregado: true, escolha: { medicao: false, publicidade: false } }), { apagarTerceiros: true, apagarAnuncio: false, recarregar: true, carregar: false })
+  assert.deepEqual(acaoAoMudarPreferencia({ ...base, gtmCarregado: true, escolha: { medicao: true, publicidade: false } }), { apagarTerceiros: false, apagarAnuncio: true, recarregar: false, carregar: false })
+  assert.deepEqual(acaoAoMudarPreferencia({ ...base, gtmCarregado: false, escolha: { medicao: true, publicidade: true } }), { apagarTerceiros: false, apagarAnuncio: false, recarregar: false, carregar: true })
+  assert.deepEqual(acaoAoMudarPreferencia({ ...base, gtmCarregado: false, escolha: { medicao: false, publicidade: false } }), { apagarTerceiros: true, apagarAnuncio: false, recarregar: false, carregar: false })
+})
 
 test('sem escolha: tudo negado, salvo segurança', () => {
   assert.deepEqual(estadoConsentimento(null), CONSENTIMENTO_PADRAO)

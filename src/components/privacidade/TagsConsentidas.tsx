@@ -3,23 +3,30 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { EVENTO_MUDOU, obterPreferencias, type Preferencias } from '@/utils/consentimento'
-import { CONSENTIMENTO_PADRAO, cookiesParaApagar, deveCarregarGtm, estadoConsentimento } from '@/utils/googleTags'
+import {
+  CONSENTIMENTO_PADRAO, acaoAoMudarPreferencia, acaoNaTrocaDeRota, cookiesParaApagar, escolhaDasPreferencias, estadoConsentimento,
+} from '@/utils/googleTags'
 
 /**
  * Etapa C: único dono da injeção de tags de terceiros (contrato em
  * marketing/entregas/claude/2026-10-17_Etapa-C_consentimento-tags-contrato_v1.md).
  *
- * - Consent Mode v2 em modo básico: o default (tudo negado) é registrado
- *   antes de qualquer script; o GTM só carrega com medição permitida.
- * - O GA4 vive dentro do GTM: este componente nunca carrega gtag.js.
- * - Sem NEXT_PUBLIC_GTM_ID, nada é carregado (é como o site fica até
- *   Raphael liberar a publicação do contêiner).
- * - Revogar: consent update negado, cookies de terceiros apagados e o GTM
- *   deixa de carregar nas próximas páginas.
+ * - Consent Mode v2 em modo básico: default (tudo negado) e update da
+ *   escolha guardada vão para o dataLayer ANTES do script do GTM, em todos
+ *   os caminhos (primeira visita, visitante recorrente, troca de rota).
+ * - O GTM só carrega com medição permitida e fora das rotas de saúde. O GA4
+ *   vive dentro do GTM: este componente nunca carrega gtag.js.
+ * - Rota de saúde com o GTM já na página (navegação interna): a página é
+ *   recarregada e nasce sem GTM, sem biblioteca em memória nem evento
+ *   automático.
+ * - Revogar a medição: consent update negado, cookies de terceiros apagados e
+ *   a página recarregada sem GTM (o Consent Mode sozinho não garante
+ *   ausência de tráfego).
+ * - Sem NEXT_PUBLIC_GTM_ID, nada é carregado.
  */
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
-type JanelaComTags = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void }
+type JanelaComTags = Window & { dataLayer?: unknown[] }
 
 function gtag(...args: unknown[]) {
   const w = window as JanelaComTags
@@ -31,10 +38,20 @@ function gtag(...args: unknown[]) {
 }
 
 let gtmCarregado = false
-let padraoRegistrado = false
+let consentimentoIniciado = false
+
+/** Default negado e, se houver escolha guardada, o update dela. Uma vez por página. */
+function iniciarConsentimento() {
+  if (consentimentoIniciado) return
+  consentimentoIniciado = true
+  gtag('consent', 'default', { ...CONSENTIMENTO_PADRAO, wait_for_update: 500 })
+  const escolha = escolhaDasPreferencias(obterPreferencias())
+  if (escolha) gtag('consent', 'update', estadoConsentimento(escolha))
+}
 
 function carregarGtm(id: string) {
   if (gtmCarregado || document.getElementById('gtm-lifitseg')) return
+  iniciarConsentimento()
   gtmCarregado = true
   const w = window as JanelaComTags
   w.dataLayer = w.dataLayer || []
@@ -46,11 +63,11 @@ function carregarGtm(id: string) {
   document.head.appendChild(s)
 }
 
-function apagarCookiesTerceiros() {
+function apagarCookies(soAnuncio: boolean) {
   const nomes = document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter(Boolean)
   const host = window.location.hostname
   const dominios = ['', host, `.${host}`, `.${host.replace(/^www\./, '')}`]
-  for (const nome of cookiesParaApagar(nomes)) {
+  for (const nome of cookiesParaApagar(nomes).filter((n) => !soAnuncio || !/^_g(a|id|at)/.test(n))) {
     for (const d of dominios) {
       document.cookie = `${nome}=; Max-Age=0; path=/${d ? `; domain=${d}` : ''}`
     }
@@ -58,37 +75,29 @@ function apagarCookiesTerceiros() {
 }
 
 export function TagsConsentidas() {
-  // Na troca de rota (SPA), carrega o GTM se a nova página não for de saúde.
   const pathname = usePathname()
-  useEffect(() => {
-    if (GTM_ID && deveCarregarGtm(GTM_ID, obterPreferencias(), pathname)) carregarGtm(GTM_ID)
-  }, [pathname])
 
+  // Troca de rota (e primeira renderização): consentimento antes de tudo.
   useEffect(() => {
     if (!GTM_ID) return
-    if (!padraoRegistrado) {
-      padraoRegistrado = true
-      gtag('consent', 'default', { ...CONSENTIMENTO_PADRAO, wait_for_update: 500 })
-    }
+    iniciarConsentimento()
+    const acao = acaoNaTrocaDeRota({ gtmId: GTM_ID, gtmCarregado, escolha: escolhaDasPreferencias(obterPreferencias()), pathname })
+    if (acao === 'recarregar') window.location.reload()
+    else if (acao === 'carregar') carregarGtm(GTM_ID)
+  }, [pathname])
 
-    function aplicar(p: Preferencias | null, revogando: boolean) {
-      const escolha = p && p.versao === 2 ? { medicao: p.medicao, publicidade: p.publicidade } : p ? { medicao: p.medicao, publicidade: false } : null
-      if (!escolha && !revogando) return // sem escolha: fica só o default negado
-      gtag('consent', 'update', estadoConsentimento(escolha))
-      if (deveCarregarGtm(GTM_ID, escolha, window.location.pathname)) carregarGtm(GTM_ID as string)
-      if (revogando && !escolha?.medicao) apagarCookiesTerceiros()
-      if (revogando && escolha && !escolha.publicidade) {
-        // Publicidade revogada: some com os cookies de anúncio, mantém os de medição.
-        const nomes = document.cookie.split(';').map((c) => c.split('=')[0].trim())
-        for (const nome of cookiesParaApagar(nomes).filter((n) => !/^_g(a|id|at)/.test(n))) {
-          document.cookie = `${nome}=; Max-Age=0; path=/`
-        }
-      }
-    }
-
-    aplicar(obterPreferencias(), false)
+  // Mudança de escolha no painel de preferências.
+  useEffect(() => {
+    if (!GTM_ID) return
     function aoMudar(e: Event) {
-      aplicar((e as CustomEvent<Preferencias>).detail ?? obterPreferencias(), true)
+      iniciarConsentimento()
+      const escolha = escolhaDasPreferencias((e as CustomEvent<Preferencias>).detail ?? obterPreferencias())
+      gtag('consent', 'update', estadoConsentimento(escolha))
+      const acao = acaoAoMudarPreferencia({ gtmId: GTM_ID, gtmCarregado, escolha, pathname: window.location.pathname })
+      if (acao.apagarTerceiros) apagarCookies(false)
+      else if (acao.apagarAnuncio) apagarCookies(true)
+      if (acao.recarregar) window.location.reload()
+      else if (acao.carregar) carregarGtm(GTM_ID as string)
     }
     window.addEventListener(EVENTO_MUDOU, aoMudar)
     return () => window.removeEventListener(EVENTO_MUDOU, aoMudar)

@@ -53,6 +53,38 @@ export function deveCarregarGtm(gtmId: string | undefined, escolha: EscolhaPriva
   return !!gtmId && /^GTM-[A-Z0-9]+$/.test(gtmId) && escolha?.medicao === true && !rotaSensivel(pathname)
 }
 
+/** Preferência guardada (v1 ou v2) → escolha. v1 nunca vira publicidade. */
+export function escolhaDasPreferencias(p: { medicao: boolean; publicidade?: boolean; versao?: number } | null): EscolhaPrivacidade | null {
+  if (!p) return null
+  return { medicao: p.medicao === true, publicidade: p.versao === 2 && p.publicidade === true }
+}
+
+/**
+ * Troca de rota com o GTM já na página: entrar numa rota de saúde exige
+ * recarregar (a página nova nasce sem GTM, sem biblioteca em memória nem
+ * evento automático). Fora disso, carrega se a escolha permitir.
+ */
+export function acaoNaTrocaDeRota(ctx: { gtmId: string | undefined; gtmCarregado: boolean; escolha: EscolhaPrivacidade | null; pathname: string }): 'carregar' | 'recarregar' | 'nada' {
+  if (ctx.gtmCarregado && rotaSensivel(ctx.pathname)) return 'recarregar'
+  if (!ctx.gtmCarregado && deveCarregarGtm(ctx.gtmId, ctx.escolha, ctx.pathname)) return 'carregar'
+  return 'nada'
+}
+
+/**
+ * Mudança de preferência. Revogar a medição com o GTM carregado recarrega a
+ * página depois de apagar os cookies: o Consent Mode sozinho não garante
+ * ausência de tráfego, a página sem GTM garante.
+ */
+export function acaoAoMudarPreferencia(ctx: { gtmId: string | undefined; gtmCarregado: boolean; escolha: EscolhaPrivacidade | null; pathname: string }) {
+  const semMedicao = !ctx.escolha?.medicao
+  return {
+    apagarTerceiros: semMedicao,
+    apagarAnuncio: !semMedicao && !ctx.escolha?.publicidade,
+    recarregar: ctx.gtmCarregado && semMedicao,
+    carregar: !ctx.gtmCarregado && deveCarregarGtm(ctx.gtmId, ctx.escolha, ctx.pathname),
+  }
+}
+
 const ROTAS_SENSIVEIS = ['/referencias-saude']
 export const MARCADOR_SENSIVEL = 'sensivel'
 

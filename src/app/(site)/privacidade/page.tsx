@@ -11,8 +11,12 @@ import { siteConfig } from '@/config/site'
 //   identificador de pessoa, sessão, clique ou IP (`registrar-evento-site`);
 // - segurança dos formulários: IP transformado em código (hash) para
 //   detectar envios repetidos; CNPJ conferido em base pública.
+// - Etapa C (17/10/2026): com permissão de medição, Google Analytics dentro do
+//   Google Tag Manager (TagsConsentidas.tsx); nunca nas rotas de saúde; revogar
+//   apaga os cookies do Google e recarrega a página sem as ferramentas.
+//   Nenhuma ferramenta de publicidade habilitada nesta versão.
 // ANTES DE PUBLICAR (M-26): Raphael/jurídico valida bases legais, retenção
-// efetiva e fornecedores. Não há pixels de terceiros nesta versão.
+// efetiva e fornecedores; o Chief revisa a redação da seção de plataformas.
 
 export const metadata: Metadata = {
   title: 'Política de Privacidade',
@@ -83,7 +87,10 @@ export default function PoliticaPrivacidadePage() {
                 Quando autorizada, a medição própria registra interações como visualizações de página, cliques em botões e início ou envio de formulários. Esses registros são somados por dia, página e campanha, sem identificar a pessoa que navegou. A origem da visita, por outro lado, pode acompanhar o contato que você decidir enviar.
               </p>
               <p>
-                Este site não utiliza pixels ou ferramentas de publicidade de terceiros. Uma eventual adoção exigirá atualização desta política e das preferências. Não envie dados de saúde, documentos ou descrições de casos a ferramentas de publicidade.
+                Se você permitir medição, o site também usa o Google Analytics, do Google, carregado pelo Google Tag Manager, para entender o uso do site. Sem essa permissão, nenhuma das duas ferramentas é carregada, e elas nunca são carregadas nas páginas de referências de saúde. O Google Analytics recebe a página visitada, os parâmetros de campanha permitidos e os eventos de navegação definidos pela Lifitseg; textos digitados em formulários não são enviados. Essas ferramentas usam cookies próprios do Google, como os de nome iniciado por _ga. Ao retirar a permissão, esses cookies são apagados do navegador e as ferramentas deixam de ser carregadas.
+              </p>
+              <p>
+                Nesta versão do site não há ferramentas de publicidade habilitadas: a permissão de publicidade só terá efeito quando alguma for habilitada, com atualização prévia desta política. Não envie dados de saúde, documentos ou descrições de casos a ferramentas de publicidade.
               </p>
             </Secao>
 
