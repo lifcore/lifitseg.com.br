@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { EVENTO_MUDOU, obterPreferencias, type Preferencias } from '@/utils/consentimento'
 import {
-  CONSENTIMENTO_PADRAO, acaoAoMudarPreferencia, acaoNaTrocaDeRota, cookiesParaApagar, escolhaDasPreferencias, estadoConsentimento,
+  CONSENTIMENTO_PADRAO, acaoAoMudarPreferencia, acaoNaTrocaDeRota, cookiesParaApagar, escolhaDasPreferencias, estadoConsentimento, urlDoGtm,
 } from '@/utils/googleTags'
 
 /**
@@ -25,6 +25,8 @@ import {
  * - Sem NEXT_PUBLIC_GTM_ID, nada é carregado.
  */
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
+// Só no .env.local de homologação (ver urlDoGtm); ignorado na produção da Vercel.
+const GTM_AMBIENTE = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? undefined : process.env.NEXT_PUBLIC_GTM_AMBIENTE
 
 type JanelaComTags = Window & { dataLayer?: unknown[] }
 
@@ -59,7 +61,7 @@ function carregarGtm(id: string) {
   const s = document.createElement('script')
   s.id = 'gtm-lifitseg'
   s.async = true
-  s.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(id)}`
+  s.src = urlDoGtm(id, GTM_AMBIENTE)
   document.head.appendChild(s)
 }
 

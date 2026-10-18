@@ -15,6 +15,12 @@ import { siteConfig } from '@/config/site'
 //   Google Tag Manager (TagsConsentidas.tsx); nunca nas rotas de saúde; revogar
 //   apaga os cookies do Google e recarrega a página sem as ferramentas.
 //   Nenhuma ferramenta de publicidade habilitada nesta versão.
+// - Revisão do Chief (18/10/2026): IP como "identificador técnico" (hash não é
+//   garantia de anonimização), cookies "de medição associados ao Google
+//   Analytics", sem prazo de cookie GA4 não conferido. A política promete pedir
+//   a escolha de novo antes de ligar publicidade: ao habilitar qualquer
+//   ferramenta, subir a versão das Preferências (consentimento.ts) para que o
+//   banner volte a aparecer.
 // ANTES DE PUBLICAR (M-26): Raphael/jurídico valida bases legais, retenção
 // efetiva e fornecedores; o Chief revisa a redação da seção de plataformas.
 
@@ -23,7 +29,8 @@ export const metadata: Metadata = {
   description: 'Como a Lifitseg utiliza dados pessoais nos contatos, no atendimento e na medição própria do site.',
 }
 
-const ATUALIZADO_EM = '16 de outubro de 2026'
+// Data da revisão; trocar pela data efetiva no dia da publicação.
+const ATUALIZADO_EM = '18 de outubro de 2026'
 
 function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
@@ -69,7 +76,7 @@ export default function PoliticaPrivacidadePage() {
                 Utilizamos as informações para responder à solicitação, encaminhar o atendimento, compreender a necessidade apresentada e apoiar procedimentos relacionados à contratação ou à gestão solicitada. A permissão opcional de medição não é condição para receber atendimento.
               </p>
               <p>
-                Para proteger os formulários contra envios automáticos e repetidos, o endereço IP de quem envia é transformado em um código que não permite recuperá-lo, usado apenas nessa verificação. Quando um CNPJ é informado, ele pode ser conferido em base pública de dados cadastrais de empresas.
+                Para proteger os formulários contra envios automáticos e repetidos, o endereço IP pode ser transformado em um identificador técnico para prevenir envios repetidos. Esse tratamento é usado para segurança dos formulários. Quando um CNPJ é informado, ele pode ser conferido em base pública de dados cadastrais de empresas.
               </p>
             </Secao>
 
@@ -87,10 +94,10 @@ export default function PoliticaPrivacidadePage() {
                 Quando autorizada, a medição própria registra interações como visualizações de página, cliques em botões e início ou envio de formulários. Esses registros são somados por dia, página e campanha, sem identificar a pessoa que navegou. A origem da visita, por outro lado, pode acompanhar o contato que você decidir enviar.
               </p>
               <p>
-                Se você permitir medição, o site também usa o Google Analytics, do Google, carregado pelo Google Tag Manager, para entender o uso do site. Sem essa permissão, nenhuma das duas ferramentas é carregada, e elas nunca são carregadas nas páginas de referências de saúde. O Google Analytics recebe a página visitada, os parâmetros de campanha permitidos e os eventos de navegação definidos pela Lifitseg; textos digitados em formulários não são enviados. Essas ferramentas usam cookies próprios do Google, como os de nome iniciado por _ga. Ao retirar a permissão, esses cookies são apagados do navegador e as ferramentas deixam de ser carregadas.
+                Se você permitir medição, o site também usa o Google Analytics, do Google, carregado pelo Google Tag Manager, para entender o uso do site. Sem essa permissão, nenhuma das duas ferramentas é carregada, e elas nunca são carregadas nas páginas de referências de saúde. O Google Analytics recebe a página visitada, os parâmetros de campanha permitidos e os eventos de navegação definidos pela Lifitseg; textos digitados em formulários não são enviados. Essas ferramentas usam cookies de medição associados ao Google Analytics, como _ga. Ao retirar a permissão, esses cookies são apagados do navegador e as ferramentas deixam de ser carregadas.
               </p>
               <p>
-                Nesta versão do site não há ferramentas de publicidade habilitadas: a permissão de publicidade só terá efeito quando alguma for habilitada, com atualização prévia desta política. Não envie dados de saúde, documentos ou descrições de casos a ferramentas de publicidade.
+                Nesta versão do site não há ferramentas de publicidade habilitadas, e nenhum dado é enviado a plataformas de anúncios. Se alguma for habilitada no futuro, esta política será atualizada antes e a sua escolha de privacidade será pedida novamente. Não envie dados de saúde, documentos ou descrições de casos a ferramentas de publicidade.
               </p>
             </Secao>
 

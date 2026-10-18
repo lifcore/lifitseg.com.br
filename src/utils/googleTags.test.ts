@@ -3,7 +3,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
   CONSENTIMENTO_PADRAO, caminhoParaTags, cookiesParaApagar, deveCarregarGtm, estadoConsentimento,
-  eventoParaDataLayer, paginaPermiteAnuncio, escolhaDasPreferencias, acaoNaTrocaDeRota, acaoAoMudarPreferencia,
+  eventoParaDataLayer, paginaPermiteAnuncio, escolhaDasPreferencias, acaoNaTrocaDeRota, acaoAoMudarPreferencia, urlDoGtm,
 } from './googleTags.ts'
 
 const PROTOCOLO = '3f1c2a7e-9b1d-4c2e-8f3a-0a1b2c3d4e5f'
@@ -97,4 +97,13 @@ test('dataLayer: allowlist e sucesso real do formulário', () => {
 test('revogar apaga só cookies de terceiros conhecidos', () => {
   assert.deepEqual(cookiesParaApagar(['_ga', '_ga_YPQE1GHEHJ', '_gcl_au', '_fbp', 'li_sugr', 'lifitseg_preferencias_v1', 'sb-token']),
     ['_ga', '_ga_YPQE1GHEHJ', '_gcl_au', '_fbp', 'li_sugr'])
+})
+
+test('gtm.js: ambiente de visualização só com gtm_auth e gtm_preview válidos', () => {
+  const base = 'https://www.googletagmanager.com/gtm.js?id=GTM-KB8C46R'
+  assert.equal(urlDoGtm('GTM-KB8C46R'), base)
+  assert.equal(urlDoGtm('GTM-KB8C46R', 'gtm_auth=Ab3_xY9-kL&gtm_preview=env-3&gtm_cookies_win=x'), `${base}&gtm_auth=Ab3_xY9-kL&gtm_preview=env-3&gtm_cookies_win=x`)
+  assert.equal(urlDoGtm('GTM-KB8C46R', '?gtm_preview=env-12&gtm_auth=Ab3_xY9-kL&outro=1'), `${base}&gtm_auth=Ab3_xY9-kL&gtm_preview=env-12&gtm_cookies_win=x`)
+  assert.equal(urlDoGtm('GTM-KB8C46R', 'gtm_auth=Ab3"><script&gtm_preview=env-3'), base)
+  assert.equal(urlDoGtm('GTM-KB8C46R', 'gtm_auth=Ab3_xY9-kL&gtm_preview=producao'), base)
 })

@@ -166,3 +166,22 @@ export function eventoParaDataLayer(
 export function cookiesParaApagar(nomes: string[]): string[] {
   return nomes.filter((n) => /^(_ga|_gid|_gat|_gcl|_fbp|_fbc|li_|lidc|bcookie|_uet)/.test(n))
 }
+
+/**
+ * URL do gtm.js. Para a homologação, `ambiente` recebe os parâmetros de um
+ * ambiente do GTM (link "Compartilhar visualização" ou Admin › Ambientes),
+ * ex.: "gtm_auth=…&gtm_preview=env-3&gtm_cookies_win=x", vindo de
+ * NEXT_PUBLIC_GTM_AMBIENTE só no .env.local de teste, nunca em produção.
+ * Assim a versão em rascunho carrega localmente e os disparos podem ser
+ * conferidos nas requisições de rede, sem depender do Tag Assistant.
+ * Só esses três parâmetros passam; o resto é descartado.
+ */
+export function urlDoGtm(id: string, ambiente?: string | null): string {
+  const url = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(id)}`
+  if (!ambiente) return url
+  const entrada = new URLSearchParams(ambiente.trim().replace(/^[?&]/, ''))
+  const auth = entrada.get('gtm_auth')
+  const preview = entrada.get('gtm_preview')
+  if (!auth || !/^[A-Za-z0-9_-]{6,64}$/.test(auth) || !preview || !/^env-\d{1,4}$/.test(preview)) return url
+  return `${url}&gtm_auth=${auth}&gtm_preview=${preview}&gtm_cookies_win=x`
+}
