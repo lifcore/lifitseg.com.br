@@ -68,11 +68,11 @@ test('caminho para tags: só UTMs na query; rota de saúde vira marcador', () =>
   assert.equal(caminhoParaTags('/referencias-saude/oncologia/hcor', '?utm_source=meta'), 'sensivel')
 })
 
-test('publicidade só em páginas corporativas', () => {
-  for (const ok of ['/', '/beneficios-corporativos', '/beneficios-corporativos/', '/seguros-corporativos', '/sobre-e-conhecimento', '/lp/veiculos-frota', '/conhecimento/como-comparar-propostas-de-plano-empresarial']) {
+test('publicidade em todas as páginas, menos as rotas de saúde (Raphael, 18/10)', () => {
+  for (const ok of ['/', '/beneficios-corporativos', '/beneficios-corporativos/', '/seguros-corporativos', '/sobre-e-conhecimento', '/lp/veiculos-frota', '/conhecimento/como-comparar-propostas-de-plano-empresarial', '/lp/saude-odonto', '/seguros-pessoais', '/privacidade', '/links']) {
     assert.equal(paginaPermiteAnuncio(ok), true, ok)
   }
-  for (const nao of ['/lp/saude-odonto', '/seguros-pessoais', '/referencias-saude', '/referencias-saude/x', '/privacidade']) {
+  for (const nao of ['/referencias-saude', '/referencias-saude/x', '/referencias-saude/oncologia/hcor', '/REFERENCIAS-SAUDE/y']) {
     assert.equal(paginaPermiteAnuncio(nao), false, nao)
   }
 })
@@ -85,7 +85,7 @@ test('dataLayer: allowlist e sucesso real do formulário', () => {
   // sucesso só com protocolo do servidor
   assert.equal(eventoParaDataLayer('form_submit_ok', { pathname: '/', rotulo: 'home-formulario' }), null)
   assert.deepEqual(eventoParaDataLayer('form_submit_ok', { pathname: '/lp/saude-odonto', rotulo: 'lp-saude-odonto', eventId: PROTOCOLO }),
-    { event: 'lf_lead_recebido', page_path: '/lp/saude-odonto', pagina_permite_anuncio: false, ponto_entrada: 'lp-saude-odonto', event_id: `lead:${PROTOCOLO}` })
+    { event: 'lf_lead_recebido', page_path: '/lp/saude-odonto', pagina_permite_anuncio: true, ponto_entrada: 'lp-saude-odonto', event_id: `lead:${PROTOCOLO}` })
   // erro de formulário e rota de saúde não saem
   assert.equal(eventoParaDataLayer('form_submit_error', { pathname: '/' }), null)
   assert.equal(eventoParaDataLayer('page_view', { pathname: '/referencias-saude/cardiologia' }), null)

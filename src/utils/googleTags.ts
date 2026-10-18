@@ -109,18 +109,15 @@ export function caminhoParaTags(pathname: string, search = ''): string {
 }
 
 /**
- * Páginas onde pixels de PUBLICIDADE (LinkedIn/Meta) podem disparar: só as
- * corporativas. Fora: saúde para pessoa física, seguros pessoais e rotas de
- * saúde (termo do LinkedIn sobre serviços de saúde ao consumidor). Lista a
- * validar com o advogado antes de publicar.
+ * Páginas onde pixels de PUBLICIDADE (LinkedIn/Meta) podem disparar: todas,
+ * menos as rotas de saúde (`/referencias-saude`: revelam interesse de saúde;
+ * LGPD art. 11 e termos do LinkedIn/Meta sobre saúde ao consumidor).
+ * Decisão de Raphael em 18/10/2026 ("sim todas páginas"), que substitui a
+ * lista só de páginas corporativas da Etapa C. Continua valendo: só com
+ * publicidade aceita (`ad_storage`).
  */
-const PAGINAS_PUBLICIDADE = ['/', '/beneficios-corporativos', '/seguros-corporativos', '/sobre-e-conhecimento', '/lp/veiculos-frota']
-const PREFIXOS_PUBLICIDADE = ['/beneficios-corporativos/', '/seguros-corporativos/', '/conhecimento/']
-
 export function paginaPermiteAnuncio(pathname: string): boolean {
-  if (rotaSensivel(pathname)) return false
-  const c = pathname.split('?')[0].replace(/\/+$/, '') || '/'
-  return PAGINAS_PUBLICIDADE.includes(c) || PREFIXOS_PUBLICIDADE.some((p) => `${c}/`.startsWith(p))
+  return !rotaSensivel(pathname)
 }
 
 export type EventoTag = 'lf_page_view' | 'lf_cta_click' | 'lf_whatsapp_click' | 'lf_form_start' | 'lf_lead_recebido'
