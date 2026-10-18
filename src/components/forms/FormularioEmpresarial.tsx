@@ -77,7 +77,7 @@ export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, f
 
     setEstado('enviando')
     try {
-      await lifcoreApi.submitLead({
+      const resposta = await lifcoreApi.submitLead({
         nome: dados.nome.trim(),
         empresa: dados.empresa.trim(),
         email: dados.email.trim() || undefined,
@@ -93,7 +93,7 @@ export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, f
         website: honeypot.current?.value ?? '',
       })
       setEstado('sucesso')
-      registrarEvento('form_submit_ok', pontoEntrada)
+      registrarEvento('form_submit_ok', pontoEntrada, { eventId: resposta?.protocolo ?? null })
     } catch (erro) {
       setEstado('falha')
       setMensagemFalha(erro instanceof Error && erro.message ? erro.message : 'Não foi possível enviar agora.')
