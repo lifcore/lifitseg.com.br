@@ -5,14 +5,18 @@ import Link from 'next/link'
 import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, precisaEscolher, salvarPreferencias } from '@/utils/consentimento'
 
 /**
- * Preferências de privacidade (Etapa C, consentimento v2). Três escolhas de
- * mesmo destaque: recusar opcionais, permitir medição (inclui o Google
- * Analytics, carregado pelo GTM só depois da permissão) e permitir medição e
- * publicidade (ferramentas de anúncio só nas páginas permitidas e só quando
- * habilitadas). Nada vem marcado, nada opcional é ativado antes da escolha, e
- * recusar não bloqueia formulário. O rodapé reabre o painel.
+ * Aviso de privacidade (Etapa C, consentimento v2), em formato compacto
+ * pedido por Raphael (18/10/2026, referência: aviso da Bradesco Seguros).
  *
- * Texto do Chief Chat: `Lifitseg_EtapaC_Aviso_Privacidade_v2.md` (17/10/2026).
+ * - Aviso: texto curto, "Recusar" e "Aceitar" com o mesmo destaque, link para
+ *   a Política de Privacidade (termos completos) e "Personalizar".
+ * - Personalizar: medição e publicidade separadas, desmarcadas por padrão.
+ *   Publicidade só vale com medição (garantido em `salvarPreferencias`).
+ * - Nada opcional é ativado antes da escolha, e recusar não bloqueia
+ *   formulário. O rodapé reabre direto na personalização, com a escolha atual.
+ *
+ * Texto resumido a partir de `Lifitseg_EtapaC_Aviso_Privacidade_v2.md` (Chief,
+ * 17/10/2026); o detalhamento completo fica na Política de Privacidade.
  */
 
 // Lê a escolha guardada como "loja externa": no servidor ainda não se sabe
@@ -31,12 +35,18 @@ function escolhaAtual(): 'publicidade' | 'sim' | 'nao' | 'pendente' {
 export function PreferenciasCookies() {
   const escolha = useSyncExternalStore(assinar, escolhaAtual, () => 'servidor' as const)
   const [reaberto, setReaberto] = useState(false)
-  const [detalhes, setDetalhes] = useState(false)
+  const [personalizando, setPersonalizando] = useState(false)
+  const [medicao, setMedicao] = useState(false)
+  const [publicidade, setPublicidade] = useState(false)
   const tituloId = useId()
   const painelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     function abrir() {
+      const p = obterPreferencias()
+      setMedicao(p?.medicao ?? false)
+      setPublicidade(p?.publicidade ?? false)
+      setPersonalizando(true)
       setReaberto(true)
     }
     window.addEventListener(EVENTO_ABRIR, abrir)
@@ -47,17 +57,18 @@ export function PreferenciasCookies() {
 
   useEffect(() => {
     if (visivel) painelRef.current?.focus()
-  }, [visivel])
+  }, [visivel, personalizando])
 
   if (!visivel) return null
 
-  function decidir(medicao: boolean, publicidade = false) {
-    salvarPreferencias(medicao, publicidade)
+  function decidir(m: boolean, p = false) {
+    salvarPreferencias(m, p)
     setReaberto(false)
-    setDetalhes(false)
+    setPersonalizando(false)
   }
 
-  const botao = 'rounded-xl border-2 border-lifitseg-green px-5 py-2.5 text-sm font-bold text-lifitseg-green hover:bg-lifitseg-paper'
+  const botao = 'flex-1 rounded-xl border-2 border-lifitseg-green px-4 py-2.5 text-sm font-bold text-lifitseg-green hover:bg-lifitseg-paper'
+  const link = 'font-semibold text-lifitseg-green underline underline-offset-2'
 
   return (
     <div
@@ -66,64 +77,65 @@ export function PreferenciasCookies() {
       aria-modal="false"
       aria-labelledby={tituloId}
       tabIndex={-1}
-      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-2xl border border-lifitseg-line bg-white p-5 text-lifitseg-text shadow-2xl outline-none sm:inset-x-6 sm:p-6"
+      className="fixed inset-x-3 bottom-3 z-50 max-w-md rounded-2xl border border-lifitseg-line bg-white p-5 text-lifitseg-text shadow-2xl outline-none sm:left-6 sm:right-auto sm:bottom-6"
     >
       <h2 id={tituloId} className="font-bold text-lifitseg-dark" style={{ fontSize: '1rem' }}>
-        Suas preferências de privacidade
+        Sua privacidade
       </h2>
-      <p className="mt-2 text-sm text-lifitseg-text-soft">
-        Usamos cookies e armazenamento necessário para manter o site funcionando e registrar suas escolhas. Se você
-        permitir medição, usaremos informações de navegação e de origem das visitas, inclusive com o Google Analytics,
-        para entender o uso do site. Se também permitir publicidade, poderemos usar ferramentas de anúncios habilitadas
-        para medir campanhas nas páginas permitidas. Você pode recusar os usos opcionais e continuar navegando. Altere
-        sua escolha a qualquer momento nas preferências de privacidade do rodapé.
-      </p>
 
-      {detalhes && (
-        <div className="mt-3 space-y-2 rounded-xl bg-lifitseg-paper p-4 text-sm text-lifitseg-text-soft">
-          <p>
-            <strong className="text-lifitseg-dark">Necessários:</strong> registram suas preferências e mantêm recursos
-            essenciais do site.
+      {!personalizando ? (
+        <>
+          <p className="mt-2 text-sm text-lifitseg-text-soft">
+            Usamos cookies para o site funcionar e, com a sua permissão, para medir o uso do site e das nossas campanhas.
+            Você pode mudar a escolha quando quiser, pelo rodapé.
           </p>
-          <p>
-            <strong className="text-lifitseg-dark">Medição:</strong> registra interações e informações de origem para
-            analisar o uso do site; a implementação prevê histórico de primeira e última origem por até 90 dias no
-            navegador.
+          <div className="mt-3 flex gap-4 text-sm">
+            <Link href="/privacidade" className={link}>Política de Privacidade</Link>
+            <button type="button" onClick={() => setPersonalizando(true)} className={link}>Personalizar</button>
+          </div>
+          <div className="mt-4 flex gap-2">
+            <button type="button" onClick={() => decidir(false)} className={botao}>Recusar</button>
+            <button type="button" onClick={() => decidir(true, true)} className={botao}>Aceitar</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <ul className="mt-3 space-y-3 text-sm">
+            <li className="flex items-start justify-between gap-4">
+              <span>
+                <span className="block font-semibold text-lifitseg-dark">Necessários</span>
+                <span className="block text-lifitseg-text-soft">Mantêm o site funcionando e guardam esta escolha.</span>
+              </span>
+              <span className="shrink-0 text-xs font-semibold text-lifitseg-text-soft">Sempre ativos</span>
+            </li>
+            <li>
+              <label className="flex cursor-pointer items-start justify-between gap-4">
+                <span>
+                  <span className="block font-semibold text-lifitseg-dark">Medição</span>
+                  <span className="block text-lifitseg-text-soft">Uso do site e origem das visitas, inclusive pelo Google Analytics.</span>
+                </span>
+                <input type="checkbox" checked={medicao} onChange={(e) => { setMedicao(e.target.checked); if (!e.target.checked) setPublicidade(false) }} className="mt-1 h-5 w-5 shrink-0 accent-lifitseg-green" />
+              </label>
+            </li>
+            <li>
+              <label className={`flex items-start justify-between gap-4 ${medicao ? 'cursor-pointer' : 'opacity-60'}`}>
+                <span>
+                  <span className="block font-semibold text-lifitseg-dark">Publicidade</span>
+                  <span className="block text-lifitseg-text-soft">Medição das campanhas pelas ferramentas de anúncio. Depende da medição.</span>
+                </span>
+                <input type="checkbox" checked={publicidade} disabled={!medicao} onChange={(e) => setPublicidade(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-lifitseg-green" />
+              </label>
+            </li>
+          </ul>
+          <p className="mt-3 text-xs text-lifitseg-text-soft">
+            Detalhes na <Link href="/privacidade" className={link}>Política de Privacidade</Link>.
           </p>
-          <p>
-            <strong className="text-lifitseg-dark">Publicidade:</strong> permite medição de campanhas pelas ferramentas
-            habilitadas, conforme as páginas e finalidades descritas na Política de Privacidade.
-          </p>
-          <p>
-            Mesmo ao recusar medição, a origem da visita atual pode acompanhar um contato que você decidir enviar. Esse
-            registro de origem no contato é separado da autorização para ferramentas de medição e publicidade. Ao retirar
-            a permissão de medição, o histórico persistente de origem é removido do navegador. A mudança vale para usos
-            futuros e não apaga automaticamente dados já recebidos.
-          </p>
-        </div>
+          <div className="mt-4 flex gap-2">
+            <button type="button" onClick={() => decidir(false)} className={botao}>Recusar</button>
+            <button type="button" onClick={() => decidir(medicao, publicidade)} className={botao}>Salvar escolha</button>
+          </div>
+        </>
       )}
-
-      {escolha !== 'pendente' && escolha !== 'servidor' && (
-        <p className="mt-3 text-xs font-semibold text-lifitseg-dark">
-          Escolha atual: {escolha === 'publicidade' ? 'medição e publicidade permitidas' : escolha === 'sim' ? 'medição permitida, publicidade recusada' : 'medição e publicidade recusadas'}.
-        </p>
-      )}
-
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-4 text-sm">
-          <button type="button" onClick={() => setDetalhes((d) => !d)} aria-expanded={detalhes} className="font-semibold text-lifitseg-green underline underline-offset-2">
-            {detalhes ? 'Ocultar detalhes' : 'Mais detalhes'}
-          </button>
-          <Link href="/privacidade" className="font-semibold text-lifitseg-green underline underline-offset-2">
-            Política de Privacidade
-          </Link>
-        </div>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" onClick={() => decidir(false)} className={botao}>Recusar opcionais</button>
-          <button type="button" onClick={() => decidir(true)} className={botao}>Permitir medição</button>
-          <button type="button" onClick={() => decidir(true, true)} className={botao}>Permitir medição e publicidade</button>
-        </div>
-      </div>
     </div>
   )
 }
