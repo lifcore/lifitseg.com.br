@@ -25,7 +25,7 @@ const paths = [
 
 export default function LinksPage() {
   return (
-    <main className="min-h-screen bg-lifitseg-dark px-5 py-12 text-lifitseg-offwhite sm:py-16">
+    <main className="min-h-screen bg-lifitseg-dark px-5 pt-12 pb-32 text-lifitseg-offwhite sm:pt-16">
       <div className="mx-auto max-w-xl">
         <header className="mb-10">
           <Link href="/" aria-label="Lifitseg, página inicial" className="inline-block rounded focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-lifitseg-mint">

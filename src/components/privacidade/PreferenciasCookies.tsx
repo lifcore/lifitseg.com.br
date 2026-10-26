@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, precisaEscolher, salvarPreferencias } from '@/utils/consentimento'
 
 /**
@@ -40,6 +41,9 @@ export function PreferenciasCookies() {
   const [publicidade, setPublicidade] = useState(false)
   const tituloId = useId()
   const painelRef = useRef<HTMLDivElement>(null)
+  // /links (bio do Instagram, celular): o aviso completo cobria as opções do
+  // menu. Lá ele vira uma faixa fina, com as mesmas escolhas (Raphael, 26/10/2026).
+  const compacto = usePathname() === '/links'
 
   useEffect(() => {
     function abrir() {
@@ -69,6 +73,30 @@ export function PreferenciasCookies() {
 
   const botao = 'flex-1 rounded-xl border-2 border-lifitseg-green px-4 py-2.5 text-sm font-bold text-lifitseg-green hover:bg-lifitseg-paper'
   const link = 'font-semibold text-lifitseg-green underline underline-offset-2'
+
+  if (compacto && !personalizando) {
+    return (
+      <div
+        ref={painelRef}
+        role="dialog"
+        aria-modal="false"
+        aria-labelledby={tituloId}
+        tabIndex={-1}
+        className="fixed inset-x-2 bottom-2 z-50 mx-auto max-w-xl rounded-xl border border-lifitseg-line bg-white px-3 py-2.5 text-lifitseg-text shadow-2xl outline-none"
+      >
+        <h2 id={tituloId} className="sr-only">Sua privacidade</h2>
+        <p className="text-xs leading-snug text-lifitseg-text-soft">
+          Usamos cookies para o site funcionar e, com sua permissão, para medição.{' '}
+          <Link href="/privacidade" className={link}>Política</Link>{' · '}
+          <button type="button" onClick={() => setPersonalizando(true)} className={link}>Personalizar</button>
+        </p>
+        <div className="mt-2 flex gap-2">
+          <button type="button" onClick={() => decidir(false)} className="flex-1 rounded-lg border-2 border-lifitseg-green px-3 py-1.5 text-xs font-bold text-lifitseg-green hover:bg-lifitseg-paper">Recusar</button>
+          <button type="button" onClick={() => decidir(true, true)} className="flex-1 rounded-lg border-2 border-lifitseg-green px-3 py-1.5 text-xs font-bold text-lifitseg-green hover:bg-lifitseg-paper">Aceitar</button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
