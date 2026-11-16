@@ -43,3 +43,10 @@ test('ficha da operadora: apelidos do site levam à ficha certa; IDSS por faixa'
   assert.equal(faixaIdss(0.83), 'Faixa 0,80 a 1,00 (a mais alta)')
   assert.equal(faixaIdss(0.45), 'Faixa 0,40 a 0,59')
 })
+
+test('nomes das operadoras da rede (Lifcore) levam à ficha', () => {
+  assert.equal(slugDaFicha('Hapvida SP/RJ'), 'hapvida-sp-rj')
+  assert.equal(slugDaFicha('Notredame Intermédica'), 'notredame-intermedica')
+  assert.equal(slugDaFicha('CarePlus'), 'careplus')
+  assert.equal(slugDaFicha('MedSênior'), null)
+})

@@ -16,6 +16,9 @@ type CtaConsultarCoberturaProps = {
   tipo?: string
   /** Lista de operadoras/convênios identificados — só as curtas (nome real, não frase inteira) viram chip. */
   operadorasInformadas?: string[]
+  /** Operadoras da nossa rede com esta instituição (vínculo conferido no Lifcore, 16/11/2026). Têm prioridade sobre as informadas. */
+  operadorasRede?: string[]
+  redeConferidaEm?: string | null
   /** 'secao' (padrão) = banner full-width, usado no hub/região/especialidade.
    *  'card' = card compacto lateral, usado só no perfil de instituição, lado a lado com o conteúdo. */
   variante?: 'secao' | 'card'
@@ -47,6 +50,8 @@ export function CtaConsultarCobertura({
   especialidade,
   cidade,
   operadorasInformadas,
+  operadorasRede,
+  redeConferidaEm,
   tipo,
   variante = 'secao',
 }: CtaConsultarCoberturaProps) {
@@ -60,7 +65,9 @@ export function CtaConsultarCobertura({
     : 'Consulte a Lifitseg para saber quais planos incluem as instituições do seu interesse.'
   const textoBotao = nomeInstituicao ? 'Quero um plano com acesso a este hospital' : 'Consultar planos compatíveis'
 
-  const chipsOperadoras = (operadorasInformadas ?? []).filter((o) => o.length <= TAMANHO_MAXIMO_CHIP)
+  const daRede = (operadorasRede ?? []).length > 0
+  const chipsOperadoras = daRede ? operadorasRede! : (operadorasInformadas ?? []).filter((o) => o.length <= TAMANHO_MAXIMO_CHIP)
+  const dataRede = redeConferidaEm ? redeConferidaEm.split('-').reverse().join('/') : null
 
   return (
     <>
@@ -72,7 +79,7 @@ export function CtaConsultarCobertura({
           {chipsOperadoras.length > 0 && (
             <div className="mb-6">
               <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wide text-lifitseg-offwhite/40">
-                Operadoras identificadas
+                {daRede ? 'Operadoras do nosso portfólio com esta instituição na rede' : 'Operadoras identificadas'}
               </p>
               <div className="flex flex-wrap gap-2">
                 {chipsOperadoras.map((op) => {
@@ -95,6 +102,11 @@ export function CtaConsultarCobertura({
                   )
                 })}
               </div>
+              {daRede && (
+                <p className="mt-2.5 text-[11px] leading-snug text-lifitseg-offwhite/45">
+                  Conforme a rede na nossa base{dataRede ? ` (conferida em ${dataRede})` : ''}. Plano, unidade e acomodação são confirmados na cotação.
+                </p>
+              )}
             </div>
           )}
 

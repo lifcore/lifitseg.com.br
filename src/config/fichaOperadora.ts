@@ -26,7 +26,7 @@ const APELIDOS: Record<string, string> = {
   'amil': 'amil', 'porto': 'porto-seguro', 'porto seguro': 'porto-seguro', 'porto saude': 'porto-seguro',
   'omint': 'omint', 'care plus': 'careplus', 'careplus': 'careplus',
   'unimed jundiai': 'unimed-jundiai', 'seguros unimed': 'seguros-unimed', 'unimed sorocaba': 'unimed-sorocaba',
-  'sobam': 'sobam', 'hapvida': 'hapvida-sp-rj', 'notredame': 'notredame-intermedica', 'notredame intermedica': 'notredame-intermedica',
+  'sobam': 'sobam', 'hapvida': 'hapvida-sp-rj', 'hapvida sp rj': 'hapvida-sp-rj', 'notredame': 'notredame-intermedica', 'notredame intermedica': 'notredame-intermedica',
   'notre dame intermedica': 'notredame-intermedica', 'gndi': 'notredame-intermedica', 'alice': 'alice', 'sami': 'sami',
   'new leader': 'newleader', 'new leader saude': 'newleader', 'newleader': 'newleader', 'plena': 'plena-saude', 'plena saude': 'plena-saude',
   'unica saude': 'unica-saude', 'gocare': 'gocare', 'go care': 'gocare', 'veracruz': 'vera-cruz-campinas', 'vera cruz': 'vera-cruz-campinas',

@@ -85,6 +85,9 @@ const realAdapterGet = async (endpoint, params) => {
       'Content-Type': 'application/json',
       'X-LifCore-Client': 'LifitSeg-WebFront',
     },
+    // Dados do Lifcore (Referências, fichas) renovados a cada hora (16/11/2026). Sem isto, a resposta ficava
+    // guardada no cache da compilação e as correções do cadastro não chegavam ao site.
+    next: { revalidate: 3600 },
   })
 
   if (!response.ok) {
