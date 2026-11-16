@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { LogoParceiro } from '@/components/common/LogoParceiro'
 import { LinkWhatsApp } from '@/components/common/LinkWhatsApp'
 import { SEGURADORAS, type Solucao } from '@/content/seguros'
 import { siteConfig } from '@/config/site'
@@ -61,7 +62,7 @@ export function GradeSeguradoras() {
           {SEGURADORAS.map((s) => (
             <li key={s.nome} className={`pm-seguradora flex h-20 items-center justify-center rounded-2xl border border-lifitseg-line p-4 text-center ${s.fundoEscuro ? 'pm-seguradora-escura' : 'bg-white'}`}>
               {s.arquivo ? (
-                <Image src={`/seguradoras/${s.arquivo}.png`} alt={s.nome} width={120} height={44} className="max-h-10 w-auto object-contain" />
+                <LogoParceiro file={s.arquivo} nome={s.nome} escala={0.85} />
               ) : (
                 <span className="pm-marca-texto">{s.nome}</span>
               )}

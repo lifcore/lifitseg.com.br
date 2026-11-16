@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { LogoParceiro } from '@/components/common/LogoParceiro'
 import { OPERADORAS_SAUDE, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
 
 /**
@@ -21,7 +21,7 @@ export function GradeMarcas() {
           {OPERADORAS_SAUDE.map((m) => (
             <li key={m.file} className="flex flex-col items-start gap-3 rounded-2xl border border-lifitseg-line bg-white p-4">
               <div className="flex h-12 w-full items-center">
-                <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={140} height={48} className="max-h-10 w-auto object-contain" />
+                <LogoParceiro file={m.file} nome={m.name} escala={0.9} />
               </div>
               <span className="text-xs text-lifitseg-text-soft">{m.name}</span>
             </li>

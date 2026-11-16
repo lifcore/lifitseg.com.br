@@ -9,6 +9,7 @@ import { GUIAS } from '@/content/guias'
 import { CAPA_GUIA, IMAGENS } from '@/content/imagens'
 import { OPERADORAS_SAUDE, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
 import { slugDaFicha } from '@/config/fichaOperadora'
+import { LogoParceiro } from '@/components/common/LogoParceiro'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { siteConfig } from '@/config/site'
@@ -238,7 +239,7 @@ export default function HomePage() {
             <ul className="pm-logos">
               {PARCEIROS.map((m) => {
                 const ficha = slugDaFicha(m.name)
-                const logo = <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={150} height={56} />
+                const logo = <LogoParceiro file={m.file} nome={m.name} />
                 return <li key={m.file}>{ficha ? <Link href={`/operadoras/${ficha}`} aria-label={`Ficha da ${m.name}`}>{logo}</Link> : logo}</li>
               })}
             </ul>

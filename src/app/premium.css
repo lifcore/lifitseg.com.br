@@ -399,9 +399,10 @@ html{scroll-behavior:smooth}
 .pm .pm-logos{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 .pm .pm-logos li{position:relative;display:grid;place-items:center;height:88px;border-radius:18px;background:#fff;border:1px solid #1c4d3014;box-shadow:0 8px 22px #0a221208;transition:transform .18s,box-shadow .18s,border-color .18s}
 .pm .pm-logos li:hover{transform:translateY(-2px);border-color:#087f6d33;box-shadow:0 14px 30px #0a221212}
-.pm .pm-logos img{max-width:72%;max-height:44px;width:auto;height:auto;object-fit:contain}
+.pm .pm-logos li>a{display:grid;place-items:center;width:100%;height:100%;border-radius:inherit}
+.pm .pm-logos img{display:block}
 @media(max-width:1050px){.pm .pm-logos{grid-template-columns:repeat(4,1fr)}.pm .pm-parceiros-topo{grid-template-columns:1fr;gap:12px}}
-@media(max-width:700px){.pm .pm-logos{grid-template-columns:repeat(3,1fr);gap:10px}.pm .pm-logos li{height:68px;border-radius:14px}.pm .pm-logos img{max-height:32px}}
+@media(max-width:700px){.pm .pm-logos{grid-template-columns:repeat(3,1fr);gap:10px}.pm .pm-logos li{height:68px;border-radius:14px}.pm .pm-logos img{transform:scale(.78)}}
 
 /* Escritório: foto ilustrativa com véu petróleo para o texto continuar legível */
 .pm .pm-escritorio-foto{object-fit:cover;object-position:50% 40%}
