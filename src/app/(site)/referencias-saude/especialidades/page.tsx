@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 export default function EspecialidadesPage() {
   return (
     <>
-      <Breadcrumb items={[{ label: 'Referências em Saúde', href: '/referencias-saude' }, { label: 'Por Especialidades' }]} />
+      <Breadcrumb items={[{ label: 'Referências em Saúde', href: '/referencias-saude' }, { label: 'Por especialidade' }]} />
 
       <section className="bg-lifitseg-offwhite py-16 lg:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="mb-4 text-3xl font-black text-lifitseg-dark sm:text-4xl">Por Especialidades</h1>
+          <h1 className="mb-4 text-3xl font-black text-lifitseg-dark sm:text-4xl">Por especialidade</h1>
           <p className="mx-auto max-w-2xl text-base text-lifitseg-dark/70">
             Navegação transversal — cada especialidade reúne hospitais, clínicas e laboratórios relacionados,
             quando houver informação confiável de que atuam nessa área.

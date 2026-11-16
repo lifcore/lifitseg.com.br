@@ -30,7 +30,7 @@ export function AtendimentoSinistro({ texto, rotulo }: { texto: string; rotulo: 
     <section aria-labelledby={`titulo-sinistro-${rotulo}`} className="bg-lifitseg-dark py-16 text-lifitseg-offwhite">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_1.3fr] lg:px-8">
         <div>
-          <h2 id={`titulo-sinistro-${rotulo}`} className="text-white">Quando acontece um sinistro</h2>
+          <h2 id={`titulo-sinistro-${rotulo}`} className="text-white">Quando acontece um sinistro.</h2>
           <p className="mt-4 text-sm text-lifitseg-offwhite/70">Já é cliente e precisa de orientação sobre uma ocorrência? Use o canal de atendimento, não o formulário de contato comercial.</p>
         </div>
         <div>
@@ -59,11 +59,11 @@ export function GradeSeguradoras() {
         </p>
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
           {SEGURADORAS.map((s) => (
-            <li key={s.nome} className="flex h-20 items-center justify-center rounded-2xl border border-lifitseg-line bg-white p-4 text-center">
+            <li key={s.nome} className={`pm-seguradora flex h-20 items-center justify-center rounded-2xl border border-lifitseg-line p-4 text-center ${s.fundoEscuro ? 'pm-seguradora-escura' : 'bg-white'}`}>
               {s.arquivo ? (
                 <Image src={`/seguradoras/${s.arquivo}.png`} alt={s.nome} width={120} height={44} className="max-h-10 w-auto object-contain" />
               ) : (
-                <span className="text-sm font-bold text-lifitseg-dark">{s.nome}</span>
+                <span className="pm-marca-texto">{s.nome}</span>
               )}
             </li>
           ))}

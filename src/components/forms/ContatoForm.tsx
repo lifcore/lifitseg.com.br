@@ -145,7 +145,7 @@ export function ContatoForm() {
           <a href="/privacidade" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#e2a535] underline">
             Política de Privacidade
           </a>{' '}
-          e autorizo o contato da LifitSeg com base nos dados informados.
+          e autorizo o contato da Lifitseg com base nos dados informados.
         </span>
       </label>
 

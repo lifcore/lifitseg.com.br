@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { regiao } = await params
   const nome = nomeDaRegiao(regiao)
   return {
-    title: `Hospitais de Referência — ${nome}`,
+    title: `Hospitais de referência — ${nome}`,
     description: `Hospitais privados de referência em ${nome}.`,
   }
 }
@@ -29,7 +29,7 @@ export default async function HospitaisRegiaoPage({ params }: PageProps) {
   return (
     <CategoriaRegiaoListagem
       categoriaSlug="hospitais"
-      categoriaTitulo="Hospitais de Referência"
+      categoriaTitulo="Hospitais de referência"
       categoriaTituloMinusculo="hospitais"
       regiaoSlug={regiao}
       instituicoes={instituicoes}

@@ -21,7 +21,7 @@ export const CORPORATIVO = {
     ctaSecundario: 'Entender as soluções',
   },
   antes: {
-    titulo: 'O que precisamos entender antes de indicar um seguro',
+    titulo: 'O que precisamos entender antes de indicar um seguro.',
     texto:
       'O que sua empresa faz, quais ativos utiliza, de quem depende e quais responsabilidades assume? Uma proposta consistente começa por essas informações — e pela leitura dos contratos e das proteções que já existem.',
     perguntas: [
@@ -199,11 +199,11 @@ export const SOBRE = {
  * marcas de saúde, e Itaú, Azul e Mitsui nunca tiveram arquivo. Trocar pelo
  * logo de ramos elementares quando for entregue.
  */
-export const SEGURADORAS: { nome: string; arquivo?: string }[] = [
+export const SEGURADORAS: { nome: string; arquivo?: string; fundoEscuro?: boolean }[] = [
   { nome: 'Bradesco Seguros' },
   { nome: 'Porto Seguro' },
   { nome: 'Seguros Unimed', arquivo: 'seguros_unimed' },
-  { nome: 'Tokio Marine', arquivo: 'tokio' },
+  { nome: 'Tokio Marine', arquivo: 'tokio-recortado' }, // cópia sem a borda vazia do tokio.png (o logo ficava minúsculo)
   { nome: 'Liberty Seguros', arquivo: 'liberty' },
   { nome: 'Mapfre', arquivo: 'mapfre' },
   { nome: 'Allianz', arquivo: 'allianz' },

@@ -465,3 +465,22 @@ html{scroll-behavior:smooth}
 .pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) h1{color:#fff}
 .pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) > div > p{color:#bdcec6}
 .pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) > div > p.text-lifitseg-green{color:#a8d5be}
+
+/* ===== Toque final (15/11, aprovado por Raphael: itens 3, 8 e 9 da conferência) ===== */
+/* 3. Filete dourado acima dos títulos de seção das páginas internas, como o sobretítulo da home */
+.pm-interna section:not(:has(> div > h1)) h2:not(.pm *)::before{content:'';display:block;width:28px;height:1px;margin:0 0 16px;background:linear-gradient(90deg,#b99a60,#b99a6033)}
+.pm-interna .text-center h2:not(.pm *)::before{margin-left:auto;margin-right:auto;background:linear-gradient(90deg,#b99a6033,#b99a60,#b99a6033)}
+/* 8. Seguradoras: logo claro sobre petróleo; nome em texto com acabamento de marca (até chegar o logo) */
+.pm-interna li.pm-seguradora:not(.pm *){border-radius:18px;border-color:#1c4d3014;box-shadow:0 8px 22px #0a221208;transition:transform .18s,box-shadow .18s}
+.pm-interna li.pm-seguradora:not(.pm *):hover{transform:translateY(-2px);box-shadow:0 14px 30px #0a221212}
+.pm-interna li.pm-seguradora.bg-white:not(.pm *){background-image:linear-gradient(140deg,#fff,#f5f6f2)}
+.pm-interna li.pm-seguradora-escura:not(.pm *){background:linear-gradient(140deg,#123a36,#0b2624);border-color:#bddac53a}
+.pm-interna .pm-marca-texto{font-size:15px;font-weight:650;letter-spacing:-.02em;line-height:1.15;color:#05191b;padding-bottom:5px;border-bottom:1px solid #b99a6080}
+/* 9. Perguntas frequentes em cards claros, com o + verde (internas e Benefícios) */
+:is(.pm-interna .divide-y.border-y:not(.pm *),.pm .pm-faq .divide-y.border-y){display:grid;gap:10px;border:0}
+:is(.pm-interna .divide-y.border-y:not(.pm *),.pm .pm-faq .divide-y.border-y) > div{border:1px solid #1c4d301a!important;border-radius:16px;padding:0 22px;background:linear-gradient(140deg,#ffffff,#f6f7f4);box-shadow:0 6px 18px #0a221208;transition:border-color .18s}
+:is(.pm-interna .divide-y.border-y:not(.pm *),.pm .pm-faq .divide-y.border-y) > div:hover{border-color:#087f6d40!important}
+:is(.pm-interna .divide-y.border-y:not(.pm *),.pm .pm-faq .divide-y.border-y) button{font-weight:550}
+/* Títulos-rótulo (h2 pequenos de propósito, como no perfil das instituições): a regra geral de títulos não vale */
+.pm-interna h2.text-xs:not(.pm *){font-size:11px;font-weight:650;letter-spacing:.12em;line-height:1.4;color:#087f6d}
+.pm-interna h2.text-xs:not(.pm *)::before{display:none}

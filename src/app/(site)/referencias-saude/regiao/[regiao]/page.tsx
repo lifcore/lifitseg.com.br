@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { regiao } = await params
   const nome = nomeDaRegiao(regiao)
   return {
-    title: `Referências em Saúde — ${nome}`,
+    title: `${nome}: instituições de referência`,
     description: `Hospitais, laboratórios e centros diagnósticos privados de referência em ${nome}.`,
   }
 }
@@ -43,7 +43,7 @@ export default async function RegiaoSaudePage({ params }: PageProps) {
       <section className="bg-lifitseg-offwhite py-12 lg:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="mb-4 text-3xl font-black text-lifitseg-dark sm:text-4xl">
-            Referências em Saúde — {nome}
+            {nome}: instituições de referência
           </h1>
           <p className="mx-auto max-w-2xl text-base text-lifitseg-dark/70">
             Instituições privadas de referência catalogadas nesta região.

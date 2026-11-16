@@ -48,7 +48,7 @@ export default function SobreEConhecimentoPage() {
               </article>
             ))}
             <article className="rounded-2xl bg-lifitseg-paper p-6">
-              <h3 className="text-lifitseg-dark" style={{ fontSize: '1.1rem' }}>{EQUIPE.titulo}</h3>
+              <h3 className="text-lifitseg-dark" style={{ fontSize: '1.1rem' }}>{EQUIPE.titulo.replace(/\.$/, '')}</h3>
               <p className="mt-3 text-sm text-lifitseg-text-soft">{EQUIPE.texto}</p>
               <a href={LINK_AVALIACOES_GOOGLE} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-sm font-bold text-lifitseg-green hover:underline">
                 Ver avaliações no Google <span aria-hidden="true">↗</span>
@@ -82,7 +82,7 @@ export default function SobreEConhecimentoPage() {
       <section id="conhecimento" aria-labelledby="titulo-conhecimento" className="scroll-mt-20 bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 id="titulo-conhecimento" className="text-lifitseg-dark">Conhecimento para decidir.</h2>
-          <p className="mt-3 max-w-2xl text-sm text-lifitseg-text-soft">Guias educativos com autoria institucional e fontes públicas quando aplicáveis.</p>
+          <p className="mt-3 max-w-2xl text-sm text-lifitseg-text-soft">Guias escritos pela equipe da Lifitseg, com fontes públicas sempre que houver.</p>
           <div className="mt-8"><GuiasDestaque area="saude" limite={3} /></div>
           <div className="mt-4"><GuiasDestaque area="seguros" limite={3} /></div>
           <Link href="/conhecimento" className="mt-6 inline-block text-sm font-bold text-lifitseg-green hover:underline">Ver todos os guias <span aria-hidden="true">→</span></Link>

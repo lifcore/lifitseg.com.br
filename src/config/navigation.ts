@@ -51,5 +51,5 @@ export const NAV_REFERENCIAS_SAUDE: ItemNavegacao[] = [
   { label: 'Hospitais', href: '/referencias-saude/hospitais', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
   { label: 'Laboratórios', href: '/referencias-saude/laboratorios', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
   { label: 'Clínicas', href: '/referencias-saude/clinicas', descricao: 'Por região: Jundiaí, Campinas e São Paulo' },
-  { label: 'Por Especialidades', href: '/referencias-saude/especialidades', descricao: 'Cardiologia, Oncologia e mais 28 outras' },
+  { label: 'Por especialidade', href: '/referencias-saude/especialidades', descricao: 'Cardiologia, oncologia e outras 28' },
 ]

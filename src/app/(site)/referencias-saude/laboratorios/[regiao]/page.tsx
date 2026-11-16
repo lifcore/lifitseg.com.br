@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { regiao } = await params
   const nome = nomeDaRegiao(regiao)
   return {
-    title: `Laboratórios de Referência — ${nome}`,
+    title: `Laboratórios de referência — ${nome}`,
     description: `Laboratórios e centros de diagnóstico de referência em ${nome}.`,
   }
 }
@@ -29,7 +29,7 @@ export default async function LaboratoriosRegiaoPage({ params }: PageProps) {
   return (
     <CategoriaRegiaoListagem
       categoriaSlug="laboratorios"
-      categoriaTitulo="Laboratórios de Referência"
+      categoriaTitulo="Laboratórios de referência"
       categoriaTituloMinusculo="laboratórios"
       regiaoSlug={regiao}
       instituicoes={instituicoes}

@@ -47,12 +47,12 @@ export function CtaConsultarCobertura({
   const [modalAberto, setModalAberto] = useState(false)
 
   const titulo = nomeInstituicao
-    ? `Quer saber qual plano dá acesso a ${nomeInstituicao}?`
+    ? 'Quais planos dão acesso a esta instituição?'
     : 'Quer saber quais planos têm cobertura compatível?'
   const subtitulo = nomeInstituicao
-    ? 'A LifitSeg identifica as opções disponíveis e compara as alternativas de acordo com seu perfil.'
-    : 'Consulte a LifitSeg para verificar quais produtos possuem cobertura compatível com esta instituição.'
-  const textoBotao = nomeInstituicao ? 'Quero um Plano com Acesso a Este Hospital' : 'Consultar Planos Compatíveis'
+    ? 'A Lifitseg identifica as opções disponíveis e compara as alternativas de acordo com o seu perfil.'
+    : 'Consulte a Lifitseg para saber quais planos incluem as instituições do seu interesse.'
+  const textoBotao = nomeInstituicao ? 'Quero um plano com acesso a este hospital' : 'Consultar planos compatíveis'
 
   const chipsOperadoras = (operadorasInformadas ?? []).filter((o) => o.length <= TAMANHO_MAXIMO_CHIP)
 

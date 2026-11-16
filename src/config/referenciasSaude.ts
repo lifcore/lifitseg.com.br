@@ -6,8 +6,8 @@
 // institucional.referencias_saude.regiao no banco.
 
 export const REGIOES_SAUDE = [
-  { slug: 'jundiai-entorno', nome: 'Jundiaí e Entorno' },
-  { slug: 'campinas-regiao', nome: 'Campinas e Região' },
+  { slug: 'jundiai-entorno', nome: 'Jundiaí e entorno' },
+  { slug: 'campinas-regiao', nome: 'Campinas e região' },
   { slug: 'sp-grande-abcd', nome: 'São Paulo e Grande ABCD' },
 ] as const
 

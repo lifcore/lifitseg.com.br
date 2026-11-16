@@ -153,7 +153,7 @@ export function DiagnosticoStepper() {
         </div>
         <h3 className="mt-4 text-2xl font-bold text-lifitseg-offwhite">Diagnóstico recebido!</h3>
         <p className="mt-2 text-sm text-lifitseg-offwhite/70">
-          Um especialista da LifitSeg vai analisar o cenário da sua empresa e entrar em contato em breve.
+          Um especialista da Lifitseg vai analisar o cenário da sua empresa e entrar em contato em breve.
         </p>
       </div>
     )
@@ -336,7 +336,7 @@ export function DiagnosticoStepper() {
               <a href="/privacidade" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline">
                 Política de Privacidade
               </a>{' '}
-              e autorizo o contato da LifitSeg com base nos dados informados.
+              e autorizo o contato da Lifitseg com base nos dados informados.
             </span>
           </label>
 

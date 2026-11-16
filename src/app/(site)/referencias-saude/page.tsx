@@ -49,7 +49,7 @@ export default async function ReferenciasSaudePage() {
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-lifitseg-dark/70 sm:text-lg">
             Reunimos instituições privadas de referência em Jundiaí, Campinas e São Paulo — não é
-            uma rede credenciada da LifitSeg. Encontre a especialidade que você precisa e consulte
+            uma rede credenciada da Lifitseg. Encontre a especialidade que você precisa e consulte
             quais planos têm cobertura compatível.
           </p>
         </div>

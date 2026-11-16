@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!esp) return { title: 'Especialidade não encontrada' }
 
   return {
-    title: `Referências em Saúde — ${esp.nome}`,
+    title: `${esp.nome}: instituições de referência`,
     description: `Hospitais, laboratórios e clínicas de referência com atuação em ${esp.nome}.`,
   }
 }
@@ -46,7 +46,7 @@ export default async function EspecialidadeSaudePage({ params }: PageProps) {
       <Breadcrumb
         items={[
           { label: 'Referências em Saúde', href: '/referencias-saude' },
-          { label: 'Por Especialidades', href: '/referencias-saude/especialidades' },
+          { label: 'Por especialidade', href: '/referencias-saude/especialidades' },
           { label: esp.nome },
         ]}
       />
@@ -55,7 +55,7 @@ export default async function EspecialidadeSaudePage({ params }: PageProps) {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="mb-3 block text-4xl">{esp.icone}</span>
           <h1 className="mb-4 text-3xl font-black text-lifitseg-dark sm:text-4xl">
-            Referências em Saúde — {esp.nome}
+            {esp.nome}: instituições de referência
           </h1>
           <p className="mx-auto max-w-2xl text-base text-lifitseg-dark/70">
             Instituições privadas de referência com atuação confirmada em {esp.nome}, em todas as regiões

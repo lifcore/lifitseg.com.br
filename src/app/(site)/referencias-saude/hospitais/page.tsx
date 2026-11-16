@@ -4,7 +4,7 @@ import { REGIOES_SAUDE } from '@/config/referenciasSaude'
 import { CategoriaHub } from '@/components/referencias-saude/CategoriaHub'
 
 export const metadata: Metadata = {
-  title: 'Hospitais de Referência',
+  title: 'Hospitais de referência',
   description: 'Hospitais privados de referência em Jundiaí, Campinas e São Paulo, organizados por região.',
 }
 
@@ -18,7 +18,7 @@ export default async function HospitaisPage() {
   return (
     <CategoriaHub
       categoriaSlug="hospitais"
-      titulo="Hospitais de Referência"
+      titulo="Hospitais de referência"
       descricao="Hospitais privados de referência em Jundiaí, Campinas e São Paulo — organizados por região."
       contagemPorRegiao={contagemPorRegiao}
     />

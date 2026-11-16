@@ -4,7 +4,7 @@ import { REGIOES_SAUDE } from '@/config/referenciasSaude'
 import { CategoriaHub } from '@/components/referencias-saude/CategoriaHub'
 
 export const metadata: Metadata = {
-  title: 'Laboratórios de Referência',
+  title: 'Laboratórios de referência',
   description: 'Laboratórios e centros de diagnóstico privados de referência em Jundiaí, Campinas e São Paulo, organizados por região.',
 }
 
@@ -18,7 +18,7 @@ export default async function LaboratoriosPage() {
   return (
     <CategoriaHub
       categoriaSlug="laboratorios"
-      titulo="Laboratórios de Referência"
+      titulo="Laboratórios de referência"
       descricao="Laboratórios e centros de diagnóstico privados de referência em Jundiaí, Campinas e São Paulo — organizados por região."
       contagemPorRegiao={contagemPorRegiao}
     />

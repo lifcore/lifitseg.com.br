@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const nomeRegiao = nomeDaRegiao(regiao)
 
   return {
-    title: `Hospitais de Referência em ${item.nome} — ${nomeRegiao}`,
+    title: `Hospitais de referência em ${item.nome} — ${nomeRegiao}`,
     description: `Encontre hospitais e centros de referência em ${item.nome} em ${nomeRegiao}.`,
   }
 }

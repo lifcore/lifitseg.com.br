@@ -39,7 +39,7 @@ export function TrabalheConoscoCTA() {
         className="inline-flex items-center gap-2 bg-primary hover:opacity-90 text-lifitseg-dark font-bold px-8 py-3.5 rounded-xl transition-all text-sm shadow-md"
       >
         <Users className="w-4 h-4" strokeWidth={1.5} />
-        Faça Parte da LifitSeg
+        Faça parte da Lifitseg
       </button>
 
       {modalAberto && <FacaParteModal onFechar={() => setModalAberto(false)} />}
@@ -117,7 +117,7 @@ function FacaParteModal({ onFechar }: { onFechar: () => void }) {
           </div>
         ) : etapa === 'escolha' ? (
           <div>
-            <h3 className="mb-2 text-2xl font-bold text-lifitseg-offwhite">Faça Parte da LifitSeg</h3>
+            <h3 className="mb-2 text-2xl font-bold text-lifitseg-offwhite">Faça parte da Lifitseg</h3>
             <p className="mb-6 text-sm text-lifitseg-offwhite/70">
               Encontre uma forma de construir sua próxima oportunidade conosco. Como você gostaria de atuar?
             </p>
@@ -144,7 +144,7 @@ function FacaParteModal({ onFechar }: { onFechar: () => void }) {
               >
                 <Users className="h-6 w-6 shrink-0 text-primary" strokeWidth={1.5} />
                 <div>
-                  <p className="font-bold text-lifitseg-offwhite">Quero trabalhar na LifitSeg</p>
+                  <p className="font-bold text-lifitseg-offwhite">Quero trabalhar na Lifitseg</p>
                   <p className="mt-1 text-xs text-lifitseg-offwhite/60">
                     Vaga interna, CLT — comercial, administrativo ou corretagem.
                   </p>
@@ -164,7 +164,7 @@ function FacaParteModal({ onFechar }: { onFechar: () => void }) {
             </button>
 
             <h3 className="mb-6 text-2xl font-bold text-lifitseg-offwhite">
-              {tipoCandidatura === 'corretor_externo' ? 'Parceiro / Corretor' : 'Trabalhar na LifitSeg'}
+              {tipoCandidatura === 'corretor_externo' ? 'Parceiro / Corretor' : 'Trabalhar na Lifitseg'}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">

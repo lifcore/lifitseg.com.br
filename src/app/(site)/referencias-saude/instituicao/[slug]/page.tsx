@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: inst.nome,
-    description: inst.descricao || `${inst.nome} — ${inst.cidade}. Referência privada em saúde catalogada pela LifitSeg.`,
+    description: inst.descricao || `${inst.nome} — ${inst.cidade}. Referência privada em saúde catalogada pela Lifitseg.`,
   }
 }
 
