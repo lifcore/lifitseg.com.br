@@ -140,7 +140,7 @@ html{scroll-behavior:smooth}
 .pm .note{font-size:9px}
 .pm .feixes{height:100%;width:200%;left:-30%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-.pm :root{--pet:#05191b;--pet2:#030f10;--sup:#0d2b2c;--sup2:#123a36;--off:#eeecea;--amb:#ffbb44;--menta:#7cffc1;--verde:#087f6d;--ouro:#b77a16;--txt:#293a38;--soft:#687673;--linha:#dfe3e1}
+.pm{--pet:#05191b;--pet2:#030f10;--sup:#0d2b2c;--sup2:#123a36;--off:#eeecea;--amb:#ffbb44;--menta:#7cffc1;--verde:#087f6d;--ouro:#b77a16;--txt:#293a38;--soft:#687673;--linha:#dfe3e1}
 .pm .eyebrow.claro{color:#5c7868}
 .pm section{scroll-margin-top:20px}
 .pm .sec{position:relative;padding:72px 0;overflow:hidden}
@@ -386,3 +386,46 @@ html{scroll-behavior:smooth}
 .pm-wa-fixo i svg{display:block}
 @media(max-width:700px){.pm .pm-wa-fixo{bottom:16px}html[data-aviso-cookies] .pm .pm-wa-fixo{bottom:112px}}
 @media(prefers-reduced-motion:reduce){.pm *{transition:none!important;animation:none!important}}
+
+/* ===== Ajustes de 15/11 (pedido de Raphael depois de publicar) ===== */
+/* Faixa de confiança: link legível (a regra .pm a herdava a cor do fundo) */
+.pm .pm-conf-link{color:#7cffc1;border-bottom:1px solid #7cffc155}
+.pm .pm-conf-link:hover{border-color:#7cffc1}
+
+/* Parceiros em cor, como a grade anterior, no acabamento premium */
+.pm .pm-parceiros{background:radial-gradient(ellipse at 95% 10%,#087f6d12,transparent 45%),linear-gradient(180deg,#f6f6f3,#eeecea)}
+.pm .pm-parceiros-topo{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end}
+.pm .pm-parceiros-topo .lead{font-size:15px}
+.pm .pm-logos{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.pm .pm-logos li{position:relative;display:grid;place-items:center;height:88px;border-radius:18px;background:#fff;border:1px solid #1c4d3014;box-shadow:0 8px 22px #0a221208;transition:transform .18s,box-shadow .18s,border-color .18s}
+.pm .pm-logos li:hover{transform:translateY(-2px);border-color:#087f6d33;box-shadow:0 14px 30px #0a221212}
+.pm .pm-logos img{max-width:72%;max-height:44px;width:auto;height:auto;object-fit:contain}
+@media(max-width:1050px){.pm .pm-logos{grid-template-columns:repeat(4,1fr)}.pm .pm-parceiros-topo{grid-template-columns:1fr;gap:12px}}
+@media(max-width:700px){.pm .pm-logos{grid-template-columns:repeat(3,1fr);gap:10px}.pm .pm-logos li{height:68px;border-radius:14px}.pm .pm-logos img{max-height:32px}}
+
+/* Escritório: foto ilustrativa com véu petróleo para o texto continuar legível */
+.pm .pm-escritorio-foto{object-fit:cover;object-position:50% 40%}
+.pm .pm-escritorio:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#05191b26 0%,#05191b8c 52%,#05191bf0 100%);pointer-events:none}
+.pm .pm-escritorio .feixes,.pm .pm-escritorio-conteudo,.pm .pm-ilustrativa{z-index:1}
+.pm .pm-ilustrativa{position:absolute;left:20px;top:18px;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:#fff;background:#05191b99;border-radius:20px;padding:5px 10px}
+
+/* Guias: foto pequena no topo do card, sob um véu petróleo */
+.pm .guia .capa .pm-capa-foto{object-fit:cover;transition:transform .5s}
+.pm .guia .capa:after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,#05191bb3,#05191b4d 55%,#0d2b2c99);pointer-events:none}
+.pm .guia .capa .tag,.pm .guia .capa .feixes{z-index:1}
+.pm .guia .capa .tag{background:#05191b80}
+.pm .guia:hover .pm-capa-foto{transform:scale(1.03)}
+
+/* Método (tela clara): mais acabamento no card grande e na linha de etapas */
+.pm #como-atuamos{background:radial-gradient(ellipse at 0% 0%,#087f6d0d,transparent 40%),radial-gradient(ellipse at 100% 100%,#b77a160a,transparent 40%),linear-gradient(180deg,#fff,#f5f6f3)}
+.pm .mcard{transition:transform .18s,box-shadow .18s}
+.pm .mcard:hover{transform:translateY(-2px);box-shadow:0 16px 34px #0a221210}
+.pm .mcard.grande{overflow:hidden;background:radial-gradient(ellipse at 100% 100%,#087f6d17,transparent 55%),linear-gradient(150deg,#ffffff,#f1f4ef)}
+.pm .mcard.grande:before{content:'';position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;border-radius:50%;border:1px solid #087f6d1f;box-shadow:0 0 0 22px #087f6d08,0 0 0 44px #087f6d05;pointer-events:none}
+.pm .mcard.grande .diag{position:relative;padding:22px 20px 18px;margin-top:auto;border-radius:16px;background:#ffffffcc;border:1px solid #087f6d1a}
+.pm .linha-etapas div{font-size:12px;color:#33504a;padding-top:20px}
+.pm .linha-etapas div:before{width:12px;height:12px;top:3px;border-width:2px}
+.pm .linha-etapas div:after{top:9px;left:16px;height:2px;background:linear-gradient(90deg,#087f6d66,#087f6d1f)}
+.pm .linha-etapas div.on{color:var(--verde);font-weight:600}
+.pm .criterios span{transition:background .18s}
+.pm .pm-conf-link{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}

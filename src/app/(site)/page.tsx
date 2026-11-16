@@ -6,6 +6,10 @@ import { LinkWhatsApp } from '@/components/common/LinkWhatsApp'
 import { Feixes, Fios } from '@/components/premium/Feixes'
 import { CARTEIRA, LINK_AVALIACOES_GOOGLE, POSICIONAMENTO } from '@/content/atuacao'
 import { GUIAS } from '@/content/guias'
+import { CAPA_GUIA, IMAGENS } from '@/content/imagens'
+import { OPERADORAS_SAUDE, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { siteConfig } from '@/config/site'
 import { fichaEmpresa, jsonLdSeguro } from '@/utils/fichaEmpresa'
 
@@ -44,15 +48,9 @@ const MOMENTOS = [
   },
 ]
 
-// Operadoras com que a corretora trabalha (logos já usados no site); credenciamento, não endosso.
-const MARCAS = [
-  { arquivo: 'bradesco', nome: 'Bradesco Saúde' },
-  { arquivo: 'sulamerica', nome: 'SulAmérica' },
-  { arquivo: 'amil', nome: 'Amil' },
-  { arquivo: 'porto', nome: 'Porto' },
-  { arquivo: 'unimed', nome: 'Unimed' },
-  { arquivo: 'careplus', nome: 'Care Plus' },
-]
+// Parceiros de saúde (grade da home anterior, que Raphael preferia; uso das imagens confirmado em 16/10/2026,
+// ver config/operadoras). Logos originais, em cor; só os que têm arquivo no site. A ordem não é ranking.
+const PARCEIROS = OPERADORAS_SAUDE.filter((m) => existsSync(join(process.cwd(), 'public/seguradoras', `${m.file}.png`)))
 
 const GUIAS_HOME = ['como-comparar-propostas-de-plano-empresarial', 'o-que-organizar-antes-da-renovacao', 'rede-assistencial-o-produto-importa']
   .map((slug) => GUIAS.find((g) => g.slug === slug))
@@ -127,7 +125,7 @@ export default function HomePage() {
 
       {/* Confiança compacta (Fundo C): só dado verificável e com fonte. */}
       <section className="confianca" aria-label="Dados institucionais">
-        <div className="wrap conf-grid">
+        <div className="wrap conf-grid pm-conf-4">
           <div className="conf-item"><b>SUSEP {juridico.registroSusep}</b><span>Corretora registrada na Superintendência de Seguros Privados.</span></div>
           <div className="conf-item"><b>{endereco.cidade} · {endereco.uf}</b><span>Escritório próprio, com atendimento à região e ao estado de São Paulo.</span></div>
           <div className="conf-item">
@@ -136,14 +134,9 @@ export default function HomePage() {
             <a className="pm-conf-link" href={LINK_AVALIACOES_GOOGLE} target="_blank" rel="noopener noreferrer">Ver avaliações <span aria-hidden="true">↗</span><span className="sr-only"> (abre em nova aba)</span></a>
           </div>
           <div className="conf-item">
-            <b>Operadoras parceiras</b>
-            <div className="marcas">
-              {MARCAS.map((m) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img key={m.arquivo} src={`/seguradoras/${m.arquivo}.png`} alt={m.nome} height={18} loading="lazy" />
-              ))}
-            </div>
-            <span>Corretora autorizada a comercializar; não é endosso das operadoras.</span>
+            <b>{PARCEIROS.length} operadoras de saúde</b>
+            <span>Parceiras credenciadas da corretora; veja a lista completa.</span>
+            <a className="pm-conf-link" href="#parceiros">Ver parceiros <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </section>
@@ -230,11 +223,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Pessoas: sem foto até a sessão de fotos (D3); nunca banco de imagem no lugar da equipe. */}
+      {/* Parceiros de mercado (em cor, como a grade anterior) */}
+      {(PORTFOLIO_HOME_CONFIRMADO || process.env.NODE_ENV !== 'production') && (
+        <section className="sec pm-parceiros" id="parceiros" aria-labelledby="titulo-parceiros">
+          <div className="wrap">
+            <div className="pm-parceiros-topo">
+              <div>
+                <p className="eyebrow claro">Parceiros de mercado</p>
+                <h2 id="titulo-parceiros">As principais operadoras,<br />analisadas para a sua empresa.</h2>
+              </div>
+              <p className="lead">Trabalhamos com parceiros credenciados para avaliar as alternativas pertinentes ao cenário da empresa, considerando produto, localização e requisitos da contratação.</p>
+            </div>
+            <ul className="pm-logos">
+              {PARCEIROS.map((m) => (
+                <li key={m.file}>
+                  <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={150} height={56} />
+                </li>
+              ))}
+            </ul>
+            <p className="pm-nota">Corretora autorizada a comercializar. Disponibilidade, rede e condições dependem do produto e da análise comercial; a ordem não é ranking nem endosso.</p>
+          </div>
+        </section>
+      )}
+
+      {/* Pessoas: sem foto da equipe até a sessão de fotos (D3); a foto do painel é ilustrativa, não o escritório. */}
       <section className="sec papel" id="pessoas" aria-labelledby="titulo-pessoas">
         <div className="wrap pessoas-grid">
           <div className="pm-escritorio">
-            <Feixes variante="capa" opacidade={0.22} />
+            <Image src={IMAGENS.escritorio.arquivo} alt="" fill sizes="(min-width: 1050px) 620px, 100vw" className="pm-escritorio-foto" />
+            <span className="pm-ilustrativa">Imagem ilustrativa</span>
+            <Feixes variante="capa" opacidade={0.18} />
             <div className="pm-escritorio-conteudo">
               <p className="eyebrow">Escritório em {endereco.cidade}</p>
               <p className="pm-escritorio-endereco">{endereco.linha1.replace(' - ', ' · ')}<br />{endereco.bairro} · {endereco.cidade}/{endereco.uf}</p>
@@ -265,6 +283,7 @@ export default function HomePage() {
             {GUIAS_HOME.map((g, i) => (
               <Link key={g.slug} className={`guia${i === 0 ? ' principal' : ''}`} href={`/conhecimento/${g.slug}`}>
                 <div className="capa">
+                  {CAPA_GUIA[g.slug] && <Image src={CAPA_GUIA[g.slug].arquivo} alt="" fill sizes={i === 0 ? '(min-width: 1050px) 700px, 100vw' : '(min-width: 1050px) 500px, 100vw'} className="pm-capa-foto" />}
                   <span className="tag">{g.tema}</span>
                   {i === 0 && <Feixes variante="capa" opacidade={0.25} />}
                 </div>
