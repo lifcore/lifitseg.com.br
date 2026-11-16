@@ -8,6 +8,7 @@ import { CARTEIRA, LINK_AVALIACOES_GOOGLE, POSICIONAMENTO } from '@/content/atua
 import { GUIAS } from '@/content/guias'
 import { CAPA_GUIA, IMAGENS } from '@/content/imagens'
 import { OPERADORAS_SAUDE, PORTFOLIO_HOME_CONFIRMADO } from '@/config/operadoras'
+import { slugDaFicha } from '@/config/fichaOperadora'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { siteConfig } from '@/config/site'
@@ -235,11 +236,11 @@ export default function HomePage() {
               <p className="lead">Trabalhamos com parceiros credenciados para avaliar as alternativas pertinentes ao cenário da empresa, considerando produto, localização e requisitos da contratação.</p>
             </div>
             <ul className="pm-logos">
-              {PARCEIROS.map((m) => (
-                <li key={m.file}>
-                  <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={150} height={56} />
-                </li>
-              ))}
+              {PARCEIROS.map((m) => {
+                const ficha = slugDaFicha(m.name)
+                const logo = <Image src={`/seguradoras/${m.file}.png`} alt={m.name} width={150} height={56} />
+                return <li key={m.file}>{ficha ? <Link href={`/operadoras/${ficha}`} aria-label={`Ficha da ${m.name}`}>{logo}</Link> : logo}</li>
+              })}
             </ul>
             <p className="pm-nota">Corretora autorizada a comercializar. Disponibilidade, rede e condições dependem do produto e da análise comercial; a ordem não é ranking nem endosso.</p>
           </div>

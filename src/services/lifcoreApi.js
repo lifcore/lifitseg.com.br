@@ -189,4 +189,9 @@ export const lifcoreApi = {
     if (patologia) params.patologia = patologia
     return getFromFunction('listar-referencias-saude', params)
   },
+
+  /** Ficha das operadoras (15/11/2026): mesma function pública, parâmetro `operadoras`. */
+  async listarOperadoras() {
+    return getFromFunction('listar-referencias-saude', { operadoras: '1' })
+  },
 }

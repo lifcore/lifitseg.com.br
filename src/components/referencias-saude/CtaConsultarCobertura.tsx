@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { ReferenciaSaudeLeadModal } from './ReferenciaSaudeLeadModal'
 import { ReusableCtaSection } from '@/components/common/StandardCard'
 import { linkWhatsApp, mensagemReferencia } from '@/utils/whatsapp'
+import Link from 'next/link'
+import { slugDaFicha } from '@/config/fichaOperadora'
 
 type CtaConsultarCoberturaProps = {
   nomeInstituicao?: string
@@ -73,17 +75,25 @@ export function CtaConsultarCobertura({
                 Operadoras identificadas
               </p>
               <div className="flex flex-wrap gap-2">
-                {chipsOperadoras.map((op) => (
-                  <span
-                    key={op}
-                    className="flex items-center gap-1.5 rounded-lg bg-white/5 py-1.5 pl-1.5 pr-3 text-xs font-medium text-lifitseg-offwhite/90"
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded bg-primary/20 text-[9px] font-bold text-primary">
-                      {op.charAt(0).toUpperCase()}
-                    </span>
-                    {op}
-                  </span>
-                ))}
+                {chipsOperadoras.map((op) => {
+                  const ficha = slugDaFicha(op)
+                  const conteudo = (
+                    <>
+                      <span className="flex h-5 w-5 items-center justify-center rounded bg-primary/20 text-[9px] font-bold text-primary">
+                        {op.charAt(0).toUpperCase()}
+                      </span>
+                      {op}
+                    </>
+                  )
+                  const classe = 'flex items-center gap-1.5 rounded-lg bg-white/5 py-1.5 pl-1.5 pr-3 text-xs font-medium text-lifitseg-offwhite/90'
+                  return ficha ? (
+                    <Link key={op} href={`/operadoras/${ficha}`} className={`${classe} transition-colors hover:bg-white/10 hover:text-lifitseg-mint`}>
+                      {conteudo}
+                    </Link>
+                  ) : (
+                    <span key={op} className={classe}>{conteudo}</span>
+                  )
+                })}
               </div>
             </div>
           )}

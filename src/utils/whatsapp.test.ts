@@ -33,3 +33,13 @@ test('referências: nome só em hospital geral; especializada, clínica e labora
   assert.equal(mensagemReferencia('clinica', 'Centro Médico Itaim'), MENSAGEM_WHATSAPP)
   assert.equal(mensagemReferencia('laboratorio', 'Hermes Pardini'), MENSAGEM_WHATSAPP)
 })
+
+import { slugDaFicha, faixaIdss } from '../config/fichaOperadora.ts'
+test('ficha da operadora: apelidos do site levam à ficha certa; IDSS por faixa', () => {
+  assert.equal(slugDaFicha('Bradesco Saúde'), 'bradesco')
+  assert.equal(slugDaFicha('Care Plus'), 'careplus')
+  assert.equal(slugDaFicha('NotreDame'), 'notredame-intermedica')
+  assert.equal(slugDaFicha('Unimed'), null)
+  assert.equal(faixaIdss(0.83), 'Faixa 0,80 a 1,00 (a mais alta)')
+  assert.equal(faixaIdss(0.45), 'Faixa 0,40 a 0,59')
+})
