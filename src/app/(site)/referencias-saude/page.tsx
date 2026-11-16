@@ -21,6 +21,7 @@ import { ESPECIALIDADES_SAUDE } from '@/config/referenciasSaudeEspecialidades'
 import { CtaConsultarCobertura } from '@/components/referencias-saude/CtaConsultarCobertura'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/referencias-saude' },
   title: 'Referências em Saúde',
   description:
     'Encontre hospitais, clínicas e laboratórios de referência por especialidade e região — em Jundiaí, Campinas e São Paulo.',

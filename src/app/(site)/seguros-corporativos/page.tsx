@@ -10,6 +10,7 @@ import { CORPORATIVO } from '@/content/seguros'
 // Rota preservada; portfólio derivado da página anterior.
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/seguros-corporativos' },
   title: { absolute: 'Seguros corporativos e análise de riscos | Lifitseg' },
   description: 'Consultoria em seguros para patrimônio, responsabilidades, transporte e frota. Entenda critérios de contratação, renovação e acompanhamento.',
 }

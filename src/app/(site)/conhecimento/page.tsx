@@ -4,6 +4,7 @@ import { GuiasDestaque } from '@/components/atuacao/Blocos'
 import { AREAS_GUIAS, GUIAS } from '@/content/guias'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/conhecimento' },
   title: 'Guias sobre plano de saúde empresarial e seguros',
   description: 'Guias sobre comparação de propostas, renovação, rede, sinistralidade, reembolso, franquia, endosso, responsabilidade civil e sinistro.',
 }

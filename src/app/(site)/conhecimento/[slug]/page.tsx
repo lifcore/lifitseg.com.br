@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const guia = obterGuia(slug)
   if (!guia) return {}
-  return { title: guia.titulo, description: guia.resumo }
+  return { title: guia.titulo, description: guia.resumo, alternates: { canonical: `/conhecimento/${guia.slug}` } }
 }
 
 function dataBR(iso: string) {

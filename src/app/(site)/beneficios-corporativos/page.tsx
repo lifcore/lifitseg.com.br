@@ -1,168 +1,190 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import Breadcrumb from '@/components/common/Breadcrumb'
-import { CardsFaixas } from '@/components/home/CardsFaixas'
 import { DuvidasHome } from '@/components/home/DuvidasHome'
-import { GradeMarcas } from '@/components/home/GradeMarcas'
 import { FormularioEmpresarial } from '@/components/forms/FormularioEmpresarial'
-import { MetodoEtapas, ComplexidadeBloco, CriteriosComparacao, ExemplosEducativos, GuiasDestaque } from '@/components/atuacao/Blocos'
-import { CARTEIRA, FAQ_BENEFICIOS, POSICIONAMENTO } from '@/content/atuacao'
+import { LinkWhatsApp } from '@/components/common/LinkWhatsApp'
+import { Feixes } from '@/components/premium/Feixes'
+import { GuiasDestaque } from '@/components/atuacao/Blocos'
+import { FAQ_BENEFICIOS } from '@/content/atuacao'
+import { siteConfig } from '@/config/site'
 
-// Benefícios Corporativos / Saúde — segunda etapa do Chief Chat (M-27 /
-// D-36): Lifitseg_Site_Etapa2_Conteudo_Tecnico_v1.md (seção 2) e
-// Lifitseg_Site_Servicos_Confirmados_v1.md (bloco de serviços). Rota
-// preservada. Aprofunda a home sem repetir todos os parágrafos dela.
+// Benefícios corporativos / saúde no visual premium (S-09; prévia aprovada por Raphael em 15/11/2026).
+// Mesma linguagem da home sem copiá-la (SITE_MESTRE 5.7): âncoras para contratação, revisão e gestão; momentos em
+// composição editorial; serviços em cards; gestão com foto; dúvidas técnicas já publicadas (com a fonte da ANS);
+// próximos passos depois do contato. Rota e âncoras antigas (#servicos, #contato) preservadas.
 
 export const metadata: Metadata = {
   title: 'Plano de saúde empresarial: contratar, revisar e acompanhar',
   description:
     'Critérios para contratar, revisar e acompanhar o plano de saúde empresarial: comparação, renovação, gestão operacional, apoio ao beneficiário e indicadores, conforme o serviço contratado.',
+  alternates: { canonical: '/beneficios-corporativos' },
 }
 
 const MOMENTOS = [
   {
-    titulo: 'Primeira contratação',
-    texto: 'A análise começa pelos requisitos do produto, pela localização e pelos objetivos da empresa. Comparar condições com clareza ajuda a decidir com uma visão mais completa do benefício.',
+    id: 'contratacao',
+    numero: '01 · PRIMEIRA CONTRATAÇÃO',
+    titulo: 'Começar com clareza',
+    texto: 'A análise começa pelos requisitos do produto, pela localização e pelos objetivos da empresa. Comparar com clareza ajuda a decidir com segurança.',
+    acao: 'Quero entender as possibilidades',
   },
   {
-    titulo: 'Revisão de alternativas',
-    texto: 'Quando já existe contrato, a conversa precisa considerar condições atuais e prioridades da empresa. A revisão pode orientar perguntas, comparação de alternativas ou preparação da renovação; não pressupõe troca.',
+    id: 'revisao',
+    numero: '02 · REVISÃO E RENOVAÇÃO',
+    titulo: 'Rever com critério',
+    texto: 'Com contrato em vigor, a conversa considera as condições atuais e as prioridades da empresa, e orienta as perguntas antes da renovação. Rever não pressupõe trocar.',
+    acao: 'Quero rever meu benefício',
   },
   {
-    titulo: 'Renovação',
-    texto: 'O entendimento da comunicação recebida e das condições contratuais vem antes da conclusão. A avaliação reúne contexto e informações pertinentes, sem prometer redução do reajuste.',
-  },
-  {
-    titulo: 'Saúde e odontológico',
-    texto: 'Benefícios odontológicos podem ser avaliados como frente complementar quando fizerem parte da necessidade da empresa e do portfólio disponível.',
+    id: 'odontologico',
+    numero: '03 · SAÚDE E ODONTOLÓGICO',
+    titulo: 'Complementar o benefício',
+    texto: 'O odontológico pode entrar como frente complementar, quando fizer parte da necessidade da empresa e do portfólio disponível.',
+    acao: 'Quero incluir o odontológico',
   },
 ]
 
 const SERVICOS = [
-  { titulo: 'Análise e comparação', texto: 'Cenário empresarial, critérios de proposta e condições do contrato; dúvidas e pontos de atenção esclarecidos antes da decisão.' },
-  { titulo: 'Gestão operacional', texto: 'Movimentações de beneficiários e conferência de faturas, com acompanhamento das divergências dentro do escopo do atendimento.' },
-  { titulo: 'Relacionamento e apoio', texto: 'Canais de contato com RH e beneficiários, orientação para reembolso, autorizações e análise de dificuldades de atendimento ou recusas.' },
-  { titulo: 'Indicadores e sinistralidade', texto: 'Leitura dos dados disponíveis, relatórios e comitês para apoiar a gestão do contrato. Indicadores apresentados com período e metodologia, sem atribuir publicamente condições de saúde a pessoas.' },
-  { titulo: 'Renovação', texto: 'Organização e avaliação de condições, apoio à negociação e planejamento dos próximos passos.' },
-  { titulo: 'In company e educação', texto: 'Workshops, palestras e acompanhamento próximo para orientar a empresa e melhorar a compreensão do benefício.' },
-  { titulo: 'Complexidade', texto: 'Análise individualizada do encaminhamento e interlocução com as partes responsáveis, preservando informações sensíveis e os limites de atuação de cada participante.' },
+  { rotulo: 'ANÁLISE', titulo: 'Análise e comparação', texto: 'Cenário da empresa, critérios das propostas e condições do contrato, com dúvidas esclarecidas antes da decisão.' },
+  { rotulo: 'NEGOCIAÇÃO', titulo: 'Renovação e negociação', texto: 'Organização e avaliação de condições, apoio à negociação e planejamento dos próximos passos.' },
+  { rotulo: 'INDICADORES', titulo: 'Indicadores e sinistralidade', texto: 'Leitura dos dados disponíveis e relatórios para apoiar a gestão, sempre com período e método informados.' },
+  { rotulo: 'OPERAÇÃO', titulo: 'Gestão operacional', texto: 'Movimentações de beneficiários e conferência de faturas, com acompanhamento das divergências.' },
+  { rotulo: 'RELACIONAMENTO', titulo: 'Relacionamento e apoio', texto: 'Canais com RH e beneficiários, orientação para reembolso, autorizações e dificuldades de atendimento.' },
+  { rotulo: 'EDUCAÇÃO', titulo: 'In company', texto: 'Workshops e palestras para a equipe entender e usar melhor o benefício.' },
+]
+
+const GESTAO = [
+  { titulo: 'Movimentações', texto: 'Inclusões e exclusões conduzidas com o RH, com prazo combinado.', icone: 'M12 5v14M5 12h14' },
+  { titulo: 'Conferência de faturas', texto: 'Divergências apontadas e acompanhadas até a correção.', icone: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6' },
+  { titulo: 'Apoio aos beneficiários', texto: 'Orientação para reembolsos, autorizações e casos mais complexos.', icone: 'M4 5h16v11H8l-4 4z' },
 ]
 
 export default function BeneficiosCorporativosPage() {
+  const { contato } = siteConfig
   return (
-    <>
-      <Breadcrumb items={[{ label: 'Plano de saúde empresarial' }]} />
-
-      <section className="bg-lifitseg-dark text-lifitseg-offwhite">
-        <div className="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-widest text-lifitseg-mint uppercase">{POSICIONAMENTO}</p>
-          <h1 className="mt-5 max-w-4xl text-4xl text-white sm:text-5xl" style={{ lineHeight: 1.15 }}>
-            Plano de saúde empresarial: critérios para contratar, revisar e acompanhar.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg text-lifitseg-offwhite/80">
-            Cada empresa tem um cenário de contratação e uma rotina de benefício. A Lifitseg reúne orientação comercial e explicação técnica para ajudar RH, financeiro e direção a compreender alternativas e próximos passos.
-          </p>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <a href="#contato" className="rounded-xl bg-primary px-6 py-3.5 text-center text-sm font-bold text-lifitseg-dark hover:opacity-90">Conversar sobre minha empresa</a>
-            <a href="#servicos" className="text-sm font-semibold hover:text-lifitseg-mint">Ver os serviços <span aria-hidden="true">→</span></a>
+    <div className="pm">
+      <section className="dark" aria-labelledby="titulo-beneficios">
+        <Feixes variante="interna" opacidade={0.14} />
+        <div className="wrap subhero">
+          <p className="eyebrow">Plano de saúde empresarial</p>
+          <h1 id="titulo-beneficios">Contratar, revisar<br />e <span>acompanhar.</span></h1>
+          <p className="intro pm-intro-larga">Da primeira contratação à gestão do dia a dia, a Lifitseg organiza a análise e acompanha o benefício junto com o RH.</p>
+          <div className="actions">
+            <LinkWhatsApp rotulo="beneficios-primeira-tela" className="primary">
+              Conversar com a Lifitseg <span aria-hidden="true">↗</span>
+            </LinkWhatsApp>
           </div>
+          <nav className="ancoras" aria-label="Nesta página">
+            <a href="#contratacao">Primeira contratação</a>
+            <a href="#revisao">Revisão e renovação</a>
+            <a href="#servicos">Gestão do benefício</a>
+            <a href="#duvidas">Dúvidas</a>
+          </nav>
         </div>
       </section>
 
-      <section aria-labelledby="titulo-faixas" className="bg-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-faixas" className="text-lifitseg-dark">Três cenários empresariais.</h2>
-          <p className="mt-3 max-w-3xl text-sm text-lifitseg-text-soft">As faixas organizam a conversa; não representam regimes regulatórios completos nem garantem condições específicas.</p>
-          <div className="mt-8"><CardsFaixas /></div>
-        </div>
-      </section>
-
-      <section aria-labelledby="titulo-momentos" className="bg-lifitseg-paper py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-momentos" className="text-lifitseg-dark">Em que momento sua empresa está?</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
+      <section className="sec papel" aria-labelledby="titulo-momentos-b">
+        <div className="wrap">
+          <p className="eyebrow claro">Em que momento a empresa está</p>
+          <h2 id="titulo-momentos-b">Três momentos,<br />uma mesma análise criteriosa.</h2>
+          <div className="momentos-b">
             {MOMENTOS.map((m) => (
-              <article key={m.titulo} className="rounded-2xl bg-white p-6">
-                <h3 className="text-lifitseg-dark" style={{ fontSize: '1.1rem' }}>{m.titulo}</h3>
-                <p className="mt-2 text-sm text-lifitseg-text-soft">{m.texto}</p>
-              </article>
+              <div key={m.id} className="mb" id={m.id}>
+                <div className="pm-num">{m.numero}</div>
+                <h3>{m.titulo}</h3>
+                <p>{m.texto}</p>
+                <a href="#contato">{m.acao} →</a>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="servicos" aria-labelledby="titulo-servicos" className="scroll-mt-20 bg-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-widest text-lifitseg-green uppercase">Serviços</p>
-          <h2 id="titulo-servicos" className="mt-3 max-w-3xl text-lifitseg-dark">O que sua empresa pode contar com a Lifitseg para organizar.</h2>
-          <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICOS.map((s) => (
-              <article key={s.titulo}>
-                <span aria-hidden="true" className="mb-3 block h-0.5 w-8 bg-lifitseg-green" />
-                <h3 className="text-lifitseg-dark" style={{ fontSize: '1.1rem' }}>{s.titulo}</h3>
-                <p className="mt-2 text-sm text-lifitseg-text-soft">{s.texto}</p>
+      <section className="sec pm-off" id="servicos" aria-labelledby="titulo-servicos">
+        <div className="wrap">
+          <p className="eyebrow claro">O que a Lifitseg faz</p>
+          <h2 id="titulo-servicos">Da análise à rotina do benefício.</h2>
+          <div className="servicos">
+            {SERVICOS.map((s, i) => (
+              <article key={s.titulo} className={`serv${i === 0 ? ' escuro' : ''}`}>
+                <div className="num">{s.rotulo}</div>
+                <h3>{s.titulo}</h3>
+                <p>{s.texto}</p>
               </article>
             ))}
           </div>
-          <p className="mt-10 text-sm text-lifitseg-text-soft">A combinação dos serviços, frequência e canais é definida na proposta de atendimento.</p>
-          <p className="mt-2 max-w-3xl text-sm text-lifitseg-text">{CARTEIRA}</p>
+          <p className="pm-nota">A combinação dos serviços, a frequência e os canais são definidos na proposta de atendimento.</p>
         </div>
       </section>
 
-      <section aria-labelledby="titulo-metodo" className="bg-lifitseg-paper py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-metodo" className="text-lifitseg-dark">Como transformamos informação em uma decisão mais clara.</h2>
-          <div className="mt-8"><MetodoEtapas /></div>
-        </div>
-      </section>
-
-      <section aria-labelledby="titulo-criterios" className="bg-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-criterios" className="text-lifitseg-dark">O que precisa entrar na comparação.</h2>
-          <p className="mt-3 max-w-3xl text-lifitseg-text-soft">A mensalidade é importante, mas não descreve sozinha o produto.</p>
-          <div className="mt-8"><CriteriosComparacao /></div>
-        </div>
-      </section>
-
-      <ComplexidadeBloco />
-
-      <section id="exemplos" aria-labelledby="titulo-exemplos-beneficios" className="scroll-mt-20 bg-lifitseg-paper py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-exemplos-beneficios" className="text-lifitseg-dark">Situações que ajudam a entender nossa atuação.</h2>
-          <p className="mt-3 max-w-3xl text-sm text-lifitseg-text-soft">Exemplos educativos, sem nomes reais. Cada contratação e demanda exige avaliação própria.</p>
-          <div className="mt-8"><ExemplosEducativos /></div>
-        </div>
-      </section>
-
-      <GradeMarcas />
-
-      <section aria-labelledby="titulo-faq-beneficios" className="bg-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-faq-beneficios" className="mb-8 text-lifitseg-dark">Perguntas técnicas frequentes.</h2>
-          <DuvidasHome itens={FAQ_BENEFICIOS} />
-          <p className="mt-4 text-xs text-lifitseg-text-soft">Regras citadas a partir de páginas públicas da ANS consultadas em 16/10/2026. Cada caso exige conferência das condições aplicáveis.</p>
-        </div>
-      </section>
-
-      <section aria-labelledby="titulo-guias-beneficios" className="bg-lifitseg-paper py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 id="titulo-guias-beneficios" className="text-lifitseg-dark">Guias para aprofundar.</h2>
-          <div className="mt-8"><GuiasDestaque area="saude" /></div>
-          <Link href="/conhecimento" className="mt-8 inline-block text-sm font-bold text-lifitseg-green hover:underline">Ver todos os guias <span aria-hidden="true">→</span></Link>
-        </div>
-      </section>
-
-      <section id="contato" aria-labelledby="titulo-contato-beneficios" className="scroll-mt-24 bg-white py-16">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.3fr] lg:px-8">
+      <section className="sec tecno" id="gestao" aria-labelledby="titulo-gestao-b">
+        <div className="wrap rotina-grid">
+          <div className="foto-rel">
+            {/* Foto ilustrativa de banco (licença gratuita): não representa a equipe nem clientes. */}
+            <Image src="/fotos/consultoria.png" alt="Reunião de trabalho, imagem ilustrativa" fill sizes="(min-width: 700px) 50vw, 100vw" />
+            <span>Imagem ilustrativa</span>
+          </div>
           <div>
-            <h2 id="titulo-contato-beneficios" className="text-lifitseg-dark">Conte o momento da sua empresa.</h2>
-            <p className="mt-4 max-w-md text-lifitseg-text-soft">Primeira contratação, revisão ou renovação: compartilhe as informações iniciais para orientar a conversa.</p>
+            <p className="eyebrow">Gestão do benefício</p>
+            <h2 id="titulo-gestao-b">A contratação é o começo.<br />A gestão é todo dia.</h2>
+            <p className="lead">Inclusões, exclusões, faturas, reembolsos e autorizações passam por um atendimento organizado, com responsável e retorno registrado.</p>
+            <ul className="funcoes">
+              {GESTAO.map((g) => (
+                <li key={g.titulo}>
+                  <span className="ic"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d={g.icone} /></svg></span>
+                  <div><b>{g.titulo}</b>{g.texto}</div>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="rounded-3xl border border-lifitseg-line bg-lifitseg-paper p-6 sm:p-8">
+        </div>
+      </section>
+
+      <section className="sec papel" id="duvidas" aria-labelledby="titulo-duvidas-b">
+        <div className="wrap">
+          <p className="eyebrow claro">Dúvidas</p>
+          <h2 id="titulo-duvidas-b">Perguntas técnicas frequentes.</h2>
+          <div className="pm-faq"><DuvidasHome itens={FAQ_BENEFICIOS} /></div>
+          <p className="pm-nota">Regras citadas a partir de páginas públicas da ANS consultadas em 16/10/2026. Cada caso exige conferência das condições aplicáveis.</p>
+        </div>
+      </section>
+
+      <section className="sec pm-off" aria-labelledby="titulo-guias-b">
+        <div className="wrap">
+          <p className="eyebrow claro">Conhecimento</p>
+          <h2 id="titulo-guias-b">Guias para aprofundar.</h2>
+          <div className="pm-guias-lista"><GuiasDestaque area="saude" /></div>
+          <Link className="pm-link-verde" href="/conhecimento">Ver todos os guias <span aria-hidden="true">→</span></Link>
+        </div>
+      </section>
+
+      <section className="sec contato" id="contato" aria-labelledby="titulo-contato-b">
+        <div className="wrap contato-grid">
+          <div>
+            <p className="eyebrow">Vamos conversar</p>
+            <h2 id="titulo-contato-b">Conte o momento<br />da sua empresa.</h2>
+            <p className="lead">O WhatsApp abre com uma mensagem pronta. O assistente virtual faz a primeira triagem e um consultor continua a conversa.</p>
+            <div className="wa">
+              <LinkWhatsApp rotulo="beneficios-contato" className="primary">
+                Conversar com a Lifitseg no WhatsApp <span aria-hidden="true">↗</span>
+              </LinkWhatsApp>
+              <small>{contato.whatsappExibicao} · {contato.horario}. Primeiro atendimento automático, a qualquer hora.</small>
+            </div>
+            <div className="painel pm-passos" role="img" aria-label="Próximos passos depois do contato: triagem pelo WhatsApp, conversa com o consultor e estudo comparativo">
+              <div className="painel-top">DEPOIS DO SEU CONTATO <i>Como funciona</i></div>
+              <div className="reg on"><span className="pt">1</span><div><b>Triagem pelo WhatsApp</b><span>Algumas perguntas sobre a empresa</span></div><em>Na hora</em></div>
+              <div className="reg"><span className="pt">2</span><div><b>Conversa com o consultor</b><span>Entendimento do cenário e dos critérios</span></div><em>Dia útil</em></div>
+              <div className="reg"><span className="pt">3</span><div><b>Estudo comparativo</b><span>Propostas lado a lado, pelos mesmos critérios</span></div><em>Combinado</em></div>
+            </div>
+          </div>
+          <div className="pm-form-card">
+            <h3>Prefere deixar seus dados?</h3>
+            <p>Primeira contratação, revisão ou renovação: um consultor retorna pelo canal que você indicar.</p>
             <FormularioEmpresarial pontoEntrada="beneficios-corporativos" />
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

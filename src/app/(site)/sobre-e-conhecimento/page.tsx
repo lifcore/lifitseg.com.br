@@ -15,6 +15,7 @@ import { siteConfig } from '@/config/site'
 // colaboradores, certificações ou índices que não foram confirmados.
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/sobre-e-conhecimento' },
   title: { absolute: 'Sobre a Lifitseg | Consultoria em benefícios e seguros' },
   description: SOBRE.texto,
 }

@@ -25,6 +25,7 @@ import { siteConfig } from '@/config/site'
 // efetiva e fornecedores; o Chief revisa a redação da seção de plataformas.
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/privacidade' },
   title: 'Política de Privacidade',
   description: 'Como a Lifitseg utiliza dados pessoais nos contatos, no atendimento e na medição própria do site.',
 }

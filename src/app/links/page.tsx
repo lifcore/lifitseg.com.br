@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, Building2, HeartHandshake, ShieldCheck, BookOpen, MessageCircle, Headphones } from 'lucide-react'
 import { siteConfig } from '@/config/site'
+import { linkWhatsApp } from '@/utils/whatsapp'
 import { SocialLinks } from '@/components/common/SocialLinks'
 import { OpcaoLinks } from '@/components/links/OpcaoLinks'
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'Lifitseg · Comece por aqui', description: 'Saúde e seguros, com orientação para cada decisão.', url: '/links' },
 }
 
-const whatsapp = `https://wa.me/${siteConfig.contato.whatsapp}`
+const whatsapp = linkWhatsApp()
 const paths = [
   { id: 'saude-empresa', title: 'Saúde para minha empresa', detail: 'Contratação e gestão do benefício.', href: '/beneficios-corporativos', Icon: HeartHandshake },
   { id: 'seguros-empresa', title: 'Seguros para minha empresa', detail: 'Proteção alinhada ao contexto da operação.', href: '/seguros-corporativos', Icon: Building2 },

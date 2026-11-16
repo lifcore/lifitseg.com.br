@@ -11,6 +11,7 @@ import { PESSOAL } from '@/content/seguros'
 // Formulário de pessoa física: sem empresa, CNPJ ou faixa de vidas.
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/seguros-pessoais' },
   title: { absolute: 'Seguros para você, sua família e seu patrimônio | Lifitseg' },
   description: 'Entenda seguros de auto, residência, vida, viagem e equipamentos com uma consultoria próxima e uma comparação clara das condições.',
 }

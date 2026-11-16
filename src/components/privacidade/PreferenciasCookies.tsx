@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { EVENTO_ABRIR, EVENTO_MUDOU, obterPreferencias, precisaEscolher, salvarPreferencias } from '@/utils/consentimento'
 
 /**
@@ -41,9 +40,10 @@ export function PreferenciasCookies() {
   const [publicidade, setPublicidade] = useState(false)
   const tituloId = useId()
   const painelRef = useRef<HTMLDivElement>(null)
-  // /links (bio do Instagram, celular): o aviso completo cobria as opções do
-  // menu. Lá ele vira uma faixa fina, com as mesmas escolhas (Raphael, 26/10/2026).
-  const compacto = usePathname() === '/links'
+  // Faixa fina com as mesmas escolhas: aprovada por Raphael para /links (26/10/2026), onde o aviso completo cobria
+  // o menu, e estendida ao site todo no visual premium (S-03, SITE_MESTRE: o aviso cobria a chamada principal no
+  // celular). Recusar e Aceitar continuam com o mesmo destaque; Personalizar abre as escolhas completas.
+  const compacto = true
 
   useEffect(() => {
     function abrir() {
@@ -58,6 +58,14 @@ export function PreferenciasCookies() {
   }, [])
 
   const visivel = reaberto || escolha === 'pendente'
+
+  // Marca na página que o aviso está aberto: o WhatsApp fixo sobe no celular para não cobrir Recusar e Aceitar.
+  useEffect(() => {
+    const raiz = document.documentElement
+    if (visivel) raiz.dataset.avisoCookies = '1'
+    else delete raiz.dataset.avisoCookies
+    return () => { delete raiz.dataset.avisoCookies }
+  }, [visivel])
 
   useEffect(() => {
     if (visivel) painelRef.current?.focus()

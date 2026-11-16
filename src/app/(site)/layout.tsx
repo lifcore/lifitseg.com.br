@@ -1,6 +1,8 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { FloatingActionButtons } from '@/components/layout/FloatingActionButtons'
+// Visual premium (S-09): só vale dentro de .pm (cabeçalho, rodapé, WhatsApp fixo, home e Benefícios).
+import '../premium.css'
 
 // Layout do grupo (site) — carrega Header/Footer/FAB só pras páginas
 // institucionais (Home, Soluções, Sobre, etc). Route Group do Next.js:
