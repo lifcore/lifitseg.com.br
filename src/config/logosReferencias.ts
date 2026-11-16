@@ -1,0 +1,68 @@
+// Logos das instituições das Referências em Saúde (15/11/2026, pedido de Raphael).
+// Tirados do site oficial de cada instituição (origem abaixo) e conferidos um a um; scripts removidos dos SVG.
+// Uso identificativo, ao lado do nome: não indica parceria nem rede credenciada da Lifitseg (aviso nas páginas).
+// Ficam de fora: logos só para fundo escuro (Rede D'Or, Pró-Matre, Hospital Care), ícones genéricos e incertos.
+// O campo logo_url do banco continua valendo e tem prioridade; este mapa é o padrão do site.
+
+export const LOGOS_REFERENCIAS: Record<string, { arquivo: string; origem: string }> = {
+  'apoio-laboratorio-de-analises-clinicas-lab': { arquivo: '/referencias/logos/apoio-laboratorio-de-analises-clinicas-lab.png', origem: "https://apoiolab.com.br/wp-content/uploads/2025/07/cropped-ApoioLab-1-logo.png" },
+  'beneficencia-portuguesa-sp': { arquivo: '/referencias/logos/beneficencia-portuguesa-sp.png', origem: "https://www.bp.org.br/images/logos-menu/institucional-header.png" },
+  'biofast-medicina-e-saude-lab': { arquivo: '/referencias/logos/biofast-medicina-e-saude-lab.webp', origem: "https://biofast.com.br/wp-content/themes/biofast/assets/images/logo.png" },
+  'biomega-lab': { arquivo: '/referencias/logos/biomega-lab.png', origem: "https://biomega.com.br/assets/images/logos/biomega.png" },
+  'blanc-hospital-sp': { arquivo: '/referencias/logos/blanc-hospital-sp.svg', origem: "https://www.blanchospital.com.br/_next/static/media/grupo-blanc-logo-bold.46dee5f1.svg" },
+  'bp-centro-de-excelencia-em-neurologia-e-neurocirurgia-clinica': { arquivo: '/referencias/logos/bp-centro-de-excelencia-em-neurologia-e-neurocirurgia-clinica.png', origem: "https://www.bp.org.br/images/logos-menu/institucional-header.png" },
+  'bp-mirante-centro-medico-clinica': { arquivo: '/referencias/logos/bp-mirante-centro-medico-clinica.png', origem: "https://www.bp.org.br/images/logos-menu/institucional-header.png" },
+  'cdb-inteligencia-diagnostica-lab': { arquivo: '/referencias/logos/cdb-inteligencia-diagnostica-lab.svg', origem: "https://storage.googleapis.com/alliar-jornada-digital-13c0.appspot.com/home_vendas/wakanda/production/LOGOS_SVG_320x70_1_8cc1b8847c/LOGOS_SVG_320x70_1_8cc1b8847c.svg" },
+  'cema-centro-de-especialidades-oftalmologicas-e-otorrinolaringologicas-clinica': { arquivo: '/referencias/logos/cema-centro-de-especialidades-oftalmologicas-e-otorrinolaringologicas-clinica.png', origem: "https://www.cemahospital.com.br/img/h-f/logo.png" },
+  'cema-hospital-e-clinicas-clinica': { arquivo: '/referencias/logos/cema-hospital-e-clinicas-clinica.png', origem: "https://www.cemahospital.com.br/img/h-f/logo.png" },
+  'centro-clinico-santa-tereza-clinica': { arquivo: '/referencias/logos/centro-clinico-santa-tereza-clinica.png', origem: "https://hospitalsantatereza.com.br/assets/logo/logo-horizontal-cor.png" },
+  'centro-de-especialidades-beneficencia-portuguesa-campinas-clinica': { arquivo: '/referencias/logos/centro-de-especialidades-beneficencia-portuguesa-campinas-clinica.png', origem: "https://www.beneficenciacamp.com.br/wp-content/uploads/2023/05/BENE_150_ANOS_LOGO.png" },
+  'centro-medico-itaim-clinica': { arquivo: '/referencias/logos/centro-medico-itaim-clinica.png', origem: "https://centromedicoitaim.com.br/wp-content/uploads/2022/01/logo-centro-medico-itaim.png" },
+  'clinica-abujamra-clinica': { arquivo: '/referencias/logos/clinica-abujamra-clinica.png', origem: "https://abujamra.com.br/wp-content/uploads/2026/05/imageye___-_imgi_1_logo-1.png" },
+  'clinica-medicina-da-mulher-bp-clinica': { arquivo: '/referencias/logos/clinica-medicina-da-mulher-bp-clinica.svg', origem: "https://www.bp.org.br/Content/saude-da-mulher/images/BP.svg" },
+  'clinicor-centro-de-cardiologia-de-jundiai-clinica': { arquivo: '/referencias/logos/clinicor-centro-de-cardiologia-de-jundiai-clinica.png', origem: "https://www.galaxcms.com.br/up_crud_comum/2997/logomov-20190426095924.png" },
+  'ecocenter-diagnostico-por-imagem-clinica': { arquivo: '/referencias/logos/ecocenter-diagnostico-por-imagem-clinica.png', origem: "http://ecocenter.med.br/ecocenter4/wp-content/uploads/2016/09/LOGOTIPO-COM-DESENHOS-e1474240041115.png" },
+  'edmundo-vasconcelos-sp': { arquivo: '/referencias/logos/edmundo-vasconcelos-sp.png', origem: "https://www.hospitaledmundovasconcelos.com.br/assets/img/logo.png" },
+  'fleming-laboratorio-de-analises-clinicas-lab': { arquivo: '/referencias/logos/fleming-laboratorio-de-analises-clinicas-lab.png', origem: "https://fleminglab.com.br/ArquivosAdm//Modulo3819/Registro45/45-site_Convenio-ImagemLogo.png?639303791434130802" },
+  'fleury-medicina-e-saude-lab': { arquivo: '/referencias/logos/fleury-medicina-e-saude-lab.png', origem: "https://d3unpzxgfygi8m.cloudfront.net/logo_fleury_811f72688e.png" },
+  'graacc-sp': { arquivo: '/referencias/logos/graacc-sp.svg', origem: "https://graacc.org.br/wp-content/themes/syriuss/assets/img/logo_GRAACC.svg" },
+  'hcor-sp': { arquivo: '/referencias/logos/hcor-sp.svg', origem: "https://www.hcor.com.br/wp-content/themes/hcor-hc/assets/images/hcor-logo-azul.svg" },
+  'hospital-paulistano-sp': { arquivo: '/referencias/logos/hospital-paulistano-sp.svg', origem: "https://www.hospitalpaulistano.com.br/sites/paulistano/files/2022-04/logo_hosp_Paulistano_alta-white.svg" },
+  'ibcc-centro-de-especialidades-oncologicas-clinica': { arquivo: '/referencias/logos/ibcc-centro-de-especialidades-oncologicas-clinica.png', origem: "https://www.ibcc.org.br/assets/images/logo.png" },
+  'ibcc-oncologia-clinica': { arquivo: '/referencias/logos/ibcc-oncologia-clinica.png', origem: "https://www.ibcc.org.br/assets/images/logo.png" },
+  'instituto-de-ortopedia-e-traumatologia-iocb-clinica': { arquivo: '/referencias/logos/instituto-de-ortopedia-e-traumatologia-iocb-clinica.png', origem: "https://iocb.com.br/images/logo.png" },
+  'iocb-instituto-de-ortopedia-e-cirurgia-do-joelho-clinica': { arquivo: '/referencias/logos/iocb-instituto-de-ortopedia-e-cirurgia-do-joelho-clinica.png', origem: "https://iocb.com.br/images/logo.png" },
+  'laboratorio-anchieta-lab': { arquivo: '/referencias/logos/laboratorio-anchieta-lab.png', origem: "https://labanchieta.com/wp-content/uploads/2025/09/logo1.png" },
+  'laboratorio-caec-lab': { arquivo: '/referencias/logos/laboratorio-caec-lab.png', origem: "https://laboratoriocaec.com.br/img/blue/logo.png" },
+  'laboratorio-fleming-jundiai-lab': { arquivo: '/referencias/logos/laboratorio-fleming-jundiai-lab.png', origem: "https://flemingsaude.com.br/wp-content/uploads/2021/09/Logo-mob.png" },
+  'laboratorio-fleury-jundiai-lab': { arquivo: '/referencias/logos/laboratorio-fleury-jundiai-lab.png', origem: "https://d3unpzxgfygi8m.cloudfront.net/logo_fleury_811f72688e.png" },
+  'laboratorio-franceschi-lab': { arquivo: '/referencias/logos/laboratorio-franceschi-lab.png', origem: "https://labfranceschi.com.br/assets/img/logo/LOGO_FRANCESCHI.png" },
+  'laboratorio-samaritano-campinas-lab': { arquivo: '/referencias/logos/laboratorio-samaritano-campinas-lab.svg', origem: "https://samaritanocampinas.com.br/wp-content/uploads/2024/01/logo_samaritano_color.svg" },
+  'laboratorio-sobam-lab': { arquivo: '/referencias/logos/laboratorio-sobam-lab.png', origem: "https://institucional.sobam.com.br/sites/sobam/files/LOGO-Grupo-SOBAM%20%281%29_1.png" },
+  'moriah-sp': { arquivo: '/referencias/logos/moriah-sp.jpg', origem: "https://www.hospitalmoriah.com.br/wp-content/uploads/2026/07/logo-nova-smart-scaled.jpeg" },
+  'nipo-brasileiro-sp': { arquivo: '/referencias/logos/nipo-brasileiro-sp.png', origem: "https://www.hnipo.org.br/wp-content/uploads/2021/09/HNIPO-LOGO-RGB-COLORIDO.png" },
+  'oftalmo-clinica-clinica': { arquivo: '/referencias/logos/oftalmo-clinica-clinica.png', origem: "https://oftalmojundiai.com.br/wp-content/uploads/2022/04/logo_topo.png" },
+  'prevent-senior-medicina-diagnostica-lab': { arquivo: '/referencias/logos/prevent-senior-medicina-diagnostica-lab.png', origem: "https://www.preventseniordiagnosticos.com.br/images/logo.png" },
+  'sabin-diagnostico-e-saude-campinas-lab': { arquivo: '/referencias/logos/sabin-diagnostico-e-saude-campinas-lab.svg', origem: "https://sabin.com.br/data/files/7D/35/9C/9E/0B9D0A10100A3D0A4B1CF831/Sabin_DS_Vermelho_f5ac69b8-332a-4f97-abae-1afec7787364%201.svg" },
+  'samaritano-campinas': { arquivo: '/referencias/logos/samaritano-campinas.svg', origem: "https://samaritanocampinas.com.br/wp-content/uploads/2024/01/logo_samaritano_color.svg" },
+  'santa-elisa-jundiai': { arquivo: '/referencias/logos/santa-elisa-jundiai.png', origem: "https://hse.com.br/wp-content/uploads/2022/05/cropped-logo-se2x-1-200x53.png" },
+  'santa-isabel-sp': { arquivo: '/referencias/logos/santa-isabel-sp.webp', origem: "https://hospitalhsi.com.br/wp-content/uploads/2026/07/Logo-Hospital-Santa-Isabel-REDE-DOR-SP-azul-1-1.png" },
+  'santa-rita-vila-mariana-sp': { arquivo: '/referencias/logos/santa-rita-vila-mariana-sp.svg', origem: "https://hospitalsantarita.com.br/wp-content/uploads/2026/05/logo.svg" },
+  'sao-camilo-pompeia-sp': { arquivo: '/referencias/logos/sao-camilo-pompeia-sp.png', origem: "https://hospitalsaocamilosp.org.br/wp-content/uploads/2025/04/logohsc2025.png" },
+  'sao-luiz-analia-franco-sp': { arquivo: '/referencias/logos/sao-luiz-analia-franco-sp.svg', origem: "https://wp.rededorsaoluiz.com.br/wp-content/uploads/sites/30/2025/01/Logo-Sao-Luiz-Analia-Franco-2024.svg" },
+  'sao-luiz-campinas': { arquivo: '/referencias/logos/sao-luiz-campinas.svg', origem: "https://wp.rededorsaoluiz.com.br/wp-content/uploads/sites/79/2025/01/Logo-Sao-Luiz-Campinas-2024.svg" },
+  'sao-luiz-itaim-sp': { arquivo: '/referencias/logos/sao-luiz-itaim-sp.svg', origem: "https://wp.rededorsaoluiz.com.br/wp-content/uploads/sites/31/2025/01/Logo-Sao-Luiz-Itaim-2024.svg" },
+  'sao-luiz-jabaquara-sp': { arquivo: '/referencias/logos/sao-luiz-jabaquara-sp.svg', origem: "https://wp.rededorsaoluiz.com.br/wp-content/uploads/sites/32/2025/01/Logo-Sao-Luiz-Jabaquara-2024.svg" },
+  'sao-luiz-morumbi-sp': { arquivo: '/referencias/logos/sao-luiz-morumbi-sp.svg', origem: "https://wp.rededorsaoluiz.com.br/wp-content/uploads/sites/33/2025/01/Logo-Sao-Luiz-Morumbi-2024.svg" },
+  'sepaco-sp': { arquivo: '/referencias/logos/sepaco-sp.png', origem: "https://www.sepaco.org.br/wp-content/uploads/2024/10/logo-eventos-1024x299.png" },
+  'sirio-libanes-centro-de-reproducao-humana-clinica': { arquivo: '/referencias/logos/sirio-libanes-centro-de-reproducao-humana-clinica.svg', origem: "https://hospitalsiriolibanes.org.br/themes/custom/hsl_institucional/logo.svg" },
+  'sirio-libanes-sp': { arquivo: '/referencias/logos/sirio-libanes-sp.svg', origem: "https://hospitalsiriolibanes.org.br/themes/custom/hsl_institucional/logo.svg" },
+  'sirio-libanes-unidade-itaim-nucleo-de-especialidades-clinica': { arquivo: '/referencias/logos/sirio-libanes-unidade-itaim-nucleo-de-especialidades-clinica.svg', origem: "https://hospitalsiriolibanes.org.br/themes/custom/hsl_institucional/logo.svg" },
+  'sirio-libanes-unidade-jardins-clinica': { arquivo: '/referencias/logos/sirio-libanes-unidade-jardins-clinica.svg', origem: "https://hospitalsiriolibanes.org.br/themes/custom/hsl_institucional/logo.svg" },
+  'sobam-jundiai': { arquivo: '/referencias/logos/sobam-jundiai.png', origem: "https://institucional.sobam.com.br/sites/sobam/files/LOGO-Grupo-SOBAM%20%281%29_1.png" },
+  'vila-nova-star-sp': { arquivo: '/referencias/logos/vila-nova-star-sp.svg', origem: "https://www.rededorsaoluiz.com.br/assets/imgs/svg/logo-redestar.svg" },
+}
+
+export function logoDaReferencia(slug: string, logoUrl?: string | null): string | null {
+  return logoUrl || LOGOS_REFERENCIAS[slug]?.arquivo || null
+}

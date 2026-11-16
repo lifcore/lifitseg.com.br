@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.002" height="48" viewBox="0 0 46.002 48">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.134" y1="0.802" x2="0.646" y2="0.126" gradientUnits="objectBoundingBox">
+      <stop offset="0.15" stop-color="#36378d"/>
+      <stop offset="0.473" stop-color="#8c4668"/>
+      <stop offset="0.85" stop-color="#ee583f"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="0.003" x2="0.5" y2="0.999" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#002581"/>
+      <stop offset="0.17" stop-color="#39559d"/>
+      <stop offset="0.397" stop-color="#7e91bf"/>
+      <stop offset="0.602" stop-color="#b5c0da"/>
+      <stop offset="0.777" stop-color="#dde2ee"/>
+      <stop offset="0.915" stop-color="#f6f7fa"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="0.99" x2="0.5" y2="0" xlink:href="#linear-gradient-2"/>
+  </defs>
+  <g id="Grupo_3011" data-name="Grupo 3011" transform="translate(-90.589 -81.039)">
+    <g id="Grupo_1863" data-name="Grupo 1863" transform="translate(90.589 81.039)">
+      <path id="Caminho_619" data-name="Caminho 619" d="M100.591,97.039h-8a4,4,0,0,0-4,4v1.367a11.988,11.988,0,0,0-10-5.368,4,4,0,0,1-4-4v-4a4,4,0,0,0-8,0v4h0v24a4,4,0,0,0,4,4h8a11.988,11.988,0,0,0,10-5.367v9.366h0v4a4,4,0,0,0,8,0v-4a4,4,0,0,1,4-4,12,12,0,0,0,0-24Zm-22,16h-4V104.51a14.5,14.5,0,0,0,4,.53,4,4,0,1,1,0,8Zm22,0a14.5,14.5,0,0,0-4,.53v-8.529h4a4,4,0,1,1,0,8Z" transform="translate(-66.589 -85.039)" fill="url(#linear-gradient)"/>
+      <path id="Caminho_620" data-name="Caminho 620" d="M74.59,107.507c-5.324-1.523-7.992-6.152-8-11.446v19.975h8Z" transform="translate(-66.589 -88.036)" fill="url(#linear-gradient-2)" style="mix-blend-mode: multiply;isolation: isolate"/>
+      <path id="Caminho_621" data-name="Caminho 621" d="M98.123,112.51a12,12,0,0,1-1.314,10.632v9.343c.008-5.294,2.676-9.923,8-11.446V112.51Z" transform="translate(-74.807 -92.51)" fill="url(#linear-gradient-3)" style="mix-blend-mode: multiply;isolation: isolate"/>
+    </g>
+  </g>
+</svg>
