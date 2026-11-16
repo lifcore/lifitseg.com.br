@@ -45,7 +45,7 @@ export function InstituicaoCard({
       className="flex flex-col gap-4 rounded-2xl border border-lifitseg-dark/10 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md"
     >
       <div className="flex items-start gap-3">
-        <LogoOuPlaceholder nome={nome} logoUrl={logoUrl} />
+        <LogoOuPlaceholder nome={nome} logoUrl={logoUrl} slug={slug} />
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex flex-wrap items-center gap-1.5">
             {status === 'EM_IMPLANTACAO' && (

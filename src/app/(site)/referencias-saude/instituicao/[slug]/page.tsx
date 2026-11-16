@@ -85,10 +85,10 @@ export default async function InstituicaoSaudePage({ params }: PageProps) {
                 </div>
               )}
 
-              <div className="mb-7 flex items-start gap-4">
-                <LogoOuPlaceholder nome={inst.nome} logoUrl={inst.logo_url} tamanho="lg" />
-                <div className="pt-0.5">
-                  <h1 className="text-2xl font-black leading-tight text-lifitseg-dark sm:text-3xl">{inst.nome}</h1>
+              <div className="mb-7 flex flex-col items-start gap-4 sm:flex-row">
+                <LogoOuPlaceholder nome={inst.nome} logoUrl={inst.logo_url} slug={inst.slug} tamanho="lg" />
+                <div className="min-w-0 pt-0.5">
+                  <h1 className="text-2xl font-black leading-tight break-words text-lifitseg-dark sm:text-3xl">{inst.nome}</h1>
                   <p className="mt-1 text-sm text-lifitseg-dark/50">
                     {inst.cidade} · {ROTULO_STATUS_REFERENCIA[inst.status] ?? inst.status}
                   </p>

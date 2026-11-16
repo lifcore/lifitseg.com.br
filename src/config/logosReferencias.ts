@@ -61,6 +61,23 @@ export const LOGOS_REFERENCIAS: Record<string, { arquivo: string; origem: string
   'sirio-libanes-unidade-jardins-clinica': { arquivo: '/referencias/logos/sirio-libanes-unidade-jardins-clinica.svg', origem: "https://hospitalsiriolibanes.org.br/themes/custom/hsl_institucional/logo.svg" },
   'sobam-jundiai': { arquivo: '/referencias/logos/sobam-jundiai.png', origem: "https://institucional.sobam.com.br/sites/sobam/files/LOGO-Grupo-SOBAM%20%281%29_1.png" },
   'vila-nova-star-sp': { arquivo: '/referencias/logos/vila-nova-star-sp.svg', origem: "https://www.rededorsaoluiz.com.br/assets/imgs/svg/logo-redestar.svg" },
+  'unimed-jundiai-anhanguera': { arquivo: '/referencias/logos/unimed-jundiai-anhanguera.png', origem: "https://www.unimed.coop.br/site/image/layout_set_logo?img_id=21163655&t=1794736047225" },
+  'a-medicina-diagnostica-lab': { arquivo: '/referencias/logos/a-medicina-diagnostica-lab.png', origem: "https://www.amaissaude.com.br/sp/_next/image?url=https%3A%2F%2Fd3unpzxgfygi8m.cloudfront.net%2Fa-mais-sao-paulo-cms%2Flogo_89966d9e1e.png&w=2048&q=80" },
+  'alta-diagnosticos-lab': { arquivo: '/referencias/logos/alta-diagnosticos-lab.png', origem: "https://d21xdc2xnp23jy.cloudfront.net/static/ad5eb6eab84f17dcb72ca3171ebb0d1a/0ca15/Alta-logo-1.png" },
+  'centro-clinico-puc-campinas-clinica': { arquivo: '/referencias/logos/centro-clinico-puc-campinas-clinica.png', origem: "https://www.hospitalpuc-campinas.com.br/wp-content/uploads/2020/09/logo-puc-2020.png" },
+  'centro-medico-campinas-clinica': { arquivo: '/referencias/logos/centro-medico-campinas-clinica.png', origem: "https://www.fcmc.com.br/_next/image?url=%2Fimages%2Fnovo_logo.png&w=640&q=75" },
+  'centro-medico-morumbi-ii-rede-dor-clinica': { arquivo: '/referencias/logos/centro-medico-morumbi-ii-rede-dor-clinica.png', origem: "https://www.rededorsaoluiz.com.br/assets/imgs/logo-rededor-blue.webp" },
+  'centro-medico-sao-luiz-itaim-unidade-healthplace-clinica': { arquivo: '/referencias/logos/centro-medico-sao-luiz-itaim-unidade-healthplace-clinica.png', origem: "https://www.rededorsaoluiz.com.br/assets/imgs/logo-rededor-blue.webp" },
+  'confiance-medicina-diagnostica-lab': { arquivo: '/referencias/logos/confiance-medicina-diagnostica-lab.png', origem: "https://confiance.com.br/_next/image?url=https%3A%2F%2Fd3unpzxgfygi8m.cloudfront.net%2Fcms-confiance%2Flogo_dbd3060813.png&w=2048&q=80" },
+  'cura-diagnostico-lab': { arquivo: '/referencias/logos/cura-diagnostico-lab.png', origem: "https://www.cura.com.br/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Falliar-jornada-digital-13c0.appspot.com%2Fhome_vendas%2Fwakanda%2Fproduction%2Fcura_43073f5456%2Fcura_43073f5456.png&w=256&q=75" },
+  'fleury-fertilidade-centro-de-medicina-reprodutiva-clinica': { arquivo: '/referencias/logos/fleury-fertilidade-centro-de-medicina-reprodutiva-clinica.png', origem: "https://fertilidade.fleury.com.br/_next/image?url=https%3A%2F%2Fd3unpzxgfygi8m.cloudfront.net%2Fcms-fleury-fertilidade%2Fsite_fleury_fertilidade_version_default_005c5f34a0.png&w=2048&q=80" },
+  'unimed-jundiai': { arquivo: '/referencias/logos/unimed-jundiai.png', origem: "https://www.unimed.coop.br/site/image/layout_set_logo?img_id=21163655&t=1794736047225" },
+  'hsanp-hospital-sp': { arquivo: '/referencias/logos/hsanp-hospital-sp.png', origem: "https://www.hsanp.com.br/assets/images/logo/logo-dark.png" },
+  'huc-campinas': { arquivo: '/referencias/logos/huc-campinas.png', origem: "https://d24ux3x5lhpqgy.cloudfront.net/assets/images/logo/logo-unimed-campinas.png" },
+  'instituto-de-neurocirurgia-neurologia-e-psiquiatria-dr-marcelo-nery-clinica': { arquivo: '/referencias/logos/instituto-de-neurocirurgia-neurologia-e-psiquiatria-dr-marcelo-nery-clinica.png', origem: "https://static.wixstatic.com/media/aa2994_d2d2be035a844cef869e82d0e69af741~mv2.png/v1/fill/w_347,h_197,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo-instituto-nery.png" },
+  'laboratorio-a-jundiai-lab': { arquivo: '/referencias/logos/laboratorio-a-jundiai-lab.png', origem: "https://www.amaissaude.com.br/sp/_next/image?url=https%3A%2F%2Fd3unpzxgfygi8m.cloudfront.net%2Fa-mais-sao-paulo-cms%2Flogo_89966d9e1e.png&w=2048&q=80" },
+  'laboratorio-unimed-jundiai-lab': { arquivo: '/referencias/logos/laboratorio-unimed-jundiai-lab.png', origem: "https://www.unimed.coop.br/site/image/layout_set_logo?img_id=21163655&t=1794725140139" },
+  'unimed-jundiai-ambulatorio-de-especialidades-clinica': { arquivo: '/referencias/logos/unimed-jundiai-ambulatorio-de-especialidades-clinica.png', origem: "https://www.unimed.coop.br/site/image/layout_set_logo?img_id=21163655&t=1794725140139" },
 }
 
 export function logoDaReferencia(slug: string, logoUrl?: string | null): string | null {
