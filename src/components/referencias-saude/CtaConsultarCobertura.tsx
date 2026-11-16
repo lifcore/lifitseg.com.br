@@ -3,12 +3,15 @@
 import { useState } from 'react'
 import { ReferenciaSaudeLeadModal } from './ReferenciaSaudeLeadModal'
 import { ReusableCtaSection } from '@/components/common/StandardCard'
+import { linkWhatsApp, mensagemReferencia } from '@/utils/whatsapp'
 
 type CtaConsultarCoberturaProps = {
   nomeInstituicao?: string
   instituicaoSlug?: string
   especialidade?: string
   cidade?: string
+  /** Tipo da instituição: no hospital geral, a mensagem do WhatsApp leva o nome (utils/whatsapp.ts). */
+  tipo?: string
   /** Lista de operadoras/convênios identificados — só as curtas (nome real, não frase inteira) viram chip. */
   operadorasInformadas?: string[]
   /** 'secao' (padrão) = banner full-width, usado no hub/região/especialidade.
@@ -42,6 +45,7 @@ export function CtaConsultarCobertura({
   especialidade,
   cidade,
   operadorasInformadas,
+  tipo,
   variante = 'secao',
 }: CtaConsultarCoberturaProps) {
   const [modalAberto, setModalAberto] = useState(false)
@@ -90,6 +94,15 @@ export function CtaConsultarCobertura({
           >
             {textoBotao}
           </button>
+          <a
+            href={linkWhatsApp(mensagemReferencia(tipo, nomeInstituicao))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 block w-full rounded-xl border border-lifitseg-offwhite/25 py-3.5 text-center text-sm font-semibold text-lifitseg-offwhite transition-colors hover:border-lifitseg-mint hover:text-lifitseg-mint"
+          >
+            Conversar no WhatsApp
+          </a>
+          <p className="mt-2 text-center text-[11px] text-lifitseg-offwhite/45">O assistente virtual faz a primeira triagem; um consultor continua a conversa.</p>
         </div>
       ) : (
         <ReusableCtaSection

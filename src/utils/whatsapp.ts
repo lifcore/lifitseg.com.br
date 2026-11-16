@@ -15,3 +15,19 @@ export function linkWhatsApp(mensagem: string = MENSAGEM_WHATSAPP, numero: strin
   const texto = mensagem.trim()
   return texto ? `https://wa.me/${digitos}?text=${encodeURIComponent(texto)}` : `https://wa.me/${digitos}`
 }
+
+// Referências em Saúde (Raphael, 15/11/2026): no hospital GERAL, a mensagem leva o nome do hospital, que o visitante
+// decide enviar; o assistente cadastra o prospect e abre a demanda. Em instituição especializada (oncologia,
+// fertilidade, neurologia, saúde da mulher e afins), clínica ou laboratório, a mensagem continua neutra, porque o
+// interesse pode revelar uma condição de saúde. O nome nunca vai para a medição nem para anúncios.
+const ESPECIALIZADA = /oncolog|c[aâ]ncer|graacc|ibcc|boldrini|fertil|reprodu|neuro|psiq|retina|oftalm|mulher|matre|cardio|cora[cç][aã]o/i
+
+export function hospitalGeral(tipo?: string | null, nome?: string | null): boolean {
+  return tipo === 'hospital' && !!nome && !ESPECIALIZADA.test(nome)
+}
+
+export function mensagemReferencia(tipo?: string | null, nome?: string | null): string {
+  return hospitalGeral(tipo, nome)
+    ? `Olá! Vim pelo site da Lifitseg e quero um plano de saúde com acesso ao ${nome}.`
+    : MENSAGEM_WHATSAPP
+}

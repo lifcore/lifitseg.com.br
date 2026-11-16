@@ -164,6 +164,7 @@ export default async function InstituicaoSaudePage({ params }: PageProps) {
                 cidade={inst.cidade}
                 especialidade={inst.especialidades?.[0]}
                 operadorasInformadas={inst.operadoras_informadas}
+                tipo={inst.tipo}
               />
             </div>
           </div>
