@@ -429,3 +429,39 @@ html{scroll-behavior:smooth}
 .pm .linha-etapas div.on{color:var(--verde);font-weight:600}
 .pm .criterios span{transition:background .18s}
 .pm .pm-conf-link{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+
+/* ===== Páginas internas (15/11, Raphael: "faça o mesmo para as demais páginas") =====
+   Acabamento premium aplicado pelo layout (.pm-interna) às peças que as páginas já usam, sem reescrever conteúdo.
+   Nada aqui vale dentro de .pm (home e Benefícios têm o visual próprio). Feixes e fios entram como fundo. */
+.pm-interna{--pi-feixes:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20600%22%20preserveAspectRatio%3D%22none%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23acb894%22%20stroke-width%3D%22.7%22%20stroke-opacity%3D%22.16%22%3E%3Cpath%20d%3D%22M%20980%20-40%20C%201150%2090%201330%20120%201480%20260%22/%3E%3Cpath%20d%3D%22M%20990%20-40%20C%201155%2092%201334%20124%201480%20268%22/%3E%3Cpath%20d%3D%22M%201000%20-40%20C%201160%2094%201338%20128%201480%20276%22/%3E%3Cpath%20d%3D%22M%201010%20-40%20C%201165%2096%201342%20132%201480%20284%22/%3E%3Cpath%20d%3D%22M%201020%20-40%20C%201170%2098%201346%20136%201480%20292%22/%3E%3Cpath%20d%3D%22M%201030%20-40%20C%201175%20100%201350%20140%201480%20300%22/%3E%3Cpath%20d%3D%22M%201040%20-40%20C%201180%20102%201354%20144%201480%20308%22/%3E%3Cpath%20d%3D%22M%201050%20-40%20C%201185%20104%201358%20148%201480%20316%22/%3E%3Cpath%20d%3D%22M%201060%20-40%20C%201190%20106%201362%20152%201480%20324%22/%3E%3Cpath%20d%3D%22M%201070%20-40%20C%201195%20108%201366%20156%201480%20332%22/%3E%3Cpath%20d%3D%22M%201080%20-40%20C%201200%20110%201370%20160%201480%20340%22/%3E%3Cpath%20d%3D%22M%201090%20-40%20C%201205%20112%201374%20164%201480%20348%22/%3E%3Cpath%20d%3D%22M%201100%20-40%20C%201210%20114%201378%20168%201480%20356%22/%3E%3Cpath%20d%3D%22M%201110%20-40%20C%201215%20116%201382%20172%201480%20364%22/%3E%3Cpath%20d%3D%22M%201120%20-40%20C%201220%20118%201386%20176%201480%20372%22/%3E%3Cpath%20d%3D%22M%201130%20-40%20C%201225%20120%201390%20180%201480%20380%22/%3E%3C/g%3E%3C/svg%3E");--pi-fios:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20600%20340%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23087f6d%22%20stroke-width%3D%22.8%22%20stroke-opacity%3D%22.08%22%3E%3Cpath%20d%3D%22M0%2040%20C200%2060%20380%20160%20600%20300%22/%3E%3Cpath%20d%3D%22M0%2052%20C205%2072%20385%20170%20600%20308%22/%3E%3Cpath%20d%3D%22M0%2064%20C210%2084%20390%20180%20600%20316%22/%3E%3Cpath%20d%3D%22M0%2076%20C215%2096%20395%20190%20600%20324%22/%3E%3Cpath%20d%3D%22M0%2088%20C220%20108%20400%20200%20600%20332%22/%3E%3Cpath%20d%3D%22M0%20100%20C225%20120%20405%20210%20600%20340%22/%3E%3C/g%3E%3C/svg%3E")}
+.pm-interna :is(section.bg-lifitseg-dark,section.bg-lifitseg-dark-deep,section.bg-gradient-to-b):not(.pm *){position:relative;background-color:#05191b;background-image:var(--pi-feixes),radial-gradient(ellipse at 85% 20%,#17473d80 0,transparent 50%),linear-gradient(123deg,#030f10,#05191b 52%,#0b2d29);background-size:100% 100%,auto,auto;background-repeat:no-repeat}
+.pm-interna :is(section.bg-white,section.bg-lifitseg-offwhite):not(.pm *){background-color:#fff;background-image:var(--pi-fios),radial-gradient(ellipse at 6% 0%,#087f6d0a,transparent 42%),linear-gradient(180deg,#ffffff,#f6f6f3);background-repeat:no-repeat;background-position:right -140px top -60px,0 0,0 0;background-size:640px auto,auto,auto}
+.pm-interna section.bg-lifitseg-paper:not(.pm *){background-image:radial-gradient(ellipse at 92% 92%,#d9e4d163,transparent 50%),linear-gradient(130deg,#f5f4f0,#eeecea)}
+/* Títulos: hierarquia da Geist como na home (peso médio, entrelinha justa) */
+.pm-interna :is(h1):not(.pm *){font-weight:550;letter-spacing:-.035em;line-height:1.08}
+.pm-interna section:is(.bg-lifitseg-dark,.bg-lifitseg-dark-deep) h1:not(.pm *){font-size:clamp(34px,5vw,56px)}
+.pm-interna :is(h2):not(.pm *){font-weight:500;letter-spacing:-.03em;line-height:1.12;font-size:clamp(26px,3vw,36px)}
+.pm-interna :is(h3):not(.pm *){font-weight:550;letter-spacing:-.015em}
+/* Sobretítulo com o filete dourado da marca */
+.pm-interna p.uppercase.tracking-widest:not(.pm *){display:flex;align-items:center;gap:10px;font-size:11px;font-weight:550;letter-spacing:2px}
+.pm-interna p.uppercase.tracking-widest:not(.pm *):before{content:'';width:26px;height:1px;background:#b99a60;flex-shrink:0}
+/* Botão principal: âmbar com luz sutil, como na home */
+.pm-interna :is(a,button).bg-primary:not(.pm *){background-image:linear-gradient(125deg,#ffca68,#ffbb44);border-radius:10px;box-shadow:0 5px 25px #f7b5451a;transition:filter .18s,transform .18s}
+.pm-interna :is(a,button).bg-primary:not(.pm *):hover{filter:brightness(1.04);transform:translateY(-1px)}
+/* Cards claros: material da home (borda leve, degradê de papel, sombra curta) */
+.pm-interna :is(.rounded-2xl,.rounded-3xl):is(.bg-white,.border,.border-lifitseg-line):not(.bg-lifitseg-dark,[class*="bg-lifitseg-dark"],[class*="bg-primary"],.pm *){border-radius:22px;border:1px solid #1c4d301a;background-image:linear-gradient(140deg,#ffffff,#f5f6f2);box-shadow:0 10px 26px #0a22120a}
+.pm-interna li.rounded-xl.bg-lifitseg-paper:not(.pm *){background:#ffffffb8;border:1px solid #087f6d17;border-radius:14px}
+.pm-interna a:is(.rounded-2xl,.rounded-3xl):not(.pm *),.pm-interna a > :is(.rounded-2xl,.rounded-3xl):not(.pm *){transition:transform .2s,box-shadow .2s,border-color .2s}
+.pm-interna a:is(.rounded-2xl,.rounded-3xl):not(.pm *):hover,.pm-interna a:hover > :is(.rounded-2xl,.rounded-3xl):not(.pm *){transform:translateY(-3px);box-shadow:0 16px 34px #0a221214}
+/* Cards escuros (StandardCard): painel petróleo com filete de luz, como o da tecnologia */
+.pm-interna .rounded-2xl[class*="bg-lifitseg-dark/"]:not(.pm *){position:relative;background:linear-gradient(140deg,#123a36,#0b2624);border-color:#bddac53a;box-shadow:0 18px 40px #0a221226}
+.pm-interna .rounded-2xl[class*="bg-lifitseg-dark/"]:not(.pm *):before{content:'';position:absolute;height:1px;top:0;left:26px;right:26px;background:linear-gradient(90deg,transparent,#cfe9d6aa,transparent)}
+/* Fotos dentro das páginas internas: cantos e sombra da fotografia integrada */
+.pm-interna :is(section) img.rounded-3xl:not(.pm *),.pm-interna :is(section) img.rounded-2xl:not(.pm *){border-radius:26px;box-shadow:0 22px 50px #0a22121f}
+@media(prefers-reduced-motion:reduce){.pm-interna *{transition:none!important}}
+/* Primeira tela clara das referências e do índice de guias vira o Fundo A petróleo, como nas demais.
+   Ficam claras as páginas de leitura (texto do guia e política de privacidade: coluna estreita, max-w-3xl). */
+.pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *){position:relative;background-color:#05191b;background-image:var(--pi-feixes),radial-gradient(ellipse at 85% 20%,#17473d80 0,transparent 50%),linear-gradient(123deg,#030f10,#05191b 52%,#0b2d29);background-size:100% 100%,auto,auto;background-repeat:no-repeat;color:#eeecea}
+.pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) h1{color:#fff}
+.pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) > div > p{color:#bdcec6}
+.pm-interna section:has(> div > h1):not(:has(> .max-w-3xl > h1)):not(.bg-lifitseg-dark):not(.bg-lifitseg-dark-deep):not(.pm *) > div > p.text-lifitseg-green{color:#a8d5be}
