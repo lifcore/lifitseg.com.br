@@ -9,13 +9,21 @@ import { mascararCnpj, mascararTelefone, somenteDigitos, validarFormulario, type
 
 export const EVENTO_SELECIONAR_FAIXA = 'lifitseg:selecionar-faixa'
 
+// '1' e 'nao_sei' entram com as páginas por segmento (Raphael, 18/11/2026): o MEI sozinho e quem ainda não sabe
+// respondem com a verdade. A faixa é informada pelo visitante; a página não a pré-seleciona.
 const FAIXAS = [
+  { valor: '1', rotulo: '1 vida (só o titular)' },
   { valor: '2-29', rotulo: '2 a 29 vidas' },
   { valor: '30-99', rotulo: '30 a 99 vidas' },
   { valor: '100+', rotulo: '100 ou mais vidas' },
+  { valor: 'nao_sei', rotulo: 'Ainda não sei' },
 ]
 
-const OBJETIVOS = [
+export type OpcaoObjetivo = { valor: 'primeira_contratacao' | 'revisao_beneficio' | 'gestao_beneficio' | 'outro'; rotulo: string }
+
+const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
+const OBJETIVOS: OpcaoObjetivo[] = [
   { valor: 'primeira_contratacao', rotulo: 'Contratar o primeiro plano da empresa' },
   { valor: 'revisao_beneficio', rotulo: 'Rever o plano atual' },
   { valor: 'gestao_beneficio', rotulo: 'Apoio na gestão do benefício' },
@@ -34,6 +42,12 @@ type Props = {
   cnpjObrigatorio?: boolean
   faixaInicial?: string
   textoBotao?: string
+  /** Rótulos do objetivo por página (os valores são os do contrato do Connect). */
+  objetivos?: OpcaoObjetivo[]
+  /** Página RH: mês da renovação do contrato atual, opcional. */
+  mostrarMesRenovacao?: boolean
+  /** Texto da confirmação, de acordo com o próximo passo da página. */
+  mensagemSucesso?: string
 }
 
 /**
@@ -41,7 +55,8 @@ type Props = {
  * Sucesso só depois do Connect confirmar; falha preserva os dados; sem
  * envio duplo; nenhum campo livre de saúde.
  */
-export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, faixaInicial = '', textoBotao = 'Enviar contato empresarial' }: Props) {
+export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, faixaInicial = '', textoBotao = 'Enviar contato empresarial', objetivos = OBJETIVOS, mostrarMesRenovacao = false, mensagemSucesso }: Props) {
+  const [mesRenovacao, setMesRenovacao] = useState('')
   const [dados, setDados] = useState<DadosFormulario>({ ...VAZIO, faixaVidas: faixaInicial })
   const [erros, setErros] = useState<Erros>({})
   const [estado, setEstado] = useState<'vazio' | 'enviando' | 'sucesso' | 'falha'>('vazio')
@@ -90,6 +105,7 @@ export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, f
         objetivo: dados.objetivo,
         cargo: dados.cargo.trim() || undefined,
         cnpj: somenteDigitos(dados.cnpj) || undefined,
+        mesRenovacao: mostrarMesRenovacao && mesRenovacao ? mesRenovacao : undefined,
         website: honeypot.current?.value ?? '',
       })
       setEstado('sucesso')
@@ -105,7 +121,7 @@ export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, f
     return (
       <div role="status" className="rounded-2xl border border-lifitseg-line bg-white p-8 text-center">
         <p className="text-lg font-bold text-lifitseg-dark">Recebemos seu contato.</p>
-        <p className="mt-2 text-sm text-lifitseg-text-soft">A equipe Lifitseg dará continuidade à conversa pelo canal informado.</p>
+        <p className="mt-2 text-sm text-lifitseg-text-soft">{mensagemSucesso ?? 'A equipe Lifitseg dará continuidade à conversa pelo canal informado.'}</p>
       </div>
     )
   }
@@ -164,10 +180,20 @@ export function FormularioEmpresarial({ pontoEntrada, cnpjObrigatorio = false, f
         <label htmlFor={`${id}-objetivo`} className="mb-1.5 block text-sm font-medium text-lifitseg-dark">Objetivo do contato</label>
         <select id={`${id}-objetivo`} value={dados.objetivo} onChange={(e) => alterar('objetivo', e.target.value)} aria-invalid={!!erros.objetivo} className="campo-formulario">
           <option value="">Selecione</option>
-          {OBJETIVOS.map((o) => <option key={o.valor} value={o.valor}>{o.rotulo}</option>)}
+          {objetivos.map((o) => <option key={o.valor} value={o.valor}>{o.rotulo}</option>)}
         </select>
         {erros.objetivo && <p className="mt-1 text-sm text-red-700">{erros.objetivo}</p>}
       </div>
+
+      {mostrarMesRenovacao && (
+        <div>
+          <label htmlFor={`${id}-renovacao`} className="mb-1.5 block text-sm font-medium text-lifitseg-dark">Mês da renovação do contrato atual<span className="font-normal text-lifitseg-text-soft"> · opcional</span></label>
+          <select id={`${id}-renovacao`} value={mesRenovacao} onChange={(e) => setMesRenovacao(e.target.value)} className="campo-formulario">
+            <option value="">Não sei ou não tenho plano</option>
+            {MESES.map((m, i) => <option key={m} value={String(i + 1)}>{m}</option>)}
+          </select>
+        </div>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2">
         {campo('cnpj', cnpjObrigatorio ? 'CNPJ' : 'CNPJ', {

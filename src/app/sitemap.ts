@@ -21,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    ...['mei', 'pme', 'rh'].map((s) => ({
+      url: `${siteConfig.url}/empresas/${s}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     {
       url: `${siteConfig.url}/seguros-corporativos`,
       lastModified: new Date(),

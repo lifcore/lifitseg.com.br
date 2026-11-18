@@ -485,3 +485,16 @@ html{scroll-behavior:smooth}
 /* Títulos-rótulo (h2 pequenos de propósito, como no perfil das instituições): a regra geral de títulos não vale */
 .pm-interna h2.text-xs:not(.pm *){font-size:11px;font-weight:650;letter-spacing:.12em;line-height:1.4;color:#087f6d}
 .pm-interna h2.text-xs:not(.pm *)::before{display:none}
+
+/* Páginas por segmento (/empresas/mei, /pme, /rh; 18/11/2026): linha do tempo em lista, maior que a da home */
+.pm .pm-seg-linha{margin-top:40px;padding-top:28px;border-top:1px solid var(--linha)}
+.pm .pm-seg-linha h3{font-size:20px;font-weight:500;letter-spacing:-.4px;color:var(--pet);margin:0 0 14px}
+.pm .pm-seg-etapas{list-style:none;padding:0;margin:8px 0 14px}
+.pm .pm-seg-etapas li{flex:1;text-align:left;font-size:13px;color:#3d4f4a;position:relative;padding-top:18px;padding-right:8px}
+.pm .pm-seg-etapas li:before{content:'';position:absolute;top:4px;left:0;width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid var(--verde)}
+.pm .pm-seg-etapas li:after{content:'';position:absolute;top:8px;left:12px;right:6px;height:1px;background:#087f6d40}
+.pm .pm-seg-etapas li:last-child:after{display:none}
+.pm .pm-seg-etapas li.on:before{background:var(--verde)}
+.pm .pm-seg-sem-cnpj{margin-top:14px;font-size:13px}
+.pm .pm-seg-sem-cnpj a{color:var(--verde);text-decoration:underline;text-underline-offset:2px}
+@media(max-width:700px){.pm .pm-seg-etapas{flex-direction:column;align-items:flex-start;gap:12px}.pm .pm-seg-etapas li{padding:0 0 0 18px}.pm .pm-seg-etapas li:before{top:5px}.pm .pm-seg-etapas li:after{display:none}}

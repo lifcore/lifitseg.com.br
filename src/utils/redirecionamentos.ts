@@ -22,6 +22,8 @@ const ANTIGOS: [string, string][] = [
   ['/blog/:caminho*', '/conhecimento'],
   ['/plano-de-saude-empresarial', '/beneficios-corporativos'],
   ['/seguro-de-vida', '/seguros-pessoais'],
+  // 18/11/2026 (Raphael): a LP de diagnóstico e renovação dá lugar à página RH (mesmo trabalho). A UTM segue junto.
+  ['/lp/saude-odonto', '/empresas/rh'],
 ]
 
 export function redirecionamentos(): Redirecionamento[] {

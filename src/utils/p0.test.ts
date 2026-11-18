@@ -22,6 +22,7 @@ test('endereço antigo vai à página equivalente, nunca tudo à home; sem www �
   assert.equal(em('/seguro-de-vida', false), '/seguros-pessoais')
   assert.equal(em('/blog/:caminho*', false), '/conhecimento')
   assert.equal(em('/contato', false), '/#contato')
+  assert.equal(em('/lp/saude-odonto', false), '/empresas/rh')
   // o geral do domínio vem depois dos específicos, senão o caminho antigo daria dois saltos
   const iGeral = lista.findIndex((r) => r.source === '/:caminho*')
   assert.ok(lista.findIndex((r) => r.source === '/contato' && r.has) < iGeral)
